@@ -1,0 +1,294 @@
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-column about-column">
+                    <div class="footer-logo">
+                        <img src=images/homeImage/logo.png alt="Pet Store Logo">
+                    </div>
+                    <p class="footer-description">Your one-stop destination for premium pet supplies, foods, toys, and
+                        accessories for all your furry, feathery, and scaly friends.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Shop Products</a></li>
+                        <li><a href="#">Dog Supplies</a></li>
+                        <li><a href="#">Cat Supplies</a></li>
+                        <li><a href="#">Fish & Aquatics</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-title">Newsletter</h3>
+                    <p class="newsletter-text">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                    <div class="payment-methods">
+                        <span class="payment-icon"><i class="fab fa-cc-visa"></i></span>
+                        <span class="payment-icon"><i class="fab fa-cc-mastercard"></i></span>
+                        <span class="payment-icon"><i class="fab fa-cc-amex"></i></span>
+                        <span class="payment-icon"><i class="fab fa-cc-paypal"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="copyright">© 2025 Pet Store. All Rights Reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Styles */
+    .footer {
+        background-color: #f9f9f9;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .footer-top {
+        padding: 60px 0 40px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .footer-column {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .about-column {
+        flex: 1.5;
+    }
+
+    .footer-logo {
+        margin-bottom: 15px;
+    }
+
+    .footer-logo img {
+        height: 70px;
+        width: auto;
+    }
+
+    .footer-description {
+        margin-bottom: 20px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #666;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background-color: #f1f1f1;
+        color: #333;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .social-icon:hover {
+        background-color: #1e88e5;
+        color: white;
+    }
+
+    .footer-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .footer-title:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 2px;
+        background-color: #1e88e5;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: #666;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+        color: #1e88e5;
+    }
+
+    .newsletter-text {
+        font-size: 14px;
+        margin-bottom: 15px;
+        color: #666;
+    }
+
+    .newsletter-form {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .newsletter-form input {
+        flex: 1;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px 0 0 4px;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .newsletter-btn {
+        padding: 10px 15px;
+        background-color: #1e88e5;
+        color: white;
+        border: none;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .newsletter-btn:hover {
+        background-color: #1976d2;
+    }
+
+    .payment-methods {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .payment-icon {
+        font-size: 24px;
+        color: #666;
+    }
+
+    .footer-bottom {
+        padding: 20px 0;
+        background-color: #f9f9f9;
+    }
+
+    .footer-bottom .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .copyright {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .footer-bottom-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .footer-bottom-links a {
+        font-size: 14px;
+        color: #666;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .footer-bottom-links a:hover {
+        color: #1e88e5;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 992px) {
+        .footer-column {
+            flex: 0 0 calc(50% - 15px);
+        }
+
+        .about-column {
+            flex: 0 0 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-top {
+            padding: 40px 0 20px;
+        }
+
+        .footer-column {
+            flex: 0 0 100%;
+        }
+
+        .footer-bottom .container {
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .footer-bottom-links {
+            justify-content: center;
+        }
+    }
+</style>
+</body>
+
+</html>

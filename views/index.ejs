@@ -1,0 +1,255 @@
+<%- include("partials/header") %>
+<link rel="stylesheet" href="/css/style.css">
+
+<%
+const productSections = {
+    jewelry: {
+        title: "Jewelry",
+        products: [
+            { title: 'Allure Beautiful Bracelet & Bangles', price: '18.00', image: 'products_img/AllureBeautifulBracelet&Bangles', isNew: true },
+
+            { title: 'shimmering beautiful leyered necklace combo for women and girls', price: '22.00', image: 'products_img/shimmering beautiful leyered necklace combo for women and girls' },
+
+            { title: 'sterling silver moder ring ', price: '15.00', image: 'products_img/sterling silver moder ring ' },
+            { title: 'sterling silver moder stud ', price: '25.00', image: 'products_img/sterling silver moder stud ' }
+        ]
+    },
+    cosmetics: {
+        title: "Cosmetics",
+        products: [
+            { title: 'Lipsticks', price: '12.00', image: 'products_img/lipstick', isNew: true },
+
+            { title: 'Foundation', price: '20.00', image: 'products_img/foundation' },
+
+            { title: 'Mascara', price: '15.00', image: 'products_img/mascara' },
+            
+            { title: 'Blush', price: '18.00', image: 'products_img/blusher' }
+        ]
+    },
+
+    gifts: {
+        title: "Gifts",
+        products: [
+            { title: 'Romantic Couple With Led Light', price: '30.00', image: 'products_img/romantic-couple-with-led-light', isNew: true },
+
+            { title: 'Round Magic Mirror', price: '5.00', image: 'products_img/round magic mirror',isNew:true },
+
+            { title: 'Teddy Bear', price: '25.00', image: 'products_img/teddyBear' },
+
+            { title: 'Scenery', price: '20.00', image: 'products_img/scenery' }
+        ]
+    },
+
+    perfumes: {
+        title: "Perfumes",
+        products: [
+            { title: 'Delicate Rose Perfume', price: '50.00', image: 'products_img/DelicateRose', isNew: true },
+
+            { title: 'Lavender Perfume', price: '45.00', image: 'products_img/lavender' },
+
+            { title: 'Vanilla Perfume', price: '40.00', image: 'products_img/vanilla' },
+            
+            { title: 'Citrus Perfume', price: '35.00', image: 'products_img/citrus Perfume' }
+        ]
+    },
+    toys: {
+        title: "Toys",
+        products: [
+            { title: 'Teddy Bear', price: '25.00', image: 'products_img/teddy-bear', isNew: true },
+
+            { title: 'Toy Car', price: '15.00', image: 'products_img/toyCar' },
+
+            { title: 'Doll', price: '20.00', image: 'products_img/doll' },
+
+            { title: 'Puzzle', price: '10.00', image: 'products_img/puzzle' }
+            
+        ]
+    },
+    decorations: {
+        title: "Decorations",
+        products: [
+            { title: 'Wall Art', price: '40.00', image: 'products_img/wall-art', isNew: true },
+
+            { title: 'Vase', price: '30.00', image: 'products_img/flower-vase' },
+
+            { title: 'Led', price: '50.00', image: 'products_img/led' },
+
+            { title: 'Curtains', price: '35.00', image: 'products_img/curtain' }
+
+        ]
+    },
+    others: {
+        title: "Others",
+        products: [
+            { title: 'Notebook', price: '10.00', image: 'products_img/notebook', isNew: true },
+
+            { title: 'Pen Set', price: '8.00', image: 'products_img/pen-set' },
+
+            { title: 'Backpack', price: '25.00', image: 'products_img/back-bags' },
+
+            { title: 'Water Bottle', price: '15.00', image: 'products_img/water-bottle' }
+        ]
+    }
+};
+%>
+
+<main>
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel">
+        <div class="carousel-container">
+            <!-- Carousel Slides -->
+            <div class="carousel-slides">
+                <!-- Slide 1 -->
+                <div class="carousel-slide active">
+                    <div class="slide-content">
+                        <div class="slide-image">
+                            <img src="/images/homeImage/giftTheam.png" alt="Gift Box">
+                        </div>
+                        <div class="slide-text">
+                            <h2>Find joy in every little detail.</h2>
+                            <p>At Aniyara, every gift tells a story.</p>
+                            <div class="brand-name">ANIYARA</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                    <div class="slide-content">
+                        <div class="slide-image">
+                            <img src="/images/homeImage/fancy.png" alt="Special Moments">
+                        </div>
+                        <div class="slide-text">
+                            <h2>Create memories that last forever.</h2>
+                            <p>Quality products for your special moments.</p>
+                            <div class="brand-name">ANIYARA</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                    <div class="slide-content">
+                        <div class="slide-image">
+                            <img src="/images/homeImage/toys.png" alt="Elegant Design">
+                        </div>
+                        <div class="slide-text">
+                            <h2>Elegance in simplicity.</h2>
+                            <p>Carefully crafted with love and attention.</p>
+                            <div class="brand-name">ANIYARA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Navigation -->
+            <div class="carousel-nav">
+                <button class="carousel-indicator active" data-slide="0"></button>
+                <button class="carousel-indicator" data-slide="1"></button>
+                <button class="carousel-indicator" data-slide="2"></button>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="carousel-controls">
+                <button class="carousel-control prev" aria-label="Previous slide">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-control next" aria-label="Next slide">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Sections -->
+    <% Object.entries(productSections).forEach(([sectionKey, section]) => { %>
+        <section class="<%= sectionKey %>">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title"><%= section.title %></h2>
+                    <a href="/shop/<%= sectionKey %>" class="shop-now-btn">
+                        SHOP NOW 
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="product-grid">
+                    <% section.products.forEach(product => { %>
+                        <div class="product-card">
+                            <% if (product.isNew) { %>
+                                <div class="product-badge">New</div>
+                            <% } %>
+                            <div class="product-image">
+                                <img src="/images/homeImage/<%= product.image %>.png" alt="<%= product.title %>">
+                                <div class="product-actions">
+                                    <button class="quick-view-btn" title="Quick View">
+                                        <i class="fas fa-eye"></i> 
+                                    </button>
+                                   
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title"><%= product.title %></h3>
+                                <div class="product-rating">
+                                    <% for(let i = 0; i < 5; i++) { %>
+                                        <i class="fas fa-star"></i>
+                                    <% } %>
+                                    <span>5.0</span>
+                                </div>
+                                <div class="product-price">$<%= product.price %></div>
+                                <div class="product-buttons">
+                                    <button class="add-to-cart-btn">ADD TO CART</button>
+                                    <button class="wishlist-btn" title="Add to Wishlist">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </section>
+    <% }) %>
+
+    <!-- Add before closing </main> tag -->
+    <div id="quickViewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div class="product-image">
+                    <img id="modalImage" src="" alt="Product Image">
+                </div>
+                <div class="product-details">
+                    <h2 id="modalTitle"></h2>
+                    <div class="product-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="product-price" id="modalPrice"></div>
+                    <div class="quantity">
+                        <label>Quantity:</label>
+                        <div class="quantity-input">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="modal-add-to-cart">Add to Cart</button>
+                        <button class="modal-wishlist" title="Add to Wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--  JavaScript file -->
+<script src="/js/carousel.js"></script>
+
+<%- include("partials/footer") %>

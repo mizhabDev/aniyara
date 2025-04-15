@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Chilanka&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Chilanka', cursive;
+    }
+    
+    body {
+      min-height: 100vh;
+    }
+
+    .header {
+      width: 100%;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+    }
+
+    .logo {
+      height: 70px;
+    }
+
+    .logo img {
+      height: 100%;
+      width: auto;
+    }
+
+    .search-bar {
+      flex-grow: 1;
+      max-width: 500px;
+      margin: 0 20px;
+    }
+
+    .search-container {
+      display: flex;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      overflow: hidden;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 10px 15px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .search-container button {
+      background-color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .contact-item .label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .contact-item .value {
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .navigation {
+      border-top: 1px solid #eee;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .main-nav {
+      display: flex;
+      list-style: none;
+    }
+
+    .main-nav li {
+      position: relative;
+    }
+
+    .main-nav li a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .main-nav li a:hover {
+      color: #1e88e5;
+    }
+
+    .main-nav li a.dropdown::after {
+      content: "▼";
+      font-size: 10px;
+      margin-left: 5px;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-actions a {
+      padding: 15px 10px;
+      color: #333;
+      font-size: 20px;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      background-color: #1e88e5;
+      color: white;
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .promo-banner {
+      color: #1e88e5;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .hero-title {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .hero-title span {
+      color: #1e88e5;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #fff;
+      color: #333;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #f5f5f5;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 100;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    .close-menu {
+      background: none;
+      border: none;
+      font-size: 24px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .mobile-nav {
+      margin-top: 60px;
+      list-style: none;
+    }
+
+    .mobile-nav li {
+      margin-bottom: 10px;
+    }
+
+    .mobile-nav a {
+      display: block;
+      padding: 10px 0;
+      text-decoration: none;
+      color: #333;
+      font-size: 18px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 992px) {
+      .contact-info {
+        display: none;
+      }
+
+      .search-bar {
+        margin: 0 10px 0 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-header {
+        padding: 10px;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .navigation {
+        display: none;
+      }
+
+      .user-actions {
+        display: none;
+      }
+
+      .search-bar {
+        display: none;
+      }
+
+      .mobile-search {
+        display: flex;
+        margin: 20px 0;
+      }
+
+      .mobile-actions {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 30px;
+      }
+
+      .mobile-actions a {
+        font-size: 24px;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    /* Keep icons using Font Awesome */
+    .fas {
+      font-family: 'Font Awesome 6 Free' !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="top-header">
+      <button class="hamburger" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="logo">
+        <a href="/">
+          <img src="images/homeImage/logo.png" alt="Pet Store Logo">
+        </a>
+      </div>
+
+      <div class="search-bar">
+        <div class="search-container">
+          <input type="text" placeholder="Search for more than 10,000 products">
+          <button type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="label">Phone</span>
+          <span class="value">+980-34984089</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">Email</span>
+          <span class="value">waggy@gmail.com</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navigation">
+      <div class="nav-container">
+        <ul class="main-nav">
+          <li>
+            <a href="#" class="dropdown">Shop by Category</a>
+          </li>
+          <li><a href="/">Home</a></li>
+          <li><a href="#" class="dropdown">Pages</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Others</a></li>
+        </ul>
+
+        <div class="user-actions">
+          <a href="#" title="My Account">
+            <i class="fas fa-user"></i>
+          </a>
+          <a href="#" title="Wishlist">
+            <i class="fas fa-heart"></i>
+          </a>
+          <a href="#" title="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">03</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="close-menu" id="close-menu">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="mobile-search search-container">
+      <input type="text" placeholder="Search for more than 10,000 products">
+      <button type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+
+    <ul class="mobile-nav">
+      <li><a href="#">Shop by Category</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="#">Pages</a></li>
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Others</a></li>
+    </ul>
+
+    <div class="mobile-actions">
+      <a href="#" title="My Account">
+        <i class="fas fa-user"></i>
+      </a>
+      <a href="#" title="Wishlist">
+        <i class="fas fa-heart"></i>
+      </a>
+      <a href="#" title="Shopping Cart">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu functionality
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+    });
+
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+    });
+  </script>
+</body>
+
+</html>
