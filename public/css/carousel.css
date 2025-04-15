@@ -1,0 +1,18 @@
+/* Hero Carousel */
+.hero-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 100px;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 500px;
+  overflow: hidden;
+}
+
+/* ... keep only unique carousel styles ... */

@@ -1,0 +1,32 @@
+/* Product Cards */
+.product-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4081;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* Buttons */
+.add-to-cart-btn,
+.wishlist-btn,
+.quick-view-btn {
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Rating Stars */
+.product-rating {
+    color: #ffd700;
+    margin: 10px 0;
+}
