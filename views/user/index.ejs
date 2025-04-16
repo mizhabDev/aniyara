@@ -1,8 +1,7 @@
-<%- include("partials/header") %>
-<link rel="stylesheet" href="/css/style.css">
+<%- include("../user-partilas/header") %>
 
-<%
-const productSections = {
+
+<% const productSections = {
     jewelry: {
         title: "Jewelry",
         products: [
@@ -93,73 +92,75 @@ const productSections = {
 };
 %>
 
+
 <main>
-    <!-- Hero Carousel Section -->
-    <section class="hero-carousel">
-        <div class="carousel-container">
-            <!-- Carousel Slides -->
-            <div class="carousel-slides">
-                <!-- Slide 1 -->
-                <div class="carousel-slide active">
-                    <div class="slide-content">
-                        <div class="slide-image">
-                            <img src="/images/homeImage/giftTheam.png" alt="Gift Box">
+    <main>
+        <!-- Hero Carousel Section -->
+        <section class="hero-carousel">
+            <div class="carousel-container">
+                <!-- Carousel Slides -->
+                <div class="carousel-slides">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide active">
+                        <div class="slide-content">
+                            <div class="slide-image">
+                                <img src="/images/homeImage/giftTheam.png" alt="Gift Box">
+                            </div>
+                            <div class="slide-text">
+                                <h2>Find joy in every little detail.</h2>
+                                <p>At Aniyara, every gift tells a story.</p>
+                                <div class="brand-name">ANIYARA</div>
+                            </div>
                         </div>
-                        <div class="slide-text">
-                            <h2>Find joy in every little detail.</h2>
-                            <p>At Aniyara, every gift tells a story.</p>
-                            <div class="brand-name">ANIYARA</div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <div class="slide-image">
+                                <img src="/images/homeImage/fancy.png" alt="Special Moments">
+                            </div>
+                            <div class="slide-text">
+                                <h2>Create memories that last forever.</h2>
+                                <p>Quality products for your special moments.</p>
+                                <div class="brand-name">ANIYARA</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <div class="slide-image">
+                                <img src="/images/homeImage/toys.png" alt="Elegant Design">
+                            </div>
+                            <div class="slide-text">
+                                <h2>Elegance in simplicity.</h2>
+                                <p>Carefully crafted with love and attention.</p>
+                                <div class="brand-name">ANIYARA</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Slide 2 -->
-                <div class="carousel-slide">
-                    <div class="slide-content">
-                        <div class="slide-image">
-                            <img src="/images/homeImage/fancy.png" alt="Special Moments">
-                        </div>
-                        <div class="slide-text">
-                            <h2>Create memories that last forever.</h2>
-                            <p>Quality products for your special moments.</p>
-                            <div class="brand-name">ANIYARA</div>
-                        </div>
-                    </div>
+                <!-- Carousel Navigation -->
+                <div class="carousel-nav">
+                    <button class="carousel-indicator active" data-slide="0"></button>
+                    <button class="carousel-indicator" data-slide="1"></button>
+                    <button class="carousel-indicator" data-slide="2"></button>
                 </div>
                 
-                <!-- Slide 3 -->
-                <div class="carousel-slide">
-                    <div class="slide-content">
-                        <div class="slide-image">
-                            <img src="/images/homeImage/toys.png" alt="Elegant Design">
-                        </div>
-                        <div class="slide-text">
-                            <h2>Elegance in simplicity.</h2>
-                            <p>Carefully crafted with love and attention.</p>
-                            <div class="brand-name">ANIYARA</div>
-                        </div>
-                    </div>
+                <!-- Carousel Controls -->
+                <div class="carousel-controls">
+                    <button class="carousel-control prev" aria-label="Previous slide">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-control next" aria-label="Next slide">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
-            
-            <!-- Carousel Navigation -->
-            <div class="carousel-nav">
-                <button class="carousel-indicator active" data-slide="0"></button>
-                <button class="carousel-indicator" data-slide="1"></button>
-                <button class="carousel-indicator" data-slide="2"></button>
-            </div>
-            
-            <!-- Carousel Controls -->
-            <div class="carousel-controls">
-                <button class="carousel-control prev" aria-label="Previous slide">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="carousel-control next" aria-label="Next slide">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+        </section>
 
     <!-- Product Sections -->
     <% Object.entries(productSections).forEach(([sectionKey, section]) => { %>
@@ -176,17 +177,14 @@ const productSections = {
                 <div class="product-grid">
                     <% section.products.forEach(product => { %>
                         <div class="product-card">
-                            <% if (product.isNew) { %>
-                                <div class="product-badge">New</div>
-                            <% } %>
                             <div class="product-image">
                                 <img src="/images/homeImage/<%= product.image %>.png" alt="<%= product.title %>">
-                                <div class="product-actions">
-                                    <button class="quick-view-btn" title="Quick View">
-                                        <i class="fas fa-eye"></i> 
-                                    </button>
-                                   
-                                </div>
+                                <% if (product.isNew) { %>
+                                    <span class="badge">New</span>
+                                <% } %>
+                                <button class="quick-view-btn" title="Quick View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                             </div>
                             <div class="product-info">
                                 <h3 class="product-title"><%= product.title %></h3>
@@ -211,7 +209,9 @@ const productSections = {
         </section>
     <% }) %>
 
-    <!-- Add before closing </main> tag -->
+   
+    <!-- Quick View Modal -->
+     
     <div id="quickViewModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -252,4 +252,4 @@ const productSections = {
 <!--  JavaScript file -->
 <script src="/js/carousel.js"></script>
 
-<%- include("partials/footer") %>
+<%- include("../user-partilas/footer") %>

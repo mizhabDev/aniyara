@@ -1,56 +1,72 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all carousel elements
     const slides = document.querySelectorAll('.carousel-slide');
     const indicators = document.querySelectorAll('.carousel-indicator');
-    const prevButton = document.querySelector('.carousel-control.prev');
-    const nextButton = document.querySelector('.carousel-control.next');
-    
     let currentSlide = 0;
-    const totalSlides = slides.length;
+    let slideInterval;
 
-    // Function to update slides and indicators
-    function updateSlide(index) {
-        // Remove active class from all slides and indicators
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-        
-        // Add active class to current slide and indicator
-        currentSlide = (index + totalSlides) % totalSlides;
+    function showSlide(index) {
+        // Remove all classes first
+        slides.forEach(slide => {
+            slide.classList.remove('active', 'previous');
+        });
+        indicators.forEach(indicator => {
+            indicator.classList.remove('active');
+        });
+
+        // Add previous class to current slide
+        slides[currentSlide].classList.add('previous');
+
+        // Update current slide index
+        currentSlide = (index + slides.length) % slides.length;
+
+        // Add active class to new current slide
         slides[currentSlide].classList.add('active');
         indicators[currentSlide].classList.add('active');
     }
 
-    // Event listeners for next/prev buttons
-    nextButton.addEventListener('click', () => {
-        updateSlide(currentSlide + 1);
-    });
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
 
-    prevButton.addEventListener('click', () => {
-        updateSlide(currentSlide - 1);
-    });
+    function startSlideshow() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
 
-    // Event listeners for indicators
+    function stopSlideshow() {
+        clearInterval(slideInterval);
+    }
+
+    // Add click events to indicators
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
-            updateSlide(index);
+            stopSlideshow();
+            showSlide(index);
+            startSlideshow();
         });
     });
 
-    // Auto-advance slides
-    function autoAdvance() {
-        updateSlide(currentSlide + 1);
-    }
-
-    let slideInterval = setInterval(autoAdvance, 5000);
+    // Start the slideshow
+    startSlideshow();
 
     // Pause on hover
     const carousel = document.querySelector('.carousel-container');
-    carousel.addEventListener('mouseenter', () => {
-        clearInterval(slideInterval);
+    carousel.addEventListener('mouseenter', stopSlideshow);
+    carousel.addEventListener('mouseleave', startSlideshow);
+
+    // Add control buttons functionality
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+
+    prevBtn.addEventListener('click', () => {
+        stopSlideshow();
+        showSlide(currentSlide - 1);
+        startSlideshow();
     });
 
-    carousel.addEventListener('mouseleave', () => {
-        slideInterval = setInterval(autoAdvance, 5000);
+    nextBtn.addEventListener('click', () => {
+        stopSlideshow();
+        showSlide(currentSlide + 1);
+        startSlideshow();
     });
 
     // Quick View functionality

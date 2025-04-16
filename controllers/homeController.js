@@ -31,7 +31,7 @@ exports.getHomePage = (req, res) => {
         }
     };
     
-    res.render('index', { productSections });
+    res.render('user/index', { productSections });
 };
 
 
