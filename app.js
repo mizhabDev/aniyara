@@ -9,9 +9,13 @@ app.set("views", path.join(__dirname, "views"));
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// Routes
+// User Routes
 const homeRoutes = require("./routes/homeRoutes");
 app.use("/", homeRoutes);
+
+// Admin Routes
+const adminRoutes=require("./routes/adminRoutes");
+app.use("/admin",adminRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
