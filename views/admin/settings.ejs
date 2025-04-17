@@ -1,0 +1,50 @@
+<%- include('../admin-partials/header') %>
+
+<link rel="stylesheet" href="/css/admin_css/messages.css">
+
+<!-- Settings Page -->
+
+<div id="settings-page" class="main-content page hidden-pages">
+    <div class="header">
+      <h1 class="page-title">Settings</h1>
+    </div>
+  
+    <div class="settings-card">
+      <div class="settings-header">
+        <h2 class="settings-title">General Settings</h2>
+      </div>
+      <div class="form-group">
+        <label>Store Name</label>
+        <input type="text" class="form-control" value="ShopAdmin Store">
+      </div>
+      <div class="form-group">
+        <label>Store Email</label>
+        <input type="email" class="form-control" value="contact@shopadmin.com">
+      </div>
+      <div class="form-group">
+        <label>Currency</label>
+        <select class="form-control">
+          <option>USD ($)</option>
+          <option>EUR (€)</option>
+          <option>GBP (£)</option>
+        </select>
+      </div>
+      <button class="btn">Save Changes</button>
+    </div>
+  
+    <div class="settings-card">
+      <div class="settings-header">
+        <h2 class="settings-title">Notifications</h2>
+      </div>
+      <div class="form-group flex-between">
+        <div>
+          <h3>Email Notifications</h3>
+          <p class="text-secondary">Receive email notifications for new orders</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div> <%- include('../admin-partials/footer') %>

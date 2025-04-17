@@ -1,0 +1,165 @@
+<%- include('../admin-partials/header') %>
+
+<!-- <link rel="stylesheet" href="/css/admin_css/orders.css"> -->
+
+
+<!-- Orders Page -->
+<div id="orders-page" class="main-content page hidden-pages">
+    <div class="header">
+      <h1 class="page-title">Orders Management</h1>
+      <div class="search-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" placeholder="Search orders...">
+      </div>
+    </div>
+  
+    <div class="filters">
+      <div class="filter-group">
+        <select class="filter-select">
+          <option>All Status</option>
+          <option>Completed</option>
+          <option>Processing</option>
+          <option>Canceled</option>
+        </select>
+        <select class="filter-select">
+          <option>All Dates</option>
+          <option>Today</option>
+          <option>Yesterday</option>
+          <option>Last 7 Days</option>
+          <option>Last 30 Days</option>
+        </select>
+      </div>
+      <button class="btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Add New Order
+      </button>
+    </div>
+  
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Products</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#ORD-7895</td>
+            <td>John Smith</td>
+            <td>Premium Wireless Headphones</td>
+            <td>Apr 14, 2025</td>
+            <td>$125.99</td>
+            <td><span class="status completed">Completed</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7894</td>
+            <td>Emily Cooper</td>
+            <td>Smart Watch Pro, Portable Bluetooth Speaker</td>
+            <td>Apr 13, 2025</td>
+            <td>$329.98</td>
+            <td><span class="status processing">Processing</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7893</td>
+            <td>Michael Johnson</td>
+            <td>Ultra HD 4K Monitor</td>
+            <td>Apr 13, 2025</td>
+            <td>$399.99</td>
+            <td><span class="status completed">Completed</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7892</td>
+            <td>Sarah Williams</td>
+            <td>Ergonomic Office Chair</td>
+            <td>Apr 12, 2025</td>
+            <td>$189.99</td>
+            <td><span class="status canceled">Canceled</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7891</td>
+            <td>David Brown</td>
+            <td>Professional Digital Camera, Premium Wireless Headphones</td>
+            <td>Apr 12, 2025</td>
+            <td>$1,029.98</td>
+            <td><span class="status completed">Completed</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7890</td>
+            <td>Jessica Miller</td>
+            <td>Portable Bluetooth Speaker</td>
+            <td>Apr 11, 2025</td>
+            <td>$79.99</td>
+            <td><span class="status processing">Processing</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7889</td>
+            <td>Kevin Wilson</td>
+            <td>Smart Watch Pro</td>
+            <td>Apr 11, 2025</td>
+            <td>$249.99</td>
+            <td><span class="status completed">Completed</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+          <tr>
+            <td>#ORD-7888</td>
+            <td>Amanda Taylor</td>
+            <td>Ergonomic Office Chair, Ultra HD 4K Monitor</td>
+            <td>Apr 10, 2025</td>
+            <td>$589.98</td>
+            <td><span class="status processing">Processing</span></td>
+            <td>
+              <button class="btn btn-sm">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="pagination">
+      <a href="#" class="pagination-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </a>
+      <a href="#" class="pagination-item active">1</a>
+      <a href="#" class="pagination-item">2</a>
+      <a href="#" class="pagination-item">3</a>
+      <a href="#" class="pagination-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div> <%- include('../admin-partials/footer') %>

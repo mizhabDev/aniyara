@@ -1,0 +1,152 @@
+
+
+<!-- Include Header -->
+<%- include('../admin-partials/header') %>
+
+<link rel="stylesheet" href="/css/admin_css/customers.css">
+
+<!-- Customers Page -->
+
+
+
+<div id="customers-page" class="main-content page hidden-pages">
+    <div class="header">
+      <h1 class="page-title">Customers Management</h1>
+      <div class="search-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" placeholder="Search customers...">
+      </div>
+    </div>
+  
+    <div class="filters">
+      <div class="filter-group">
+        <select class="filter-select">
+          <option>All Customers</option>
+          <option>New Customers</option>
+          <option>Returning Customers</option>
+          <option>VIP Customers</option>
+        </select>
+        <select class="filter-select">
+          <option>Sort By: Date Joined</option>
+          <option>Sort By: Total Spent</option>
+          <option>Sort By: Orders Count</option>
+          <option>Sort By: Name (A-Z)</option>
+        </select>
+      </div>
+      <button class="btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Add New Customer
+      </button>
+    </div>
+  
+    <div class="customer-card">
+      <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
+      <div class="customer-info">
+        <h3 class="customer-name">John Smith</h3>
+        <div class="customer-email">john.smith@example.com</div>
+        <div class="customer-stats">
+          <div>Total Orders: 14</div>
+          <div>Total Spent: $1,895.64</div>
+          <div>Member Since: Jan 12, 2023</div>
+        </div>
+      </div>
+      <div class="customer-actions">
+        <button class="btn btn-sm">View</button>
+        <button class="btn btn-sm btn-secondary">Edit</button>
+      </div>
+    </div>
+  
+    <div class="customer-card">
+      <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
+      <div class="customer-info">
+        <h3 class="customer-name">Emily Cooper</h3>
+        <div class="customer-email">emily.cooper@example.com</div>
+        <div class="customer-stats">
+          <div>Total Orders: 9</div>
+          <div>Total Spent: $1,245.30</div>
+          <div>Member Since: Mar 5, 2023</div>
+        </div>
+      </div>
+      <div class="customer-actions">
+        <button class="btn btn-sm">View</button>
+        <button class="btn btn-sm btn-secondary">Edit</button>
+      </div>
+    </div>
+  
+    <div class="customer-card">
+      <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
+      <div class="customer-info">
+        <h3 class="customer-name">Michael Johnson</h3>
+        <div class="customer-email">michael.johnson@example.com</div>
+        <div class="customer-stats">
+          <div>Total Orders: 21</div>
+          <div>Total Spent: $3,542.75</div>
+          <div>Member Since: Aug 18, 2022</div>
+        </div>
+      </div>
+      <div class="customer-actions">
+        <button class="btn btn-sm">View</button>
+        <button class="btn btn-sm btn-secondary">Edit</button>
+      </div>
+    </div>
+  
+    <div class="customer-card">
+      <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
+      <div class="customer-info">
+        <h3 class="customer-name">Sarah Williams</h3>
+        <div class="customer-email">sarah.williams@example.com</div>
+        <div class="customer-stats">
+          <div>Total Orders: 6</div>
+          <div>Total Spent: $789.50</div>
+          <div>Member Since: Oct 30, 2023</div>
+        </div>
+      </div>
+      <div class="customer-actions">
+        <button class="btn btn-sm">View</button>
+        <button class="btn btn-sm btn-secondary">Edit</button>
+      </div>
+    </div>
+  
+    <div class="customer-card">
+      <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
+      <div class="customer-info">
+        <h3 class="customer-name">David Brown</h3>
+        <div class="customer-email">david.brown@example.com</div>
+        <div class="customer-stats">
+          <div>Total Orders: 17</div>
+          <div>Total Spent: $2,876.20</div>
+          <div>Member Since: Apr 15, 2022</div>
+        </div>
+      </div>
+      <div class="customer-actions">
+        <button class="btn btn-sm">View</button>
+        <button class="btn btn-sm btn-secondary">Edit</button>
+      </div>
+    </div>
+  
+    <div class="pagination">
+      <a href="#" class="pagination-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </a>
+      <a href="#" class="pagination-item active">1</a>
+      <a href="#" class="pagination-item">2</a>
+      <a href="#" class="pagination-item">3</a>
+      <a href="#" class="pagination-item">4</a>
+      <a href="#" class="pagination-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+
+  <%- include('../admin-partials/footer') %>

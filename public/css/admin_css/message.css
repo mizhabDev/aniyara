@@ -1,0 +1,96 @@
+/* Messages Page Styles */
+
+/* Card for Messages */
+#messages-page .card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Individual Message */
+.message {
+  display: flex;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.message:last-child {
+  border-bottom: none;
+}
+
+.message:hover {
+  background-color: #f8fafc;
+}
+
+/* Unread Message Styling */
+.message.unread {
+  background-color: #f0f7ff;
+}
+
+.message.unread:hover {
+  background-color: #e6f0fd;
+}
+
+.message.unread .message-sender {
+  font-weight: 600;
+}
+
+/* Message Avatar */
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+/* Message Content */
+.message-content {
+  flex: 1;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.message-sender {
+  font-size: 15px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.message-text {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Hidden Pages Fix */
+.hidden-pages {
+  display: none;
+}
+
+#messages-page.active {
+  display: block;
+}
+
+/*
+  Note: The following styles are from the previous CSS files
+  and may need to be included if you're not importing those files:
+  
+  - Main content layout
+  - Header styles
+  - etc.
+*/

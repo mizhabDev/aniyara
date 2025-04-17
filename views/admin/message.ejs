@@ -1,0 +1,35 @@
+<%- include('../admin-partials/header') %>
+
+<link rel="stylesheet" href="/css/admin_css/messages.css">
+
+<!-- Messages Page -->
+
+<div id="messages-page" class="main-content page hidden-pages">
+    <div class="header">
+      <h1 class="page-title">Messages</h1>
+    </div>
+  
+    <div class="card">
+      <div class="message">
+        <img src="/api/placeholder/40/40" alt="User" class="message-avatar">
+        <div class="message-content">
+          <div class="message-header">
+            <span class="message-sender">John Smith</span>
+            <span class="message-time">2 hours ago</span>
+          </div>
+          <p class="message-text">Thank you for the quick response to my order inquiry.</p>
+        </div>
+      </div>
+  
+      <div class="message unread">
+        <img src="/api/placeholder/40/40" alt="User" class="message-avatar">
+        <div class="message-content">
+          <div class="message-header">
+            <span class="message-sender">Emily Cooper</span>
+            <span class="message-time">5 hours ago</span>
+          </div>
+          <p class="message-text">I need help with my recent order #ORD-7894.</p>
+        </div>
+      </div>
+    </div>
+  </div> <%- include('../admin-partials/footer') %>
