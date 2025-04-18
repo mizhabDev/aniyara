@@ -1,0 +1,47 @@
+<%- include('../admin-partials/header') %>
+<link rel="stylesheet" href="/css/admin_css/discount.css">
+
+<div id="discounts-page" class="main-content">
+  <div class="header">
+    <h1 class="page-title">Discounts</h1>
+    <button class="btn btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+      Add New Discount
+    </button>
+  </div>
+
+  <div class="discount-grid">
+    <!-- Discount Card -->
+    <div class="discount-card">
+      <div class="discount-header">
+        <span class="discount-type">Percentage Off</span>
+        <span class="discount-status active">Active</span>
+      </div>
+      <h3 class="discount-title">Summer Sale 20% Off</h3>
+      <div class="discount-value">20% OFF</div>
+      <div class="discount-details">
+        <div class="detail-item">
+          <span class="label">Code:</span>
+          <span class="value">SUMMER20</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Valid Until:</span>
+          <span class="value">Aug 31, 2024</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Min Purchase:</span>
+          <span class="value">$50</span>
+        </div>
+      </div>
+      <div class="discount-actions">
+        <button class="btn btn-sm">Edit</button>
+        <button class="btn btn-sm btn-danger">Disable</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../admin-partials/footer') %>

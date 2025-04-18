@@ -31,6 +31,13 @@ const getCustomersPage=(req,res)=>{
     res.render('admin/customers');
 }
 
+const getDiscountPage=(req,res)=>{
+    res.render('admin/discount');
+}
+
+const getStaffPage=(req,res)=>{
+    res.render('admin/staff');
+}
 
 module.exports={
     getAdminPage,
@@ -40,5 +47,7 @@ module.exports={
     getSettingsPage,
     getTransactionPage,
     getCustomersPage,
-    getloginPage
+    getloginPage,
+    getDiscountPage,
+    getStaffPage
 }

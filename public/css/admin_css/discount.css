@@ -1,0 +1,109 @@
+/* Discounts Page Layout */
+#discounts-page {
+  margin-left: 260px;
+  padding: var(--spacing-lg);
+  background-color: var(--gray-light);
+  min-height: 100vh;
+}
+
+/* Discount Grid */
+.discount-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+/* discount active colour */
+#discount-active-clr {
+    color: var(--primary);
+    background-color: var(--primary-light);
+    border-left-color: var(--primary);
+  }
+
+/* Discount Card */
+.discount-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.discount-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.discount-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.discount-type {
+  font-size: 0.875rem;
+  color: var(--secondary);
+}
+
+.discount-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.discount-status.active {
+  background-color: #ecfdf5;
+  color: var(--success);
+}
+
+.discount-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.discount-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.discount-details {
+  margin-bottom: var(--spacing-lg);
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.875rem;
+}
+
+.detail-item .label {
+  color: var(--secondary);
+}
+
+.detail-item .value {
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.discount-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* Buttons */
+.btn-danger {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-danger:hover {
+  background-color: #fecaca;
+}

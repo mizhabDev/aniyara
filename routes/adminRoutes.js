@@ -13,5 +13,7 @@ router.get('/orders',adminController.getOrderPage);
 router.get('/products',adminController.getProductPage);
 router.get('/settings',adminController.getSettingsPage);
 router.get('/transaction',adminController.getTransactionPage);
+router.get('/discount',adminController.getDiscountPage);
+router.get('/staff',adminController.getStaffPage);
 
 module.exports = router;

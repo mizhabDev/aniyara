@@ -15,7 +15,6 @@
 }
 
 
-
 /* Header */
 .header {
   display: flex;
@@ -93,8 +92,8 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background-color: var(--primary-color);
-  color: white;
-  border: none;
+  color: rgb(151, 153, 247);
+  border: 1px solid var(--border);
   border-radius: 0.375rem;
   font-size: 0.875rem;
   font-weight: 500;
@@ -104,6 +103,7 @@
 
 .btn:hover {
   background-color: #2563eb;
+  color: white;
 }
 
 .btn-sm {
