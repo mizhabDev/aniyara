@@ -1,5 +1,9 @@
 // controllers/adminController.js
 
+const getloginPage=(req,res)=>{
+    res.render('admin/login');
+}
+
 const getAdminPage=(req,res)=>{
     res.render('admin/dashboard');
 }
@@ -35,5 +39,6 @@ module.exports={
     getProductPage,
     getSettingsPage,
     getTransactionPage,
-    getCustomersPage
+    getCustomersPage,
+    getloginPage
 }

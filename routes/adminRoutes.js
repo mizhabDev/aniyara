@@ -5,7 +5,8 @@ const adminController = require('../controllers/adminController/adminController'
 
 // Admin Routes page loading
 
-router.get('/',adminController.getAdminPage);
+router.get('/',adminController.getloginPage);
+router.get('/dashboard',adminController.getAdminPage);
 router.get('/customers',adminController.getCustomersPage);
 router.get('/message',adminController.getMessagePage);
 router.get('/orders',adminController.getOrderPage);

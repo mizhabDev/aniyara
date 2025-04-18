@@ -1,103 +1,144 @@
-/* Orders Page Styles */
+:root {
+  --primary-blue: #2563eb;
+  --light-blue: #f0f7ff;
+  --success-green: #10b981;
+  --danger-red: #ef4444;
+  --gray-text: #64748b;
+  --dark-text: #1e293b;
+  --light-gray: #f5f7fa;
+  --border-color: #f0f0f0;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Sidebar active Styles */
+#orders-active-clr{
+  color: var(--primary);
+  background-color: var(--primary-light);
+  border-left-color: var(--primary);
+}
+
+
+/* Page Layout */
+#orders-page {
+  flex: 1;
+  margin-left: 260px;
+  padding: 30px;
+  background: var(--light-gray);
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--dark-text);
+}
 
 /* Search Bar */
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 0 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  width: 300px;
-}
-
-.search-bar svg {
-  margin-right: 10px;
+  gap: 12px;
+  background: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
 }
 
 .search-bar input {
   border: none;
   outline: none;
-  padding: 12px 0;
-  width: 100%;
   font-size: 14px;
-  color: #334155;
+  width: 250px;
+  color: var(--dark-text);
 }
 
-.search-bar input::placeholder {
-  color: #94a3b8;
+.search-bar svg {
+  color: var(--gray-text);
 }
 
-/* Filters */
+/* Filters Section */
 .filters {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .filter-group {
   display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
 .filter-select {
-  background-color: #fff;
-  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 8px 12px;
   font-size: 14px;
-  color: #334155;
+  color: var(--gray-text);
+  background: white;
   cursor: pointer;
-  outline: none;
+  transition: all 0.2s ease;
+}
+
+.filter-select:hover {
+  border-color: var(--primary-blue);
 }
 
 /* Table Card */
 .card {
-  background-color: #fff;
+  background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow);
   overflow: hidden;
-  margin-bottom: 25px;
 }
 
-/* Table */
+.card-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Table Styles */
 .table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.table th,
-.table td {
-  padding: 15px 20px;
-  text-align: left;
-}
-
 .table th {
-  font-weight: 500;
-  color: #64748b;
+  padding: 12px 20px;
   font-size: 13px;
-  border-bottom: 1px solid #f0f0f0;
+  font-weight: 500;
+  color: var(--gray-text);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  background: #f8fafc;
 }
 
 .table td {
+  padding: 12px 20px;
   font-size: 14px;
-  color: #334155;
-  border-bottom: 1px solid #f0f0f0;
+  color: var(--dark-text);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .table tr:last-child td {
   border-bottom: none;
 }
 
-.table tr:hover {
-  background-color: #f8fafc;
-}
-
 /* Status Badges */
 .status {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
@@ -105,26 +146,23 @@
 
 .status.completed {
   background-color: #dcfce7;
-  color: #10b981;
+  color: var(--success-green);
 }
 
 .status.processing {
-  background-color: #e0f2fe;
-  color: #0ea5e9;
+  background-color: var(--light-blue);
+  color: var(--primary-blue);
 }
 
 .status.canceled {
   background-color: #fee2e2;
-  color: #ef4444;
+  color: var(--danger-red);
 }
 
-/* Button */
+/* Buttons */
 .btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #2563eb;
-  color: #fff;
+  background-color: #f1f5f9;
+  color: #475569;
   border: none;
   border-radius: 6px;
   padding: 8px 16px;
@@ -132,67 +170,44 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn:hover {
-  background-color: #1d4ed8;
-}
-
-.btn svg {
-  margin-right: 8px;
-}
-
-.btn-sm {
-  padding: 6px 12px;
-  font-size: 13px;
+  background-color: #e2e8f0;
 }
 
 /* Pagination */
 .pagination {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
 }
 
 .pagination-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 6px;
-  margin: 0 5px;
-  color: #64748b;
+  color: var(--gray-text);
   text-decoration: none;
+  transition: all 0.2s;
   font-size: 14px;
-  transition: all 0.2s ease;
 }
 
 .pagination-item:hover {
-  background-color: #f1f5f9;
-  color: #334155;
+  background: var(--light-blue);
+  color: var(--primary-blue);
 }
 
 .pagination-item.active {
-  background-color: #2563eb;
-  color: #fff;
+  background: var(--primary-blue);
+  color: white;
 }
 
-/* Hidden Pages Fix */
-.hidden-pages {
-  display: none;
-}
-
-#orders-page.active {
-  display: block;
-}
-
-/*
-  Note: The following styles are from the previous CSS files
-  and may need to be included if you're not importing those files:
-  
-  - Main content layout
-  - Header styles
-  - etc.
-*/

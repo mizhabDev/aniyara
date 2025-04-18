@@ -1,0 +1,209 @@
+:root {
+    /* Colors */
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --secondary: #64748b;
+    --dark: #1e293b;
+    --gray: #94a3b8;
+    --gray-light: #f1f5f9;
+    --border: #e2e8f0;
+    --white: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+    
+    /* Font */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+}
+
+/* Customer Page Specific Styles */
+#customers-page {
+    margin-left: 260px; /* Match sidebar width */
+    padding: var(--spacing-lg);
+    background-color: var(--gray-light);
+    min-height: 100vh;
+}
+
+#customers-active-clr{
+    color: var(--primary);
+    background-color: var(--primary-light);
+    border-left-color: var(--primary);
+  }
+
+/* Header Section */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 var(--spacing-md);
+    width: 300px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    padding: var(--spacing-md);
+    width: 100%;
+    font-size: 0.875rem;
+    color: var(--dark);
+}
+
+/* Filters Section */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Filter Group Specific */
+.filter-group {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.filter-select {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-select:hover {
+    border-color: var(--primary);
+}
+
+/* Customer Cards */
+.customer-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-md);
+    transition: transform 0.2s ease;
+}
+
+.customer-card:hover {
+    transform: translateY(-2px);
+}
+
+.customer-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: var(--spacing-lg);
+}
+
+.customer-info {
+    flex: 1;
+}
+
+.customer-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.customer-email {
+    font-size: 0.875rem;
+    color: var(--secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.customer-stats {
+    display: flex;
+    gap: var(--spacing-lg);
+    font-size: 0.813rem;
+    color: var(--secondary);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-sm {
+    padding: 6px var(--spacing-md);
+    font-size: 0.813rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+    border: 1px solid var(--primary);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    color: var(--secondary);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    gap: var(--spacing-xs);
+}
+
+.pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    color: var(--secondary);
+    transition: all 0.2s ease;
+}
+
+.pagination-item.active {
+    background-color: var(--primary);
+    color: var(--white);
+}

@@ -1,20 +1,78 @@
-/* Messages Page Styles */
+:root {
+  /* Colors */
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --primary-lighter: #f0f7ff;
+  --secondary: #64748b;
+  --dark: #1e293b;
+  --gray: #94a3b8;
+  --gray-light: #f1f5f9;
+  --border: #e2e8f0;
+  --white: #ffffff;
 
-/* Card for Messages */
-#messages-page .card {
-  background-color: #fff;
+  /* Shadows */
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  /* Font */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+}
+
+/* Sidebar Specific Styles */
+#messages-active-clr{
+  color: var(--primary);
+  background-color: var(--primary-light);
+  border-left-color: var(--primary);
+}
+
+/* Message Page Layout */
+#messages-page {
+  margin-left: 260px; /* Match sidebar width */
+  padding: var(--spacing-lg);
+  background-color: var(--gray-light);
+  min-height: 100vh;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  background: var(--white);
+  padding: var(--spacing-lg);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+/* Messages Container */
+.card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 
 /* Individual Message */
 .message {
   display: flex;
-  padding: 20px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
   transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .message:last-child {
@@ -22,16 +80,16 @@
 }
 
 .message:hover {
-  background-color: #f8fafc;
+  background-color: var(--gray-light);
 }
 
 /* Unread Message Styling */
 .message.unread {
-  background-color: #f0f7ff;
+  background-color: var(--primary-lighter);
 }
 
 .message.unread:hover {
-  background-color: #e6f0fd;
+  background-color: var(--primary-light);
 }
 
 .message.unread .message-sender {
@@ -44,7 +102,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 15px;
+  margin-right: var(--spacing-lg);
 }
 
 /* Message Content */
@@ -56,41 +114,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: var(--spacing-xs);
 }
 
 .message-sender {
-  font-size: 15px;
-  color: #1e293b;
+  font-size: 0.938rem;
+  color: var(--dark);
   font-weight: 500;
 }
 
 .message-time {
-  font-size: 12px;
-  color: #94a3b8;
+  font-size: 0.75rem;
+  color: var(--gray);
 }
 
 .message-text {
-  font-size: 14px;
-  color: #475569;
+  font-size: 0.875rem;
+  color: var(--secondary);
   line-height: 1.5;
   margin: 0;
 }
 
-/* Hidden Pages Fix */
-.hidden-pages {
-  display: none;
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--secondary);
 }
 
-#messages-page.active {
-  display: block;
-}
-
-/*
-  Note: The following styles are from the previous CSS files
-  and may need to be included if you're not importing those files:
-  
-  - Main content layout
-  - Header styles
-  - etc.
-*/
