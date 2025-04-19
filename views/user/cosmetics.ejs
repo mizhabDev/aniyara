@@ -1,0 +1,389 @@
+<%- include("../user-partilas/header") %>
+
+    <title>Cosmetics Collection - Aniyara</title>
+
+    <body>
+        <header>
+            <div class="container">
+                <div class="header-top">
+                    <div class="logo">
+                        <img src="/api/placeholder/150/50" alt="Aniyara Logo">
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for more than 10,000 products">
+                        <button>🔍</button>
+                    </div>
+                    <div class="contact-info">
+                        <div class="phone">+980-3456789</div>
+                        <div class="email">aniyara@example.com</div>
+                    </div>
+                </div>
+                <div class="nav">
+                    <ul class="menu">
+                        <li><a href="#">Shop by Category</a></li>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Pages</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Offers</a></li>
+                    </ul>
+                    <div class="user-actions">
+                        <a href="#" class="user-icon">👤</a>
+                        <a href="#" class="wishlist-icon">❤️</a>
+                        <a href="#" class="cart-icon">🛒 <span class="cart-count">3</span></a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-title">
+            <div class="container">
+                <h1>Cosmetics Collection</h1>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="hero-banner">
+                <div class="banner-image"></div>
+                <div class="banner-content">
+                    <h1>Beauty Essentials Collection</h1>
+                    <p>Discover our premium range of cosmetics that enhance your natural beauty. From luxurious skincare
+                        to
+                        vibrant makeup, find products that make you look and feel your best every day.</p>
+                    <a href="#" class="banner-btn">Explore Collection</a>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-options">
+                    <select name="sort">
+                        <option value="default">Sort by: Default</option>
+                        <option value="popularity">Sort by: Popularity</option>
+                        <option value="rating">Sort by: Rating</option>
+                        <option value="price_low">Sort by: Price Low to High</option>
+                        <option value="price_high">Sort by: Price High to Low</option>
+                    </select>
+                    <select name="category">
+                        <option value="all">Category: All</option>
+                        <option value="skincare">Category: Skincare</option>
+                        <option value="makeup">Category: Makeup</option>
+                        <option value="fragrance">Category: Fragrance</option>
+                        <option value="haircare">Category: Hair Care</option>
+                    </select>
+                </div>
+                <div class="view-options">
+                    <button class="grid-view active">📱</button>
+                    <button class="list-view">📄</button>
+                </div>
+            </div>
+
+            <div class="featured-section">
+                <div class="section-title">
+                    <h2>Featured Categories</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="collection-grid">
+                    <div class="collection-card">
+                        <img src="/api/placeholder/400/250" alt="Skincare Collection" class="collection-image">
+                        <div class="collection-overlay">
+                            <h3 class="collection-title">Skincare</h3>
+                            <a href="#" class="collection-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="collection-card">
+                        <img src="/api/placeholder/400/250" alt="Makeup Collection" class="collection-image">
+                        <div class="collection-overlay">
+                            <h3 class="collection-title">Makeup</h3>
+                            <a href="#" class="collection-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="collection-card">
+                        <img src="/api/placeholder/400/250" alt="Fragrance Collection" class="collection-image">
+                        <div class="collection-overlay">
+                            <h3 class="collection-title">Fragrance</h3>
+                            <a href="#" class="collection-btn">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featured-section">
+                <div class="section-title">
+                    <h2>Bestselling Products</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Hydrating Face Serum">
+                            <span class="sale-tag">Sale</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Hydrating Face Serum with Hyaluronic Acid</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$24.99</span>
+                                <span class="original-price">$32.00</span>
+                                <span class="discount">22% off</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Volumizing Mascara">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Volumizing Mascara - Intense Black</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$18.50</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Matte Liquid Lipstick">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Matte Liquid Lipstick - Ruby Red</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$15.99</span>
+                                <span class="original-price">$19.99</span>
+                                <span class="discount">20% off</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Nourishing Night Cream">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Nourishing Night Cream with Retinol</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$29.99</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="beauty-tips">
+                <div class="tips-content">
+                    <h2>Beauty Tips & Tricks</h2>
+                    <p>Enhance your beauty routine with our expert tips and tricks. Learn how to maximize the benefits
+                        of
+                        your skincare products and perfect your makeup application techniques.</p>
+                    <p>Our beauty advisors recommend applying serums before moisturizers and using primer before
+                        foundation
+                        for a flawless finish that lasts all day.</p>
+                    <a href="#" class="banner-btn">Read More</a>
+                </div>
+                <div class="tips-image">
+                    <img src="/api/placeholder/500/300" alt="Beauty Tips">
+                </div>
+            </div>
+
+            <div class="featured-section">
+                <div class="section-title">
+                    <h2>New Arrivals</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Vitamin C Brightening Serum">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Vitamin C Brightening Serum</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$34.99</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Eyeshadow Palette - Sunset Collection">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Eyeshadow Palette - Sunset Collection</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$42.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Hydrating Facial Mist">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Hydrating Facial Mist with Rose Water</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$16.99</span>
+                                <span class="original-price">$19.99</span>
+                                <span class="discount">15% off</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Perfume - Floral Dreams">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Perfume - Floral Dreams 50ml</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$55.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featured-section">
+                <div class="section-title">
+                    <h2>Skincare Must-Haves</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Gentle Foaming Cleanser">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Gentle Foaming Cleanser for Sensitive Skin</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$22.50</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Exfoliating Face Scrub">
+                            <span class="sale-tag">Sale</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Exfoliating Face Scrub with Natural Ingredients</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$18.99</span>
+                                <span class="original-price">$24.99</span>
+                                <span class="discount">24% off</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Moisturizing Day Cream">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Moisturizing Day Cream with SPF 30</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$28.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Eye Cream">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Anti-Aging Eye</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$28.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Hydrating Face Mask">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Hydrating Face Mask with Aloe Vera</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$15.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Sunscreen SPF 50">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Sunscreen SPF 50 - Broad Spectrum Protection</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$20.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Soothing Gel with Aloe Vera">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Soothing Gel with Aloe Vera</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$12.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination">
+                <a href="#" class="prev">←</a>
+                <a href="#" class="page active">1</a>
+                <a href="#" class="page">2</a>
+                <a href="#" class="page">3</a>
+                <a href="#" class="next">→</a>
+            </div>
+        </div>
+
+    </body>
+
+    <%- include("../user-partilas/footer") %>

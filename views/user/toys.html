@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toys - Your Store</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px 0;
+    }
+    
+    .category-title {
+      font-size: 24px;
+      color: #333;
+      font-weight: normal;
+    }
+    
+    .shop-now-btn {
+      padding: 5px 15px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      color: #333;
+      text-decoration: none;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .shop-now-btn::after {
+      content: "→";
+      margin-left: 5px;
+    }
+    
+    .products-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    
+    .product-card {
+      background-color: white;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .product-image-container {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .new-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      color: #f44336;
+    }
+    
+    .product-details {
+      padding: 15px;
+    }
+    
+    .product-title {
+      margin-bottom: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+    
+    .rating {
+      color: #ffc107;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    
+    .price {
+      color: #2196f3;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .add-to-cart {
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    
+    .wishlist {
+      width: 32px;
+      height: 32px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: white;
+    }
+    
+    .wishlist svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #888;
+      stroke-width: 2;
+    }
+
+    @media (max-width: 1024px) {
+      .products-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .products-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .products-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Popular Toys Section -->
+  <section>
+    <div class="category-header">
+      <h2 class="category-title">Popular Toys</h2>
+      <a href="#" class="shop-now-btn">SHOP NOW</a>
+    </div>
+    
+    <div class="products-container">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Wooden Building Blocks" class="product-image">
+          <span class="new-badge">New</span>
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Wooden Building Blocks</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$30.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Remote Control Robot" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Remote Control Robot</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$45.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Art & Craft Kit" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Art & Craft Kit</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$25.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Educational Board Game" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Educational Board Game</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$35.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Educational Toys Section -->
+  <section>
+    <div class="category-header">
+      <h2 class="category-title">Educational Toys</h2>
+      <a href="#" class="shop-now-btn">SHOP NOW</a>
+    </div>
+    
+    <div class="products-container">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Science Experiment Kit" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Science Experiment Kit</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$40.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Coding Robot" class="product-image">
+          <span class="new-badge">New</span>
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Coding Robot</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$55.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="World Map Puzzle" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">World Map Puzzle</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$20.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Math Learning Set" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Math Learning Set</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$15.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Outdoor Toys Section -->
+  <section>
+    <div class="category-header">
+      <h2 class="category-title">Outdoor Toys</h2>
+      <a href="#" class="shop-now-btn">SHOP NOW</a>
+    </div>
+    
+    <div class="products-container">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Kids Bicycle" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Kids Bicycle</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$65.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Water Gun Set" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Water Gun Set</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$25.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Jump Rope" class="product-image">
+          <span class="new-badge">New</span>
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Jump Rope</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$10.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="/api/placeholder/400/320" alt="Bubble Blower Machine" class="product-image">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Bubble Blower Machine</h3>
+          <div class="rating">★★★★★ 5.0</div>
+          <div class="price">$18.00</div>
+          <div class="actions">
+            <button class="add-to-cart">ADD TO CART</button>
+            <button class="wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
