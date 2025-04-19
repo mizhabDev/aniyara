@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Home Decorations | Your Brand</title>
+    <style>
+        :root {
+            --primary-color: #3b5249;
+            --secondary-color: #e8dcd5;
+            --accent-color: #d3a588;
+            --text-color: #333333;
+            --light-bg: #f9f7f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .cart-icon {
+            font-size: 20px;
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero {
+            background-color: var(--secondary-color);
+            padding: 60px 5%;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #2e413c;
+        }
+        
+        .categories {
+            padding: 60px 5%;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .category-image {
+            height: 200px;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .category-info {
+            padding: 20px;
+        }
+        
+        .category-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .category-info p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .view-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .view-button:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .trending {
+            padding: 60px 5%;
+            background-color: white;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 220px;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .product-price {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+        
+        .add-to-cart {
+            display: block;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .testimonials {
+            padding: 60px 5%;
+            background-color: var(--secondary-color);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .author-name {
+            font-weight: 600;
+        }
+        
+        .author-location {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .newsletter {
+            padding: 60px 5%;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            font-size: 16px;
+        }
+        
+        .newsletter-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-button:hover {
+            background-color: var(--accent-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 50px 5% 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            color: #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                padding: 15px 5%;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                margin-bottom: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-button {
+                border-radius: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Décor Haven</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Collections</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon">
+                🛒
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <h1>Transform Your Space</h1>
+        <p>Discover our curated collection of elegant home decorations that blend style, comfort, and personality. From minimalist to bohemian, find pieces that speak to your unique taste.</p>
+        <a href="#" class="cta-button">Shop Now</a>
+    </section>
+    
+    <section class="categories">
+        <h2 class="section-title">Shop By Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-image">
+                    <img src="/api/placeholder/400/320" alt="Wall Decor" />
+                </div>
+                <div class="category-info">
+                    <h3>Wall Decor</h3>
+                    <p>Art prints, mirrors, and wall hangings to elevate your space.</p>
+                    <a href="#" class="view-button">View All</a>
+                </div>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-image">
+                    <img src="/api/placeholder/400/320" alt="Candles & Fragrances" />
+                </div>
+                <div class="category-info">
+                    <h3>Candles & Fragrances</h3>
+                    <p>Set the mood with our handcrafted scented candles and diffusers.</p>
+                    <a href="#" class="view-button">View All</a>
+                </div>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-image">
+                    <img src="/api/placeholder/400/320" alt="Vases & Planters" />
+                </div>
+                <div class="category-info">
+                    <h3>Vases & Planters</h3>
+                    <p>Beautiful vessels for your botanical companions.</p>
+                    <a href="#" class="view-button">View All</a>
+                </div>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-image">
+                    <img src="/api/placeholder/400/320" alt="Textiles" />
+                </div>
+                <div class="category-info">
+                    <h3>Textiles</h3>
+                    <p>Throw pillows, blankets, and rugs to add texture and warmth.</p>
+                    <a href="#" class="view-button">View All</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="trending">
+        <h2 class="section-title">Trending Now</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/320" alt="Botanical Print Set" />
+                </div>
+                <div class="product-info">
+                    <h3>Botanical Print Set</h3>
+                    <div class="product-price">$49.99</div>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/320" alt="Ceramic Vase" />
+                </div>
+                <div class="product-info">
+                    <h3>Handcrafted Ceramic Vase</h3>
+                    <div class="product-price">$35.99</div>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/320" alt="Macrame Wall Hanging" />
+                </div>
+                <div class="product-info">
+                    <h3>Macrame Wall Hanging</h3>
+                    <div class="product-price">$28.50</div>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/400/320" alt="Scented Candle Set" />
+                </div>
+                <div class="product-info">
+                    <h3>Luxury Scented Candle Set</h3>
+                    <div class="product-price">$42.00</div>
+                    <a href="#" class="add-to-cart">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "The quality of these decorative pieces exceeded my expectations. They've completely transformed my living room and I get compliments from everyone who visits."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div>
+                        <div class="author-name">Jessica D.</div>
+                        <div class="author-location">Chicago, IL</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Fast shipping and excellent customer service. The wall art I purchased is even more beautiful in person than in the photos. Will definitely shop here again!"
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MT</div>
+                    <div>
+                        <div class="author-name">Michael T.</div>
+                        <div class="author-location">Portland, OR</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "I love how unique each piece is. These aren't your typical mass-produced decorations. Each item has character and adds personality to my home."
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SL</div>
+                    <div>
+                        <div class="author-name">Sarah L.</div>
+                        <div class="author-location">Austin, TX</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        <h2 class="section-title">Join Our Community</h2>
+        <p>Subscribe to our newsletter for exclusive deals, decoration tips, and new arrivals.</p>
+        <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required>
+            <button type="submit" class="newsletter-button">Subscribe</button>
+        </form>
+    </section>
+    
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul class="footer-links">
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Best Sellers</a></li>
+                    <li><a href="#">Sale</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Track Order</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">IG</a>
+                    <a href="#" class="social-icon">PT</a>
+                    <a href="#" class="social-icon">TW</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Décor Haven. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
