@@ -1,28 +1,27 @@
 <%- include("../user-partilas/header") %>
 
-    <title>Cosmetics Collection - Aniyara</title>
+    <link rel="stylesheet" href="/css/user_css/gift.css">
 
-   
-    <link rel="stylesheet" href="/css/user_css/cosmetics.css">
+        <title>Gift Collection - Aniyara</title>
+       
 
+        
         <div class="page-title">
             <div class="container">
-                <h1>Cosmetics Collection</h1>
+                <h1>Gift Collection</h1>
             </div>
         </div>
-
+    
         <div class="container">
             <div class="hero-banner">
                 <div class="banner-image"></div>
                 <div class="banner-content">
-                    <h1>Beauty Essentials Collection</h1>
-                    <p>Discover our premium range of cosmetics that enhance your natural beauty. From luxurious skincare
-                        to
-                        vibrant makeup, find products that make you look and feel your best every day.</p>
+                    <h1>Perfect Gifts For Every Occasion</h1>
+                    <p>Discover our thoughtfully curated collection of gifts for your loved ones. From birthday surprises to anniversary treasures, find the perfect present that shows how much you care.</p>
                     <a href="#" class="banner-btn">Explore Collection</a>
                 </div>
             </div>
-
+    
             <div class="filter-section">
                 <div class="filter-options">
                     <select name="sort">
@@ -34,17 +33,17 @@
                     </select>
                     <select name="category">
                         <option value="all">Category: All</option>
-                        <option value="skincare">Category: Skincare</option>
-                        <option value="makeup">Category: Makeup</option>
-                        <option value="fragrance">Category: Fragrance</option>
-                        <option value="haircare">Category: Hair Care</option>
+                        <option value="birthday">Category: Birthday</option>
+                        <option value="anniversary">Category: Anniversary</option>
+                        <option value="wedding">Category: Wedding</option>
+                        <option value="housewarming">Category: Housewarming</option>
                     </select>
                 </div>
             </div>
-
+    
             <div class="featured-section">
                 <div class="section-title">
-                    <h2>Featured Categories</h2>
+                    <h2>Gift Categories</h2>
                     <button class="view-all-btn">
                         VIEW ALL
                         <span>&rarr;</span> <!-- arrow like in the image -->
@@ -53,51 +52,51 @@
                 </div>
                 <div class="collection-grid">
                     <div class="collection-card">
-                        <img src="/images/homeImage/products_img/lipstick.png" alt="Skincare Collection" class="collection-image">
+                        <img src="/api/placeholder/400/250" alt="Birthday Gifts" class="collection-image">
                         <div class="collection-overlay">
-                            <h3 class="collection-title">Skincare</h3>
+                            <h3 class="collection-title">Birthday Gifts</h3>
                             <a href="#" class="collection-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="collection-card">
-                        <img src="/api/placeholder/400/250" alt="Makeup Collection" class="collection-image">
+                        <img src="/api/placeholder/400/250" alt="Anniversary Gifts" class="collection-image">
                         <div class="collection-overlay">
-                            <h3 class="collection-title">Makeup</h3>
+                            <h3 class="collection-title">Anniversary Gifts</h3>
                             <a href="#" class="collection-btn">Shop Now</a>
                         </div>
                     </div>
                     <div class="collection-card">
-                        <img src="/api/placeholder/400/250" alt="Fragrance Collection" class="collection-image">
+                        <img src="/api/placeholder/400/250" alt="Wedding Gifts" class="collection-image">
                         <div class="collection-overlay">
-                            <h3 class="collection-title">Fragrance</h3>
+                            <h3 class="collection-title">Wedding Gifts</h3>
                             <a href="#" class="collection-btn">Shop Now</a>
                         </div>
                     </div>
                 </div>
             </div>
-
+    
             <div class="featured-section">
                 <div class="section-title">
-                    <h2>Bestselling Products</h2>
+                    <h2>Most Popular Gifts</h2>
                     <button class="view-all-btn">
                         VIEW ALL
-                        <span>&rarr;</span> <!-- arrow like in the image -->
+                        <span>&rarr;</span> 
                       </button>
                       
                 </div>
                 <div class="products-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Hydrating Face Serum">
+                            <img src="/api/placeholder/200/200" alt="Scented Candle Set">
                             <span class="sale-tag">Sale</span>
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Hydrating Face Serum with Hyaluronic Acid</h3>
+                            <h3 class="product-name">Luxury Scented Candle Gift Set</h3>
                             <div class="rating">★★★★★</div>
                             <div class="price">
-                                <span class="current-price">$24.99</span>
-                                <span class="original-price">$32.00</span>
+                                <span class="current-price">$34.99</span>
+                                <span class="original-price">$45.00</span>
                                 <span class="discount">22% off</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
@@ -105,29 +104,115 @@
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Volumizing Mascara">
+                            <img src="/api/placeholder/200/200" alt="Personalized Photo Frame">
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Volumizing Mascara - Intense Black</h3>
+                            <h3 class="product-name">Personalized Wooden Photo Frame</h3>
                             <div class="rating">★★★★★</div>
                             <div class="price">
-                                <span class="current-price">$18.50</span>
+                                <span class="current-price">$29.50</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Matte Liquid Lipstick">
+                            <img src="/api/placeholder/200/200" alt="Gourmet Chocolate Box">
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Matte Liquid Lipstick - Ruby Red</h3>
+                            <h3 class="product-name">Gourmet Chocolate Assortment Box</h3>
                             <div class="rating">★★★★☆</div>
                             <div class="price">
-                                <span class="current-price">$15.99</span>
-                                <span class="original-price">$19.99</span>
+                                <span class="current-price">$25.99</span>
+                                <span class="original-price">$32.99</span>
+                                <span class="discount">21% off</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Wine Gift Set">
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Premium Wine Gift Set with Accessories</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$59.99</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="gift-ideas">
+                <div class="tips-content">
+                    <h2>Gift Ideas For Everyone</h2>
+                    <p>Finding the perfect gift doesn't have to be stressful. Our curated gift collections are designed to delight recipients of all ages and preferences.</p>
+                    <p>Whether you're shopping for a significant other, family member, friend, or colleague, we have thoughtful options that show just how much you care.</p>
+                    <a href="#" class="banner-btn">Get Inspired</a>
+                </div>
+                <div class="tips-image">
+                    <img src="/api/placeholder/500/300" alt="Gift Ideas">
+                </div>
+            </div>
+    
+            <div class="featured-section">
+                <div class="section-title">
+                    <h2>New Gift Arrivals</h2>
+                    <button class="view-all-btn">
+                        VIEW ALL
+                        <span>&rarr;</span> <!-- arrow like in the image -->
+                      </button>
+                      
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Spa Gift Basket">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Luxury Spa Gift Basket</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$49.99</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Smart Home Device">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Smart Home Assistant Device</h3>
+                            <div class="rating">★★★★☆</div>
+                            <div class="price">
+                                <span class="current-price">$89.00</span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/api/placeholder/200/200" alt="Personalized Star Map">
+                            <span class="sale-tag">New</span>
+                            <button class="wishlist-btn">❤️</button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Personalized Night Sky Star Map</h3>
+                            <div class="rating">★★★★★</div>
+                            <div class="price">
+                                <span class="current-price">$39.99</span>
+                                <span class="original-price">$49.99</span>
                                 <span class="discount">20% off</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
@@ -135,40 +220,25 @@
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Nourishing Night Cream">
+                            <img src="/api/placeholder/200/200" alt="Gourmet Gift Basket">
+                            <span class="sale-tag">New</span>
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Nourishing Night Cream with Retinol</h3>
-                            <div class="rating">★★★★★</div>
+                            <h3 class="product-name">Gourmet Snacks & Treats Gift Basket</h3>
+                            <div class="rating">★★★★☆</div>
                             <div class="price">
-                                <span class="current-price">$29.99</span>
+                                <span class="current-price">$65.00</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="beauty-tips">
-                <div class="tips-content">
-                    <h2>Beauty Tips & Tricks</h2>
-                    <p>Enhance your beauty routine with our expert tips and tricks. Learn how to maximize the benefits
-                        of
-                        your skincare products and perfect your makeup application techniques.</p>
-                    <p>Our beauty advisors recommend applying serums before moisturizers and using primer before
-                        foundation
-                        for a flawless finish that lasts all day.</p>
-                    <a href="#" class="banner-btn">Read More</a>
-                </div>
-                <div class="tips-image">
-                    <img src="/api/placeholder/500/300" alt="Beauty Tips">
-                </div>
-            </div>
-
+    
             <div class="featured-section">
                 <div class="section-title">
-                    <h2>New Arrivals</h2>
+                    <h2>Anniversary Gift Ideas</h2>
                     <button class="view-all-btn">
                         VIEW ALL
                         <span>&rarr;</span> <!-- arrow like in the image -->
@@ -178,183 +248,66 @@
                 <div class="products-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Vitamin C Brightening Serum">
-                            <span class="sale-tag">New</span>
+                            <img src="/api/placeholder/200/200" alt="Couple Watches">
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Vitamin C Brightening Serum</h3>
+                            <h3 class="product-name">Elegant His & Hers Watch Set</h3>
                             <div class="rating">★★★★★</div>
                             <div class="price">
-                                <span class="current-price">$34.99</span>
+                                <span class="current-price">$129.50</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Eyeshadow Palette - Sunset Collection">
-                            <span class="sale-tag">New</span>
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Eyeshadow Palette - Sunset Collection</h3>
-                            <div class="rating">★★★★☆</div>
-                            <div class="price">
-                                <span class="current-price">$42.00</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Hydrating Facial Mist">
-                            <span class="sale-tag">New</span>
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Hydrating Facial Mist with Rose Water</h3>
-                            <div class="rating">★★★★★</div>
-                            <div class="price">
-                                <span class="current-price">$16.99</span>
-                                <span class="original-price">$19.99</span>
-                                <span class="discount">15% off</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Perfume - Floral Dreams">
-                            <span class="sale-tag">New</span>
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Perfume - Floral Dreams 50ml</h3>
-                            <div class="rating">★★★★☆</div>
-                            <div class="price">
-                                <span class="current-price">$55.00</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="featured-section">
-                <div class="section-title">
-                    <h2>Skincare Must-Haves</h2>
-                    <button class="view-all-btn">
-                        VIEW ALL
-                        <span>&rarr;</span> <!-- arrow like in the image -->
-                      </button>
-                      
-                </div>
-                <div class="products-grid">
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Gentle Foaming Cleanser">
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Gentle Foaming Cleanser for Sensitive Skin</h3>
-                            <div class="rating">★★★★★</div>
-                            <div class="price">
-                                <span class="current-price">$22.50</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Exfoliating Face Scrub">
+                            <img src="/api/placeholder/200/200" alt="Crystal Photo Frame">
                             <span class="sale-tag">Sale</span>
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Exfoliating Face Scrub with Natural Ingredients</h3>
+                            <h3 class="product-name">Crystal Photo Frame with Custom Engraving</h3>
                             <div class="rating">★★★★☆</div>
                             <div class="price">
-                                <span class="current-price">$18.99</span>
-                                <span class="original-price">$24.99</span>
-                                <span class="discount">24% off</span>
+                                <span class="current-price">$45.99</span>
+                                <span class="original-price">$59.99</span>
+                                <span class="discount">23% off</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Moisturizing Day Cream">
+                            <img src="/api/placeholder/200/200" alt="Couple's Jewelry">
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Moisturizing Day Cream with SPF 30</h3>
+                            <h3 class="product-name">Matching Couple's Bracelet Set</h3>
                             <div class="rating">★★★★★</div>
                             <div class="price">
-                                <span class="current-price">$28.00</span>
+                                <span class="current-price">$79.00</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Eye Cream">
+                            <img src="/api/placeholder/200/200" alt="Experience Gift">
                             <button class="wishlist-btn">❤️</button>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Anti-Aging Eye</h3>
+                            <h3 class="product-name">Romantic Dinner Experience Voucher</h3>
                             <div class="rating">★★★★★</div>
                             <div class="price">
-                                <span class="current-price">$28.00</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Hydrating Face Mask">
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Hydrating Face Mask with Aloe Vera</h3>
-                            <div class="rating">★★★★☆</div>
-                            <div class="price">
-                                <span class="current-price">$15.00</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Sunscreen SPF 50">
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Sunscreen SPF 50 - Broad Spectrum Protection</h3>
-                            <div class="rating">★★★★★</div>
-                            <div class="price">
-                                <span class="current-price">$20.00</span>
-                            </div>
-                            <button class="add-to-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="/api/placeholder/200/200" alt="Soothing Gel with Aloe Vera">
-                            <button class="wishlist-btn">❤️</button>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Soothing Gel with Aloe Vera</h3>
-                            <div class="rating">★★★★☆</div>
-                            <div class="price">
-                                <span class="current-price">$12.00</span>
+                                <span class="current-price">$150.00</span>
                             </div>
                             <button class="add-to-cart">Add to Cart</button>
                         </div>
                     </div>
                 </div>
             </div>
+    
             <div class="pagination">
                 <a href="#" class="prev">←</a>
                 <a href="#" class="page active">1</a>
@@ -363,7 +316,9 @@
                 <a href="#" class="next">→</a>
             </div>
         </div>
-
+        
+      
+  
 
 
     <%- include("../user-partilas/footer") %>

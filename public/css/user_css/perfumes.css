@@ -1,0 +1,137 @@
+/* Reset basic margins */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    background-color: #fff;
+    color: #222;
+    line-height: 1.6;
+    padding: 20px;
+  }
+  
+  /* Perfume title */
+  h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  
+  /* Grid layout */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    padding: 20px;
+  }
+  
+  /* Card style */
+  .card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* NEW badge */
+  .badge-new {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: crimson;
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  /* Product name */
+  .card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  /* Rating stars */
+  .stars {
+    color: gold;
+    margin: 5px 0;
+  }
+  
+  /* Price */
+  .price {
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  /* Add to cart button */
+  .btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #444;
+  }
+  
+  /* Eye icon and heart icon position */
+  .icons {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .icons i {
+    color: #555;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  
+  .icons i:hover {
+    color: #000;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    h2 {
+      font-size: 28px;
+    }
+  
+    .btn {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+  }
+  

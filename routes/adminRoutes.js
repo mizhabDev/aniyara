@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/adminController/adminController');
+const adminController = require('../controllers/adminController/pageController');
 
 
 // Admin Routes page loading

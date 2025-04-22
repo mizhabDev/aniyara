@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopAdmin - Add New Product</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --text: #333;
+      --border: #e5e7eb;
+      --background: #f9fafb;
+      --white: #fff;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+    }
+
+
+  </style>
+</head>
+
+  
+  <script>
+    
+  </script>
+</body>
+</html>
+
+
+<%- include('../admin-partials/header') %>
+
+
+
+  <link rel="stylesheet" href="/css/admin_css/products.css">
+
+  <title>Products - Aniyara</title>
+
+
+
+  <!-- Products Page -->
+  <div id="products-page" class="main-content page hidden-pages">
+    <div class="header">
+      <h1 class="page-title">Products Management</h1>
+      <div class="search-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" placeholder="Search products...">
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <select class="filter-select">
+          <option>All Categories</option>
+          <option>Electronics</option>
+          <option>Clothing</option>
+          <option>Home & Kitchen</option>
+          <option>Beauty & Personal Care</option>
+        </select>
+        <select class="filter-select">
+          <option>All Stock Status</option>
+          <option>In Stock</option>
+          <option>Low Stock</option>
+          <option>Out of Stock</option>
+        </select>
+        <select class="filter-select">
+          <option>Sort By: Latest</option>
+          <option>Sort By: Price (Low to High)</option>
+          <option>Sort By: Price (High to Low)</option>
+          <option>Sort By: Most Popular</option>
+        </select>
+      </div>
+      <button class="btn" onclick="openModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Add New Product
+      </button>
+    </div>
+
+
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+        <div class="product-card-body">
+          <h3 class="product-card-title">Premium Wireless Headphones</h3>
+          <div class="product-card-price">$129.99</div>
+          <div class="product-card-stock">In Stock: 45 units</div>
+          <div class="product-card-actions">
+            <button class="btn btn-sm">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+        <div class="product-card-body">
+          <h3 class="product-card-title">Smart Watch Pro</h3>
+          <div class="product-card-price">$249.99</div>
+          <div class="product-card-stock">In Stock: 32 units</div>
+          <div class="product-card-actions">
+            <button class="btn btn-sm">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+        <div class="product-card-body">
+          <h3 class="product-card-title">Ultra HD 4K Monitor</h3>
+          <div class="product-card-price">$399.99</div>
+          <div class="product-card-stock">In Stock: 18 units</div>
+          <div class="product-card-actions">
+            <button class="btn btn-sm">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+        <div class="product-card-body">
+          <h3 class="product-card-title">Ergonomic Office Chair</h3>
+          <div class="product-card-price">$189.99</div>
+          <div class="product-card-stock">In Stock: 24 units</div>
+          <div class="product-card-actions">
+            <button class="btn btn-sm">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+        <div class="product-card-body">
+          <h3 class="product-card-title">Portable Bluetooth Speaker</h3>
+          <div class="product-card-price">$79.99</div>
+          <div class="product-card-stock">In Stock: 37 units</div>
+          <div class="product-card-actions">
+            <button class="btn btn-sm">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+        <div class="product-card-body">
+          <h3 class="product-card-title">Professional Digital Camera</h3>
+          <div class="product-card-price">$899.99</div>
+          <div class="product-card-stock">In Stock: 12 units</div>
+          <div class="product-card-actions">
+            <button class="btn btn-sm">Edit</button>
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+
+
+  <!-- Add New Product Modal -->
+
+  <body>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Product</h2>
+        <button class="close-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="add-product-form">
+          <div class="form-group">
+            <label for="product-name">Product Name</label>
+            <input type="text" id="product-name" class="form-control" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-price">Price ($)</label>
+              <input type="number" id="product-price" class="form-control" step="0.01" min="0" required>
+            </div>
+            <div class="form-group">
+              <label for="product-stock">Stock Quantity</label>
+              <input type="number" id="product-stock" class="form-control" min="0" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="product-category">Category</label>
+            <select id="product-category" class="form-control" required>
+              <option value="">Select a category</option>
+              <option value="electronics">Electronics</option>
+              <option value="furniture">Furniture</option>
+              <option value="audio">Audio</option>
+              <option value="camera">Camera</option>
+              <option value="wearables">Wearables</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="product-description">Description</label>
+            <textarea id="product-description" class="form-control"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Product Image</label>
+            <div class="image-upload">
+              <div class="upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                  stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <p class="upload-text">Drag and drop an image here, or click to browse</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline">Cancel</button>
+        <button class="btn btn-primary" type="submit" form="add-product-form">
+          Add Product
+        </button>
+      </div>
+    </div>
+
+    
+
+  </body>
+
+
+  <%- include('../admin-partials/footer') %>
