@@ -1,4 +1,4 @@
-const productModel = require('../../models/productModel');
+const productModel = require('../../models/productSchema');
 
 const getHomePage = (req, res) => {
     const productSections = {
@@ -66,7 +66,7 @@ const loadGiftsPage = async (req, res) => {
 
 const loadJewelryPage = async (req, res) => {
     try {
-        const products = await productModel.find({ category: 'jewelry' });
+        // const products = await productModel.find({ category: 'jewelry' });
         res.render('user/jewelry', { products });
     } catch (error) {
         console.error('Error fetching jewelry:', error);
@@ -133,9 +133,10 @@ const loadOthersPage = (req, res) => {
 }
 
 const loadPerfumePage = async (req, res) => {
+    // const products = await productModel.find({ category: 'perfumes' });
+
     try {
-        const products = await productModel.find({ category: 'perfume' });
-        res.render('user/perfumes', { products });
+        res.render('user/perfumes')//, { products });
     } catch (error) {
         console.error('Error fetching perfumes:', error);
         res.status(500).send('Internal Server Error');
@@ -149,6 +150,32 @@ const loadPnfPage = (req, res) => {
         console.error('Error loading about page:', error);
         res.status(500).send('Internal Server Error');
     }   
+}
+
+const loadLoginPage = (req, res) => {
+    try {
+        return res.render('user/login');
+    } catch (error) {
+        console.error('Error loading login page:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+const loadWishlistPage = (req, res) =>{
+    try {
+        return res.render('user/wishlist')
+    } catch (error) {
+        
+    }
+}
+
+const loadUserPage = (req, res) => {
+    try {
+        return res.render('user/user')
+    } catch (error) {
+        console.error('Error loading user page:', error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 // Exporting the functions to be used in routes
@@ -166,5 +193,8 @@ module.exports = {
     loadCheckoutPage,
     loadOthersPage,
     loadPerfumePage,
-    loadPnfPage
+    loadPnfPage,
+    loadLoginPage,
+    loadWishlistPage,
+    loadUserPage
 }; 

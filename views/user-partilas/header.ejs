@@ -150,7 +150,41 @@
       color: #1e88e5;
     }
 
-    .main-nav li a.dropdown::after {
+    /* Dropdown hidden by default */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      list-style: none;
+      padding: 10px 0;
+      margin-top: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    /* Show on hover */
+    .dropdown-parent:hover .dropdown-menu {
+       display: block;
+    }
+
+    /* Style the dropdown items */
+    .dropdown-menu li {
+      margin-bottom: 5px;
+    }
+
+    .dropdown-menu li a {
+      color: #333;
+      text-decoration: none;
+      padding: 5px 10px;
+      display: block;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: #f0f0f0;
+    }
+
+
+   .main-nav li a.dropdown::after {
       content: "▼";
       font-size: 10px;
       margin-left: 5px;
@@ -370,11 +404,29 @@
     <nav class="navigation">
       <div class="nav-container">
         <ul class="main-nav">
-          <li>
+          <li class="dropdown-parent">
             <a href="#" class="dropdown">Shop by Category</a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Category 1</a></li>
+              <li><a href="#">Category 2</a></li>
+              <li><a href="#">Category 3</a></li>
+              <li><a href="#">Category 4</a></li>
+            </ul>
           </li>
           <li><a href="/">Home</a></li>
-          <li><a href="#" class="dropdown">Pages</a></li>
+          <li class="dropdown-parent">
+            <a href="#" class="dropdown">Pages</a>
+            <ul class="dropdown-menu">
+              <li><a href="jewelry">Jewelry</a></li>
+              <li><a href="/gifts">Gift</a></li>
+              <li><a href="#">Cosmetics</a></li>
+              <li><a href="/perfumes">Perfumes</a></li>
+              <li><a href="#">Toys</a></li>
+              <li><a href="#">Decorations</a></li>
+              <li><a href="others">Others</a></li>
+              <li><a href="#">About us</a></li>
+                        </ul>
+          </li>
           <li><a href="#">Shop</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Contact</a></li>
@@ -448,3 +500,6 @@
       mobileMenu.classList.remove('active');
     });
   </script>
+</body>
+
+</html>
