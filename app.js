@@ -3,14 +3,29 @@ const path = require("path");
 const app = express();
 const connectDB = require('./config/db');
 require("dotenv").config();
+const session = require('express-session');
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'your_secret_key',  // use a strong, secure key in production
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } 
+}));
+
 
 
 // Database connection
 connectDB();
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+
+
+
+
+
 
 
 // View engine

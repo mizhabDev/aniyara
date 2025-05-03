@@ -1,4 +1,9 @@
 const productModel = require('../../models/productSchema');
+const User = require('../../models/userModel');
+const bcrypt = require('bcryptjs');
+const userShema = require('../../models/userSchema');
+
+
 
 const getHomePage = (req, res) => {
     const productSections = {
@@ -152,14 +157,17 @@ const loadPnfPage = (req, res) => {
     }   
 }
 
-const loadLoginPage = (req, res) => {
+const loadLoginPage = async (req, res) => {
     try {
+        
         return res.render('user/login');
+    
     } catch (error) {
         console.error('Error loading login page:', error);
         res.status(500).send('Internal Server Error');
     }
 }
+
 
 const loadWishlistPage = (req, res) =>{
     try {
@@ -178,9 +186,94 @@ const loadUserPage = (req, res) => {
     }
 }
 
+
+
+// sign up page
+
+const signup = async (req, res) => {
+    try {
+        const { name, email, password, confirmPassword } = req.body;
+        
+        // Basic validation
+        if (!name || !email || !password || !confirmPassword) {
+            return res.render('user/login', { message: 'All fields are required' });
+        }
+
+        // Check if user exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.render('user/login', { message: 'Email already exists' });
+        }
+
+        // Password validation
+        if (password !== confirmPassword) {
+            return res.render('user/login', { message: 'Passwords do not match' });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword
+        });
+
+        // Save user to database
+        await user.save();
+        console.log('User created successfully:', user);
+
+        // Set session
+        req.session.user = user;
+        req.session.userLoggedIn = true;
+
+        return res.redirect('/');
+
+    } catch (error) {
+        console.error('Signup error:', error);
+        return res.render('user/login', { message: 'Error creating account' });
+    }
+};
+
+const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Basic validation
+        if (!email || !password) {
+            return res.render('user/login', { message: 'All fields are required' });
+        }
+
+        // Check if user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.render('user/login', { message: 'Invalid email' });
+        }
+
+        // Check password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.render('user/login', { message: 'Invalid password' });
+        }
+
+        // Set session
+        req.session.user = user;
+        req.session.userLoggedIn = true;
+
+        console.log('User logged in successfully:', user);
+
+        return res.redirect('/');
+    } catch (error) {
+        console.error('Login error:', error);
+        return res.render('user/login', { message: 'Error logging in' });
+    }
+}; 
+
 // Exporting the functions to be used in routes
 
 module.exports = {
+    // get pages
     getHomePage,
     loadCosmeticsPage,
     loadToysPage,
@@ -196,5 +289,9 @@ module.exports = {
     loadPnfPage,
     loadLoginPage,
     loadWishlistPage,
-    loadUserPage
-}; 
+    loadUserPage,
+
+    // post pages
+    signup,
+    login
+};

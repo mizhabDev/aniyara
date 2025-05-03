@@ -5,509 +5,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aniyara - Login & Sign Up</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    <link rel="stylesheet" href="/css/user_css/login.css">
 
-        body {
-            background-color: #f5f5f5;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: #fff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            min-height: 620px;
-            position: relative;
-        }
-
-        /* Form Containers */
-        .form-container {
-            padding: 30px 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-container {
-            background-color: #fff;
-        }
-
-        .signup-container {
-            background-color: #fff;
-            position: absolute;
-            top: 0;
-            height: 100%;
-            opacity: 0;
-            z-index: 1;
-            width: 50%;
-            right: 0;
-            transform: translateX(100%);
-        }
-
-        /* Form Elements */
-        .form {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e5285d;
-            margin-bottom: 10px;
-            display: none;
-            width: 100%;
-            text-align: center;
-
-        }
-
-        h1 {
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #e5285d;
-            font-size: 28px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .form-subtitle {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 24px;
-            letter-spacing: 0.3px;
-            margin-bottom: 30px;
-            color: #666;
-            text-align: center;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .overlay-panel .form-subtitle {
-            color: #fff;
-        }
-
-        /* Input Fields */
-        .form-group {
-            position: relative;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        input {
-            background-color: #f5f5f5;
-            border: none;
-            border-radius: 50px;
-            padding: 15px 20px 15px 45px;
-            width: 100%;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(229, 40, 93, 0.2);
-        }
-
-        /* Input icons */
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 13px;
-            color: #808080;
-            font-size: 18px;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 13px;
-            color: #808080;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        /* Remember Me */
-        .remember-me {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            margin: 15px 0;
-        }
-
-        .remember-me input {
-            width: auto;
-            margin-right: 8px;
-            padding: 0;
-        }
-
-        .remember-me label {
-            color: #666;
-            font-size: 14px;
-            margin-right: auto;
-            cursor: pointer;
-        }
-
-        /* Forgot Password */
-        .forgot-password {
-            color: #666;
-            font-size: 14px;
-            text-decoration: none;
-            margin-left: auto;
-            transition: color 0.3s ease;
-            text-align: right;
-            display: block;
-        }
-
-        .forgot-password:hover {
-            color: #e5285d;
-            text-decoration: underline;
-        }
-
-        /* Buttons */
-        button {
-            border-radius: 50px;
-            border: none;
-            background-color: #e5285d;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 14px 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: background-color 0.3s;
-            cursor: pointer;
-            width: 100%;
-            margin: 15px 0;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        button:focus {
-            outline: none;
-        }
-
-        button:hover {
-            background-color: #d4194c;
-        }
-
-        button.ghost {
-            background-color: #fff;
-            border: 2px solid #fff;
-            color: #e5285d;
-            font-weight: 600;
-            width: auto;
-            padding: 12px 45px;
-        }
-
-        button.ghost:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Social Links */
-        .social-text {
-            margin-bottom: 15px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .social-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .social-container a {
-            border: 1px solid #ddd;
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 8px;
-            height: 40px;
-            width: 40px;
-            text-decoration: none;
-            color: #666;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-
-        .social-container a:hover {
-            background-color: #f5f5f5;
-            border-color: #ccc;
-        }
-
-        /* Overlay Container */
-        .overlay-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            transition: transform 0.6s ease-in-out;
-            z-index: 100;
-        }
-
-        .overlay {
-            background: linear-gradient(135deg, #ffa7c3 0%, #fd9ca4 100%);
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: 0 0;
-            color: #fff;
-            position: relative;
-            left: -100%;
-            height: 100%;
-            width: 200%;
-            transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .overlay-panel {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 30px 50px;
-            text-align: center;
-            top: 0;
-            height: 100%;
-            width: 50%;
-            transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .overlay-panel h1 {
-            color: #fff;
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        .overlay-left {
-            transform: translateX(-20%);
-        }
-
-        .overlay-right {
-            right: 0;
-            transform: translateX(0);
-        }
-
-        .welcome-image {
-            max-width: 200px;
-            margin: 25px 0;
-        }
-
-        /* Panel transition effects */
-        .container.right-panel-active .login-container {
-            transform: translateX(-100%);
-        }
-
-        .container.right-panel-active .signup-container {
-            transform: translateX(0);
-            opacity: 1;
-            z-index: 5;
-            animation: show 0.6s;
-        }
-
-        .container.right-panel-active .overlay-container {
-            transform: translateX(-100%);
-        }
-
-        .container.right-panel-active .overlay {
-            transform: translateX(50%);
-        }
-
-        .container.right-panel-active .overlay-left {
-            transform: translateX(0);
-        }
-
-        .container.right-panel-active .overlay-right {
-            transform: translateX(20%);
-        }
-
-        .mobile-nav {
-            display: none;
-        }
-
-        @keyframes show {
-
-            0%,
-            49.99% {
-                opacity: 0;
-                z-index: 1;
-            }
-
-            50%,
-            100% {
-                opacity: 1;
-                z-index: 5;
-            }
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                max-width: 450px;
-                min-height: auto;
-            }
-
-            .form-container {
-                height: auto;
-                padding: 25px;
-                width: 100%;
-                position: relative;
-            }
-
-            .signup-container,
-            .login-container {
-                position: relative;
-                width: 100%;
-                height: auto;
-                transform: none;
-                opacity: 1;
-            }
-            .logo {
-                display: block;
-                margin-bottom: 10px;
-            }
-
-            .overlay-container {
-                display: none;
-                /* Hide the pink overlay completely */
-            }
-
-
-            /* Show alternative navigation links at bottom */
-            .mobile-nav {
-                display: flex;
-                width: 100%;
-                justify-content: center;
-                margin-top: 20px;
-                padding-top: 15px;
-                border-top: 1px solid #eee;
-            }
-
-            .mobile-nav p {
-                font-size: 14px;
-                color: #666;
-                margin-right: 5px;
-            }
-
-            .mobile-nav a {
-                color: #e5285d;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-            }
-
-            /* Hide/show containers based on active state */
-            .container:not(.right-panel-active) .signup-container {
-                display: none;
-            }
-
-            .container.right-panel-active .login-container {
-                display: none;
-            }
-
-            .container.right-panel-active .signup-container,
-            .container:not(.right-panel-active) .login-container {
-                display: block;
-            }
-
-            /* Reset transformations for mobile */
-            .container.right-panel-active .overlay-container,
-            .container.right-panel-active .overlay,
-            .container.right-panel-active .login-container,
-            .container.right-panel-active .signup-container {
-                transform: none;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="container" id="container">
         <div class="form-container signup-container">
-            <form class="form">
-                <div class="logo">ANIYARA</div>
-                <h1>Create Account</h1>
-                <div class="form-subtitle">Create your account to join Aniyara shopping</div>
+            <form class="form" action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
+                <% if (typeof message !=='undefined' ) { %>
+                    <div class="error-message" style="color: red; margin-bottom: 10px;">
+                        <%= message %>
+                    </div>
+                    <% } %>
+                        <div class="logo">ANIYARA</div>
+                        <h1>Create Account</h1>
+                        <div class="form-subtitle">Create your account to join Aniyara shopping</div>
 
-                <div class="form-group">
-                    <span class="input-icon">👤</span>
-                    <input type="text" id="signup-name" placeholder="Full Name" required />
-                </div>
+                        <div class="form-group">
+                            <span class="input-icon">👤</span>
+                            <input type="text" id="signup-name" name="name" placeholder="Full Name" required />
+                        </div>
 
-                <div class="form-group">
-                    <span class="input-icon">📧</span>
-                    <input type="email" id="signup-email" placeholder="Email Address" required />
-                </div>
+                        <div class="form-group">
+                            <span class="input-icon">📧</span>
+                            <input type="email" id="signup-email" name="email" placeholder="Email Address" required />
+                        </div>
 
-                <div class="form-group">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" id="signup-password" placeholder="Password" required />
-                    <span class="password-toggle">👁️</span>
-                </div>
+                        <div class="form-group">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="signup-password" name="password" placeholder="Password"
+                                required />
+                            <span class="password-toggle">👁️</span>
+                        </div>
 
-                <div class="form-group">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required />
-                    <span class="password-toggle">👁️</span>
-                </div>
+                        <div class="form-group">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="signup-confirm-password" name="confirmPassword"
+                                placeholder="Confirm Password" required />
+                            <span class="password-toggle">👁️</span>
+                        </div>
 
-                <button type="submit">SIGN UP</button>
+                        <button type="submit">SIGN UP</button>
 
-                <div class="mobile-nav">
-                    <p>Already a member?</p>
-                    <a href="#" id="mobile-signin">Sign In</a>
-                </div>
+                        <div class="mobile-nav">
+                            <p>Already a member?</p>
+                            <a href="#" id="mobile-signin">Sign In</a>
+                        </div>
 
-                <div class="social-text">Or Sign up with</div>
-                <div class="social-container">
-                    <a href="#" class="social">f</a>
-                    <a href="#" class="social">G</a>
-                    <a href="#" class="social">in</a>
-                </div>
+                        <div class="social-text">Or Sign up with</div>
+                        <div class="social-container">
+                            <a href="#" class="social">f</a>
+                            <a href="#" class="social">G</a>
+                            <a href="#" class="social">in</a>
+                        </div>
             </form>
         </div>
 
         <div class="form-container login-container">
-            <form class="form">
+            
+            <form class="form" action="/login" method="POST">
+                <% if (typeof message !=='undefined' ) { %>
+                    <div class="error-message" style="color: red; margin-bottom: 10px;">
+                        <%= message %>
+                    </div>
+                    <% } %>
                 <div class="logo">ANIYARA</div>
                 <h1>Sign In</h1>
                 <div class="form-subtitle" style="color: #666;">Login to access your personal shopping area</div>
 
                 <div class="form-group">
                     <span class="input-icon">📧</span>
-                    <input type="email" id="login-email" placeholder="Email" required />
+                    <input type="email" id="login-email" name="email" placeholder="Email" required>
                 </div>
 
                 <div class="form-group">
                     <span class="input-icon">🔒</span>
-                    <input type="password" id="login-password" placeholder="Password" required />
+                    <input type="password" id="login-password" name="password" placeholder="Password" required />
                     <span class="password-toggle">👁️</span>
                 </div>
 
@@ -556,6 +130,12 @@
     </div>
 
     <script>
+
+
+
+        const signupForm = document.querySelector('.signup-container form');
+        const loginForm = document.querySelector('.login-container form');
+
         document.addEventListener('DOMContentLoaded', function () {
             const signUpButton = document.getElementById('signUp');
             const signInButton = document.getElementById('signIn');
@@ -625,37 +205,31 @@
             }
 
             // Form validation (basic example)
-            const signupForm = document.querySelector('.signup-container form');
-            const loginForm = document.querySelector('.login-container form');
+            // if (signupForm) {
+            //     signupForm.addEventListener('submit', function (e) {
+            //         const password = document.getElementById('signup-password').value;
+            //         const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            if (signupForm) {
-                signupForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const password = document.getElementById('signup-password').value;
-                    const confirmPassword = document.getElementById('signup-confirm-password').value;
+            //         if (password !== confirmPassword) {
+            //             e.preventDefault();
+            //             alert("Passwords don't match!");
+            //         }
+            //         // Remove the success alert - let the server handle the response
+            //     });
+            // }
 
-                    if (password !== confirmPassword) {
-                        alert("Passwords don't match!");
-                        return;
-                    }
 
-                    // Here you would typically send the data to your server
-                    alert("Account created successfully! You can now login.");
-                    togglePanel(false);
-                });
-            }
+            // if (loginForm) {
+            //     loginForm.addEventListener('submit', function (e) {
 
-            if (loginForm) {
-                loginForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    // Here you would typically validate credentials with your server
-                    const email = document.getElementById('login-email').value;
-                    if (email) {
-                        alert("Login successful! Redirecting to Aniyara shopping...");
-                        // Redirect to main page or dashboard
-                    }
-                });
-            }
+            //         // Here you would typically validate credentials with your server
+            //         const email = document.getElementById('login-email').value;
+            //         if (email) {
+            //             alert("Login successful! Redirecting to Aniyara shopping...");
+            //             // Redirect to main page or dashboard
+            //         }
+            //     });
+            // }
 
             // Call once on page load
             updateVisibility();
