@@ -4,16 +4,24 @@ const app = express();
 const connectDB = require('./config/db');
 require("dotenv").config();
 const session = require('express-session');
+const flash = require('connect-flash');
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'your_secret_key',  // use a strong, secure key in production
+    secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } 
+    cookie: { secure: false } // set to true if using HTTPS
 }));
+
+
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.message = req.flash('message'); // You can use any key, like 'error' or 'success'
+  next();
+});
 
 
 

@@ -8,68 +8,64 @@
     <link rel="stylesheet" href="/css/user_css/login.css">
 
 </head>
+<style>
+    
+    
+</style>
 
 <body>
+
     <div class="container" id="container">
         <div class="form-container signup-container">
             <form class="form" action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
-                <% if (typeof message !=='undefined' ) { %>
-                    <div class="error-message" style="color: red; margin-bottom: 10px;">
-                        <%= message %>
-                    </div>
-                    <% } %>
-                        <div class="logo">ANIYARA</div>
-                        <h1>Create Account</h1>
-                        <div class="form-subtitle">Create your account to join Aniyara shopping</div>
 
-                        <div class="form-group">
-                            <span class="input-icon">👤</span>
-                            <input type="text" id="signup-name" name="name" placeholder="Full Name" required />
-                        </div>
+                <div class="logo">ANIYARA</div>
+                <h1>Create Account</h1>
+                <div class="form-subtitle">Create your account to join Aniyara shopping</div>
 
-                        <div class="form-group">
-                            <span class="input-icon">📧</span>
-                            <input type="email" id="signup-email" name="email" placeholder="Email Address" required />
-                        </div>
+                <div class="form-group">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="signup-name" name="name" placeholder="Full Name" required />
+                </div>
 
-                        <div class="form-group">
-                            <span class="input-icon">🔒</span>
-                            <input type="password" id="signup-password" name="password" placeholder="Password"
-                                required />
-                            <span class="password-toggle">👁️</span>
-                        </div>
+                <div class="form-group">
+                    <span class="input-icon">📧</span>
+                    <input type="email" id="signup-email" name="email" placeholder="Email Address" required />
+                </div>
 
-                        <div class="form-group">
-                            <span class="input-icon">🔒</span>
-                            <input type="password" id="signup-confirm-password" name="confirmPassword"
-                                placeholder="Confirm Password" required />
-                            <span class="password-toggle">👁️</span>
-                        </div>
+                <div class="form-group">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="signup-password" name="password" placeholder="Password" required />
+                    <span class="password-toggle">👁️</span>
+                </div>
 
-                        <button type="submit">SIGN UP</button>
+                <div class="form-group">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="signup-confirm-password" name="confirmPassword"
+                        placeholder="Confirm Password" required />
+                    <span class="password-toggle">👁️</span>
+                </div>
 
-                        <div class="mobile-nav">
-                            <p>Already a member?</p>
-                            <a href="#" id="mobile-signin">Sign In</a>
-                        </div>
+                <button type="submit">SIGN UP</button>
 
-                        <div class="social-text">Or Sign up with</div>
-                        <div class="social-container">
-                            <a href="#" class="social">f</a>
-                            <a href="#" class="social">G</a>
-                            <a href="#" class="social">in</a>
-                        </div>
+                <div class="mobile-nav">
+                    <p>Already a member?</p>
+                    <a href="#" id="mobile-signin">Sign In</a>
+                </div>
+
+                <div class="social-text">Or Sign up with</div>
+                <div class="social-container">
+                    <a href="#" class="social">f</a>
+                    <a href="#" class="social">G</a>
+                    <a href="#" class="social">in</a>
+                </div>
             </form>
         </div>
 
         <div class="form-container login-container">
-            
+
             <form class="form" action="/login" method="POST">
-                <% if (typeof message !=='undefined' ) { %>
-                    <div class="error-message" style="color: red; margin-bottom: 10px;">
-                        <%= message %>
-                    </div>
-                    <% } %>
+
                 <div class="logo">ANIYARA</div>
                 <h1>Sign In</h1>
                 <div class="form-subtitle" style="color: #666;">Login to access your personal shopping area</div>
@@ -110,20 +106,43 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
-                    <h1>Already a Member?</h1>
-                    <p class="form-subtitle">Sign in to access your account and continue shopping your favorite
-                        products!</p>
 
-                    <button class="ghost" id="signIn">SIGN IN</button>
+                    <% if (message && message.length> 0) { %>
+                        <div class="alert flash-message" style="color: red; margin-bottom: 10px;">
+                            <%= message %>
+                        </div>
+
+                        <% } %>
+
+
+
+
+                            <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
+                            <h1>Already a Member?</h1>
+                            <p class="form-subtitle">Sign in to access your account and continue shopping your favorite
+                                products!</p>
+
+                            <button class="ghost" id="signIn">SIGN IN</button>
                 </div>
-                <div class="overlay-panel overlay-right">
-                    <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
-                    <h1>New to Aniyara?</h1>
-                    <p class="form-subtitle">Sign up now and discover our amazing collection of jewelry, cosmetics,
-                        gifts and more!</p>
 
-                    <button class="ghost" id="signUp">SIGN UP</button>
+
+                <div class="overlay-panel overlay-right">
+
+                    <% if (message && message.length> 0) { %>
+                        <div class="alert flash-message" style="color: red; margin-bottom: 10px;">
+                            <%= message %>
+                        </div>
+
+                        <% } %>
+
+
+                            <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
+                            <h1>New to Aniyara?</h1>
+                            <p class="form-subtitle">Sign up now and discover our amazing collection of jewelry,
+                                cosmetics,
+                                gifts and more!</p>
+
+                            <button class="ghost" id="signUp">SIGN UP</button>
                 </div>
             </div>
         </div>
@@ -142,6 +161,7 @@
             const mobileSignup = document.getElementById('mobile-signup');
             const mobileSignin = document.getElementById('mobile-signin');
             const container = document.getElementById('container');
+
 
             // Function to update visibility for mobile views
             function updateVisibility() {
@@ -203,6 +223,18 @@
                     togglePanel(false);
                 });
             }
+
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(msg => {
+                setTimeout(() => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.style.display = 'none', 300); // wait for fade
+                }, 5000);
+            });
+
+
+
+
 
             // Form validation (basic example)
             // if (signupForm) {

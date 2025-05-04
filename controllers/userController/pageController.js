@@ -42,6 +42,9 @@ const getHomePage = (req, res) => {
 const loadCosmeticsPage = async (req, res) => {
     try {
         const products = await productModel.find({ category: 'cosmetics' });
+        if (!Array.isArray(products)) {
+            throw new Error('Invalid products data');
+        }
         res.render('user/cosmetics', { products });
     } catch (error) {
         console.error('Error fetching cosmetics:', error);
@@ -52,6 +55,9 @@ const loadCosmeticsPage = async (req, res) => {
 const loadToysPage = async (req, res) => {
     try {
         const products = await productModel.find({ category: 'toys' });
+        if (!Array.isArray(products)) {
+            throw new Error('Invalid products data');
+        }
         res.render('user/toys', { products });
     } catch (error) {
         console.error('Error fetching toys:', error);
@@ -62,6 +68,9 @@ const loadToysPage = async (req, res) => {
 const loadGiftsPage = async (req, res) => {
     try {
         const products = await productModel.find({ category: 'gifts' });
+        if (!Array.isArray(products)) {
+            throw new Error('Invalid products data');
+        }
         res.render('user/gifts', { products });
     } catch (error) {
         console.error('Error fetching gifts:', error);
@@ -159,9 +168,10 @@ const loadPnfPage = (req, res) => {
 
 const loadLoginPage = async (req, res) => {
     try {
-        
-        return res.render('user/login');
-    
+        return res.render('user/login', {
+            errorMessage: req.flash('error_msg'),
+            successMessage: req.flash('success_msg')
+        });
     } catch (error) {
         console.error('Error loading login page:', error);
         res.status(500).send('Internal Server Error');
@@ -190,85 +200,78 @@ const loadUserPage = (req, res) => {
 
 // sign up page
 
+const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            req.flash('error_msg', 'All fields are required');
+            return res.redirect('/login');
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            req.flash('error_msg', 'Invalid email or password');
+            return res.redirect('/login');
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            req.flash('error_msg', 'Invalid email or password');
+            return res.redirect('/login');
+        }
+
+        req.session.user = user;
+        req.session.userLoggedIn = true;
+        req.flash('success_msg', 'Welcome back! You have successfully logged in.');
+        return res.redirect('/');
+
+    } catch (error) {
+        console.error('Login error:', error);
+        req.flash('error_msg', 'An error occurred while logging in');
+        return res.redirect('/login');
+    }
+};
+
 const signup = async (req, res) => {
     try {
         const { name, email, password, confirmPassword } = req.body;
-        
-        // Basic validation
+
         if (!name || !email || !password || !confirmPassword) {
-            return res.render('user/login', { message: 'All fields are required' });
+            req.flash('error_msg', 'All fields are required');
+            return res.redirect('/login');
         }
 
-        // Check if user exists
+        if (password !== confirmPassword) {
+            req.flash('error_msg', 'Passwords do not match');
+            return res.redirect('/login');
+        }
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.render('user/login', { message: 'Email already exists' });
+            req.flash('error_msg', 'Email is already registered');
+            return res.redirect('/login');
         }
 
-        // Password validation
-        if (password !== confirmPassword) {
-            return res.render('user/login', { message: 'Passwords do not match' });
-        }
-
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create new user
         const user = new User({
             name,
             email,
             password: hashedPassword
         });
 
-        // Save user to database
         await user.save();
-        console.log('User created successfully:', user);
-
-        // Set session
         req.session.user = user;
         req.session.userLoggedIn = true;
-
+        req.flash('success_msg', 'Account created successfully! Welcome to Aniyara.');
         return res.redirect('/');
 
     } catch (error) {
         console.error('Signup error:', error);
-        return res.render('user/login', { message: 'Error creating account' });
+        req.flash('error_msg', 'An error occurred while creating your account');
+        return res.redirect('/login');
     }
 };
-
-const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Basic validation
-        if (!email || !password) {
-            return res.render('user/login', { message: 'All fields are required' });
-        }
-
-        // Check if user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.render('user/login', { message: 'Invalid email' });
-        }
-
-        // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.render('user/login', { message: 'Invalid password' });
-        }
-
-        // Set session
-        req.session.user = user;
-        req.session.userLoggedIn = true;
-
-        console.log('User logged in successfully:', user);
-
-        return res.redirect('/');
-    } catch (error) {
-        console.error('Login error:', error);
-        return res.render('user/login', { message: 'Error logging in' });
-    }
-}; 
 
 // Exporting the functions to be used in routes
 
