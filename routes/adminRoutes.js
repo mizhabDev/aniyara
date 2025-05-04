@@ -16,4 +16,9 @@ router.get('/transaction',adminController.getTransactionPage);
 router.get('/discount',adminController.getDiscountPage);
 router.get('/staff',adminController.getStaffPage);
 
+
+
+
+
+
 module.exports = router;

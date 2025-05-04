@@ -1,3 +1,6 @@
+const usersModel = require('../../models/userModel');
+
+
 // controllers/adminController.js
 
 const getloginPage=(req,res)=>{
@@ -27,8 +30,15 @@ const getTransactionPage=(req,res)=>{
     res.render('admin/transaction');
 }
 
-const getCustomersPage=(req,res)=>{
-    res.render('admin/customers');
+const getCustomersPage= async (req,res)=>{
+    try {
+        const users = await usersModel.find({});
+        res.render('admin/customers', { users });
+    }
+    catch (error) {
+        console.error("Error fetching customers:", error);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 const getDiscountPage=(req,res)=>{
@@ -40,6 +50,9 @@ const getStaffPage=(req,res)=>{
 }
 
 module.exports={
+ 
+    // getpages
+
     getAdminPage,
     getMessagePage,
     getOrderPage,
