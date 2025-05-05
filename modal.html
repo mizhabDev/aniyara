@@ -1,0 +1,251 @@
+<!-- View User Details Modal -->
+<div class="modal" id="viewModal">
+    <div class="modal-content">
+        <h2>User Details</h2>
+        <p>Name: <span id="viewName"></span></p>
+        <p>Email: <span id="viewEmail"></span></p>
+        <p>Join Date: <span id="viewJoinDate"></span></p>
+        <p>Total Orders: <span id="viewTotalOrders"></span></p>
+        <p>Total Spent: $<span id="viewTotalSpent"></span></p>
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // DOM Elements
+    const modalOverlay = document.getElementById('customer-modal');
+    const editModal = document.getElementById('edit-customer-modal');
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const editButtons = document.querySelectorAll('.edit-btn');
+    
+    // Initialize Modals
+    initViewModal();
+    initEditModal();
+
+    // View Modal Functions
+    function initViewModal() {
+        const closeButtons = document.querySelectorAll('.modal-close, .modal-footer .btn-secondary');
+        const tabButtons = document.querySelectorAll('.tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // Event Listeners
+        viewButtons.forEach(button => {
+            button.addEventListener('click', async function () {
+                const userId = this.getAttribute('data-id');
+                await fetchAndDisplayUserDetails(userId);
+                modalOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => closeModal(modalOverlay));
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal(modalOverlay);
+        });
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => switchTab(button.dataset.tab));
+        });
+    }
+
+    // Edit Modal Functions
+    function initEditModal() {
+        const closeEditButtons = document.querySelectorAll('#edit-customer-modal .modal-close, #edit-customer-modal .cancel-edit');
+        const editTabButtons = document.querySelectorAll('#edit-customer-modal .tab-item');
+        const editCustomerForm = document.getElementById('edit-customer-form');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', async function () {
+                const userId = this.getAttribute('data-id');
+                const userData = await fetchAndDisplayUserDetails(userId);
+                if (userData) {
+                    populateEditForm(userData);
+                    editModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        closeEditButtons.forEach(button => {
+            button.addEventListener('click', () => closeModal(editModal));
+        });
+
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) closeModal(editModal);
+        });
+
+        editCustomerForm?.addEventListener('submit', handleFormSubmit);
+    }
+
+    // Helper Functions
+    async function fetchAndDisplayUserDetails(userId) {
+        try {
+            showLoadingSkeleton();
+            const response = await fetch(`/admin/customers/${userId}`);
+            if (!response.ok) throw new Error('Failed to fetch user details');
+            
+            const userData = await response.json();
+            if (!userData) throw new Error('No user data received');
+
+            updateModalWithUserData(userData);
+            return userData;
+        } catch (error) {
+            console.error('Error:', error);
+            showErrorState();
+            return null;
+        } finally {
+            hideLoadingSkeleton();
+        }
+    }
+
+    function updateModalWithUserData(userData) {
+        const profileInfo = document.querySelector('.customer-profile-info');
+        if (!profileInfo) return;
+
+        profileInfo.innerHTML = `
+            <h3 class="customer-name">${userData.name || 'N/A'}</h3>
+            <p class="customer-email">${userData.email || 'N/A'}</p>
+            <p class="customer-joined">Joined: ${formatDate(userData.createdAt)}</p>
+        `;
+
+        updateStats(userData);
+        updateOrdersList(userData.orders);
+    }
+
+    function updateStats(userData) {
+        const stats = {
+            totalOrders: userData.totalOrders || 0,
+            totalSpent: formatCurrency(userData.totalSpent || 0),
+            avgOrder: formatCurrency(calculateAverageOrder(userData.totalSpent, userData.totalOrders)),
+            status: userData.status || 'Active'
+        };
+
+        Object.entries(stats).forEach(([key, value]) => {
+            const element = document.getElementById(key);
+            if (element) element.textContent = value;
+        });
+    }
+
+    // UI State Functions
+    function showLoadingSkeleton() {
+        const skeletonHTML = `
+            <div class="skeleton-loading">
+                <div class="skeleton-item" style="height: 24px; width: 60%"></div>
+                <div class="skeleton-item" style="height: 16px; width: 80%"></div>
+                <div class="skeleton-item" style="height: 16px; width: 40%"></div>
+            </div>
+        `;
+        
+        document.querySelector('.customer-profile-info').innerHTML = skeletonHTML;
+        document.querySelectorAll('.stat-value').forEach(stat => {
+            stat.innerHTML = '<div class="skeleton-item" style="height: 20px;"></div>';
+        });
+    }
+
+    function hideLoadingSkeleton() {
+        document.querySelectorAll('.skeleton-loading').forEach(el => el.remove());
+    }
+
+    function showErrorState() {
+        const errorHTML = `
+            <div class="error-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <p>Failed to load customer data</p>
+            </div>
+        `;
+        document.querySelector('.customer-profile-info').innerHTML = errorHTML;
+    }
+
+    // Utility Functions
+    function closeModal(modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function switchTab(tabId) {
+        const tabButtons = document.querySelectorAll('.tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
+        const activeContent = document.getElementById(`${tabId}-tab`);
+        
+        if (activeButton && activeContent) {
+            activeButton.classList.add('active');
+            activeContent.classList.add('active');
+        }
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(amount || 0);
+    }
+
+    function calculateAverageOrder(totalSpent, totalOrders) {
+        return totalOrders > 0 ? totalSpent / totalOrders : 0;
+    }
+});

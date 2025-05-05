@@ -7,6 +7,7 @@
   <title>Customers - Aniyara</title>
   <!-- Customers Page -->
 
+  
 
 
   <div id="customers-page" class="main-content page hidden-pages">
@@ -18,7 +19,10 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" placeholder="Search customers...">
+        <input type="search" placeholder="Search customers..."
+          aria-label="Search customers"
+          autocomplete="off">
+
       </div>
     </div>
 
@@ -58,8 +62,8 @@
             <%= user.email %>
           </div>
           <div class="customer-stats">
-            <div>Total Orders: 2</div>
-            <div>Total Spent: $200000</div>
+            <div>Total Orders: <%= user.totalOrders || 0 %></div>
+            <div>Total Spent: $<%= (user.totalSpent || 0).toFixed(2) %></div>
             <div>Member Since: <%= user.createdAt.toDateString() %>
             </div>
           </div>
@@ -67,12 +71,12 @@
         <div class="customer-actions">
 
           <!-- view button -->
-          <button class="btn btn-sm" data-id="<%= user._id %>" data-name="<%= user.name %>" user
-            data-email="<%= user.email %>">View </button>
+          <button type="button" class="btn btn-sm view-btn" data-id="<%= user._id %>">
+            View
+          </button>
 
           <!-- edit button -->
-          <button class="btn btn-sm btn-secondary" data-id="<%= user._id %>" data-name="<%= user.name %>"
-            data-email="<%= user.email %>">
+          <button class="btn btn-sm btn-secondary edit-btn" data-id="<%= user._id %>">
             Edit
           </button>
         </div>
@@ -107,7 +111,7 @@
   <!-- Include modal -->
 
   <%- include('../admin/customer-modal') %>
-
+  
     <!-- Add this to your CSS for notifications -->
     <style>
       .notification {
@@ -159,40 +163,9 @@
 
 
     <script src="/js/admin_js/customer.js"></script>
-    <script>
-
-      document.querySelectorAll('.view-btn').forEach(button => {
-        button.addEventListener('click', function () {
-          const name = this.dataset.name;
-          const email = this.dataset.email;
-
-          // Fill modal fields
-          document.getElementById('viewName').innerText = name;
-          document.getElementById('viewEmail').innerText = email;
-
-          // Show modal
-          const modal = new bootstrap.Modal(document.getElementById('viewModal'));
-          modal.show();
-        });
-      });
-
-      document.querySelectorAll('.edit-btn').forEach(button => {
-        button.addEventListener('click', function () {
-          const id = this.dataset.id;
-          const name = this.dataset.name;
-          const email = this.dataset.email;
-
-          // Fill modal form fields
-          document.getElementById('editName').value = name;
-          document.getElementById('editEmail').value = email;
-          document.getElementById('userId').value = id;
-
-          // Show modal
-          const modal = new bootstrap.Modal(document.getElementById('editModal'));
-          modal.show();
-        });
-      });
-    </script>
+    
+   
+    
 
 
 
