@@ -1,7 +1,7 @@
 const productModel = require('../../models/productSchema');
 const User = require('../../models/userModel');
 const bcrypt = require('bcryptjs');
-const userShema = require('../../models/userSchema');
+
 
 
 
