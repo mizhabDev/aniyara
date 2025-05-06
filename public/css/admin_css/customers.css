@@ -65,6 +65,7 @@
     border-radius: 8px;
     padding: 0 var(--spacing-md);
     width: 300px;
+    position: relative;
 }
 
 .search-bar input {
@@ -74,6 +75,14 @@
     width: 100%;
     font-size: 0.875rem;
     color: var(--dark);
+}
+
+#clearBtn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #64748b;
 }
 
 /* Filters Section */

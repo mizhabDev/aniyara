@@ -1,57 +1,26 @@
-// {/* <style>
-//     
-//   </style>
-
-//  */}
 
 
+const searchInput = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearBtn');
 
+searchInput.addEventListener('input', () => {
+  clearBtn.style.display = searchInput.value ? 'block' : 'none';
+});
 
+clearBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  clearBtn.style.display = 'none';
 
+  // Reset or fetch full results from backend
+  fetchAllCustomers(); // You should define this function
+});
 
-
-
-
-
-
-
-
-
-
-// {/* <script>
-//     // Functions to show and hide modals
-//     function showModal(modalId) {
-//       document.getElementById(modalId).classList.add('show');
-//     }
-
-//     function closeModal(modalId) {
-//       document.getElementById(modalId).classList.remove('show');
-//     }
-
-//     // Demo function for block/unblock buttons
-//     document.getElementById('blockUserBtn').addEventListener('click', function() {
-//       this.style.display = 'none';
-//       document.getElementById('unblockUserBtn').style.display = 'inline-block';
-//       // Here you would actually make an API call to block the user
-//     });
-
-//     document.getElementById('unblockUserBtn').addEventListener('click', function() {
-//       this.style.display = 'none';
-//       document.getElementById('blockUserBtn').style.display = 'inline-block';
-//       // Here you would actually make an API call to unblock the user
-//     });
-
-//     // Demo function for form submission
-//     function submitAddCustomerForm() {
-//       // Here you would collect the form data and send it to your API
-//       alert('Customer would be added here!');
-//       closeModal('addModal');
-//     }
-
-//     // Close modals when clicking outside
-//     window.addEventListener('click', function(event) {
-//       if (event.target.classList.contains('modal-overlay')) {
-//         event.target.classList.remove('show');
-//       }
-//     });
-//   </script> */}
+// Example function to get full customer list again
+function fetchAllCustomers() {
+  fetch('/api/customers')  // your endpoint here
+    .then(res => res.json())
+    .then(data => {
+      console.log('Reset results:', data);
+      // renderCustomerList(data); <-- You can use your render logic here
+    });
+}
