@@ -17,19 +17,19 @@
           <div class="customer-info">
             <div class="info-group">
               <span class="info-label">Name</span>
-              <span class="info-value" id="view-name">adsfa</span>
+              <span class="info-value" id="view-name">MY NAME</span>
             </div>
             <div class="info-group">
               <span class="info-label">Email</span>
-              <span class="info-value" id="view-email">my@gmail.com</span>
+              <span class="info-value" id="view-email">MY EMAIL@GMAIL.COM</span>
             </div>
             <div class="info-group">
               <span class="info-label">Phone</span>
-              <span class="info-value" id="view-phone">1d234567</span>
+              <span class="info-value" id="view-phone">1234567890</span>
             </div>
             <div class="info-group">
               <span class="info-label">Member Since</span>
-              <span class="info-value" id="view-created">dd</span>
+              <span class="info-value" id="view-created">28-02-2002</span>
             </div>
             <div class="info-group">
               <span class="info-label">Status</span>
@@ -171,6 +171,7 @@
       try {
         const res = await fetch(`/admin/customers/${userId}`);
         const user = await res.json();
+        console.log('this from cus-modal',user);
 
         // Update modal fields
         document.getElementById('view-name').textContent = user.name;

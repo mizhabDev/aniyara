@@ -17,6 +17,8 @@ router.get('/transaction', adminController.getTransactionPage);
 router.get('/discount', adminController.getDiscountPage);
 router.get('/staff', adminController.getStaffPage);
 router.get('/customers/:id', adminController.getCustomerDetailsModal);
+router.get('/search-users', adminController.searchUsers);
+  
 
 
 // Server route (using Express)

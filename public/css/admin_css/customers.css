@@ -29,7 +29,7 @@
     margin-left: 260px; /* Match sidebar width */
     padding: var(--spacing-lg);
     background-color: var(--gray-light);
-    min-height: 100vh;
+    min-height: 500px;
 }
 
 #customers-active-clr{
@@ -115,6 +115,10 @@
 }
 
 /* Customer Cards */
+.customers-content{
+    min-height: calc(100vh - 200px); 
+    
+}
 .customer-card {
     display: flex;
     align-items: center;
@@ -194,11 +198,18 @@
 
 /* Pagination */
 .pagination {
+    
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: var(--spacing-xl);
     gap: var(--spacing-xs);
+    position:sticky;
+    bottom:0;
+    background-color: var(--white);
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 10;
 }
 
 .pagination-item {
@@ -212,7 +223,21 @@
     transition: all 0.2s ease;
 }
 
-.pagination-item.active {
-    background-color: var(--primary);
-    color: var(--white);
+
+
+.pagination-item {
+    /* existing styles */
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.pagination-item:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-item.disabled,
+.pagination-item span {
+    cursor: default;
+    pointer-events: none;
+    color: var(--secondary-light);
 }

@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-const User = require('../../models/userModel'); 
+const User = require('../../models/userModel');
+const { name } = require('ejs');
 
 
 // controllers/adminController.js
@@ -31,16 +32,43 @@ const getTransactionPage = (req, res) => {
     res.render('admin/transaction');
 }
 
+
 const getCustomersPage = async (req, res) => {
-    try {
-        const users = await User.find({});
-        res.render('admin/customers', { users });
-    }
-    catch (error) {
-        console.error("Error fetching customers:", error);
-        res.status(500).send("Internal Server Error");
-    }
-}
+  const page = parseInt(req.query.page) || 1;
+  const limit = 1;
+  const sortOption = req.query.sort || 'name';
+
+  let sortBy;
+
+  if (sortOption === 'date') {
+    sortBy = { createdAt: -1 }; // latest joined first
+  } else if (sortOption === 'count') {
+    sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
+  } else {
+    sortBy = { name: 1 }; // default to A-Z
+  }
+
+  try {
+    const totalUsers = await User.countDocuments();
+    const totalPages = Math.ceil(totalUsers / limit);
+
+    const users = await User.find({})
+      .sort(sortBy)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.render('admin/customers', {
+      users,
+      currentPage: page,
+      totalPages,
+      sort: sortOption
+    });
+  } catch (error) {
+    console.error("Error fetching customers:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 
 const getDiscountPage = (req, res) => {
     res.render('admin/discount');
@@ -64,6 +92,7 @@ const getCustomerDetailsModal = async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            phone: user.phone,
             createdAt: user.createdAt,
             isBlocked: user.isBlocked || false,
             totalOrders: user.totalOrders || 0,
@@ -104,7 +133,7 @@ const addCustomer = async (req, res) => {
         const newUser = new User({
             name,
             email,
-            password:hashedPassword,
+            password: hashedPassword,
             phone
         });
 
@@ -115,6 +144,26 @@ const addCustomer = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+const searchUsers = async (req, res) => {
+    const query = req.query.query || '';
+
+    try {
+        const users = await User.find({
+            $or: [
+                { name: { $regex: query, $options: 'i' } }, // case-insensitive match
+                { email: { $regex: query, $options: 'i' } }, // case-insensitive match
+                { phone: { $regex: query, $options: 'i' } } // case-insensitive match
+            ]
+        });
+
+        res.json(users);
+    } catch (err) {
+        console.error('Search error:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 
 module.exports = {
 
@@ -131,6 +180,7 @@ module.exports = {
     getDiscountPage,
     getStaffPage,
     getCustomerDetailsModal,
+    searchUsers,  
 
     // put methods
     updateBlockStatus,

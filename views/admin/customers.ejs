@@ -19,7 +19,8 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input id="searchInput" type="text" placeholder="Search customers..." aria-label="Search customers" autocomplete="off">
+        <input id="searchInput" type="text" placeholder="Search customers..." aria-label="Search customers"
+          autocomplete="off">
         <button id="clearBtn" style="display:none;">×</button>
 
       </div>
@@ -33,12 +34,14 @@
           <option>Returning Customers</option>
           <option>VIP Customers</option>
         </select>
-        <select class="filter-select">
-          <option>Sort By: Date Joined</option>
-          <option>Sort By: Total Spent</option>
-          <option>Sort By: Orders Count</option>
-          <option>Sort By: Name (A-Z)</option>
-        </select>
+        <form method="GET" action="/admin/customers">
+          <select class="filter-select" name="sort" onchange="this.form.submit()">
+            <option value="name" <%=sort==='name' ? 'selected' : '' %>>Sort By:Name (A-Z)</option>
+            <option value="date" <%=sort==='date' ? 'selected' : '' %>>Sort By:Date Joined</option>
+            <option value="count" <%=sort==='count' ? 'selected' : '' %>>Sort By:Total Count</option>
+          </select>
+        </form>
+
       </div>
       <button class="btn" id="add-customer-btn" type="button" data-toggle="modal" data-target="#customer-modal">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -50,60 +53,88 @@
       </button>
     </div>
 
-    <% users.forEach(user=> { %>
-      <div class="customer-card">
-        <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
-        <div class="customer-info">
-          <h3 class="customer-name">
-            <%= user.name %>
-          </h3>
-          <div class="customer-email">
-            <%= user.email %>
+    <div class="customers-content" id="user-list">
+      <% users.forEach(user=> { %>
+        <div class="customer-card">
+          <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
+          <div class="customer-info">
+            <h3 class="customer-name">
+              <%= user.name %>
+            </h3>
+            <div class="customer-email">
+              <%= user.email %>
+            </div>
+            <div class="customer-stats">
+              <div>Total Orders: <%= user.totalOrders || 0 %>
+              </div>
+              <div>Total Spent: $<%= (user.totalSpent || 0).toFixed(2) %>
+              </div>
+              <div>Member Since: <%= user.createdAt.toDateString() %>
+              </div>
+            </div>
           </div>
-          <div class="customer-stats">
-            <div>Total Orders: <%= user.totalOrders || 0 %>
-            </div>
-            <div>Total Spent: $<%= (user.totalSpent || 0).toFixed(2) %>
-            </div>
-            <div>Member Since: <%= user.createdAt.toDateString() %>
-            </div>
+          <div class="customer-actions">
+
+            <!-- view button -->
+            <button type="button" class="btn btn-sm view-btn" data-id="<%= user._id %>">
+              View
+            </button>
+
+            <!-- edit button -->
+            <button class="btn btn-sm btn-secondary edit-btn" data-id="<%= user._id %>">
+              Edit
+            </button>
           </div>
         </div>
-        <div class="customer-actions">
+        <% }) %>
 
-          <!-- view button -->
-          <button type="button" class="btn btn-sm view-btn" data-id="<%= user._id %>">
-            View
-          </button>
-
-          <!-- edit button -->
-          <button class="btn btn-sm btn-secondary edit-btn" data-id="<%= user._id %>">
-            Edit
-          </button>
-        </div>
-      </div>
-      <% }) %>
+    </div>
 
 
 
-        <div class="pagination">
-          <a href="#" class="pagination-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </a>
-          <a href="#" class="pagination-item active">1</a>
-          <a href="#" class="pagination-item">2</a>
-          <a href="#" class="pagination-item">3</a>
-          <a href="#" class="pagination-item">4</a>
-          <a href="#" class="pagination-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </a>
-        </div>
+
+
+    <div class="pagination">
+      <% if (currentPage> 1) { %>
+        <a href="?page=<%= currentPage - 1 %>" class="pagination-item">&lt;</a>
+        <% } %>
+
+          <% if (currentPage> 2) { %>
+            <span class="pagination-item">...</span>
+            <% } %>
+
+              <% if (currentPage> 1) { %>
+                <a href="?page=<%= currentPage - 1 %>" class="pagination-item">
+                  <%= currentPage - 1 %>
+                </a>
+                <% } %>
+
+                  <span class="pagination-item active">
+                    <%= currentPage %>
+                  </span>
+
+                  <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= parseInt(currentPage) + 1 %>" class="pagination-item">
+                      <%= parseInt(currentPage) + 1 %>
+                    </a>
+                    <% } %>
+
+                      <% if (currentPage < totalPages - 1) { %>
+                        <span class="pagination-item">...</span>
+                        <% } %>
+
+                          <% if (currentPage < totalPages) { %>
+                            <a href="?page=<%= parseInt(currentPage) + 1 %>" class="pagination-item">&gt;</a>
+                            <% } %>
+    </div>
+
+
+
+
+
+
+
+
   </div>
 
 
@@ -111,14 +142,7 @@
 
   <!-- Include modal -->
 
-  <!-- <%- include('../admin/customer-modal',{ users:users }) %> -->
-
-    <script>
-
-    </script>
-
-
-
+  <%- include('../admin/customer-modal',{ users:users }) %>
 
 
     <script src="/js/admin_js/customer.js"></script>
