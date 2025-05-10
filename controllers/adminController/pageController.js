@@ -21,7 +21,7 @@ const getOrderPage = (req, res) => {
 }
 
 const getProductPage = (req, res) => {
-    res.render('admin/products');
+    res.render('admin/products',{currentPage:2,totalPages:10    });
 }
 
 const getSettingsPage = (req, res) => {

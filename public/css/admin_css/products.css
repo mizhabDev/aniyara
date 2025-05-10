@@ -1,12 +1,40 @@
+:root {
+  /* Colors */
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --secondary: #64748b;
+  --dark: #1e293b;
+  --gray: #94a3b8;
+  --gray-light: #f1f5f9;
+  --border: #e2e8f0;
+  --white: #ffffff;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  /* Font */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 5px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+}
+
 /* Products Page Layout */
 #products-page {
   margin-left: 260px;
-  /* Match sidebar width */
   padding: var(--spacing-lg);
   background-color: var(--gray-light);
-  min-height: 500px;
-  display: block;
-  /* Force display */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+ 
 }
 
 #product-active-clr {
@@ -22,6 +50,12 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+
+  margin-bottom: var(--spacing-xl);
+  background: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
 }
 
 .page-title {
@@ -62,7 +96,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .filter-group {
@@ -185,7 +219,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: var(--spacing-xl);
+  margin-top: auto;
   gap: var(--spacing-xs);
   position: sticky;
   bottom: 0;
@@ -204,15 +238,10 @@
   border-radius: 6px;
   color: var(--secondary);
   transition: all 0.2s ease;
-}
-
-
-
-.pagination-item {
-  /* existing styles */
   font-size: 14px;
   cursor: pointer;
 }
+
 
 .pagination-item:hover {
   background-color: #f0f0f0;
