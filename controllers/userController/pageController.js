@@ -315,7 +315,7 @@ const signup = async (req, res) => {
     try {
         const { name, email, password, confirmPassword } = req.body;
 
-        if (password >= 6) {
+        if (!password >= 6) {
             req.flash('error', 'Atlest 6 charater should be there');
             return res.redirect('/login');
         }

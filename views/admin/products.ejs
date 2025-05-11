@@ -370,7 +370,7 @@
 
 
 
-  <script>
+  <!-- <script>
 
     let uploadedImageInfo = null; // Will store publicId and url after upload
 
@@ -523,6 +523,209 @@
       }
     });
 
+  </script> -->
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  // DOM elements
+  const uploadContainer = document.getElementById('upload-container');
+  const previewContainer = document.getElementById('preview-container');
+  const imagePreview = document.getElementById('image-preview');
+  const imageName = document.getElementById('image-name');
+  const removeImage = document.getElementById('remove-image');
+  const fileInput = document.getElementById('product-image');
+  const imageUrlInput = document.getElementById('product-image-url');
+  const progressBar = document.querySelector('.progress-bar');
+  const uploadError = document.querySelector('.upload-error');
+  const uploadSuccess = document.querySelector('.upload-success');
+  const cancelModalBtn = document.getElementById('cancelModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+
+  // Show upload container initially, hide preview
+  previewContainer.style.display = 'none';
+  uploadError.style.display = 'none';
+  uploadSuccess.style.display = 'none';
+
+  // Handle click on upload container
+  uploadContainer.addEventListener('click', function () {
+    fileInput.click();
+  });
+
+  // Handle drag and drop events
+  uploadContainer.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    uploadContainer.classList.add('dragover');
+  });
+
+  uploadContainer.addEventListener('dragleave', function () {
+    uploadContainer.classList.remove('dragover');
+  });
+
+  uploadContainer.addEventListener('drop', function (e) {
+    e.preventDefault();
+    uploadContainer.classList.remove('dragover');
+
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      handleFileSelect(e.dataTransfer.files[0]);
+    }
+  });
+
+  // Handle file selection
+  fileInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+      handleFileSelect(this.files[0]);
+    }
+  });
+
+  // Handle remove image button
+  removeImage.addEventListener('click', function (e) {
+    e.preventDefault();
+    resetImageUpload();
+
+    // If there's a public_id stored, you can delete from Cloudinary
+    const publicId = imageUrlInput.dataset.publicId;
+    if (publicId) {
+      deleteFromCloudinary(publicId);
+    }
+  });
+
+  // Handle cancel modal button
+  cancelModalBtn.addEventListener('click', function () {
+    resetImageUpload();
+    closeModal();
+  });
+
+  // Handle close modal button
+  closeModalBtn.addEventListener('click', function () {
+    resetImageUpload();
+    closeModal();
+  });
+
+  function resetImageUpload() {
+    fileInput.value = '';
+    imageUrlInput.value = '';
+    imageUrlInput.dataset.publicId = '';
+    previewContainer.style.display = 'none';
+    uploadContainer.style.display = 'block';
+    uploadContainer.querySelector('.upload-icon').style.display = 'block';
+    uploadContainer.querySelector('.upload-text').style.display = 'block';
+    uploadContainer.querySelector('.upload-progress').style.display = 'none';
+    progressBar.style.width = '0%';
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+  }
+
+  // Handle file selection and upload to Cloudinary
+  function handleFileSelect(file) {
+    // Display file name
+    imageName.textContent = file.name;
+
+    // Validate file type
+    if (!file.type.match('image.*')) {
+      showError('Please select an image file');
+      return;
+    }
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      imagePreview.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    // Show upload progress
+    uploadContainer.querySelector('.upload-icon').style.display = 'none';
+    uploadContainer.querySelector('.upload-text').style.display = 'none';
+    uploadContainer.querySelector('.upload-progress').style.display = 'block';
+    simulateProgress(); // For visual feedback during upload
+
+    // Upload to Cloudinary
+    uploadToCloudinary(file);
+  }
+
+  function uploadToCloudinary(file) {
+    // Create form data - IMPORTANT: Use 'image' as the field name to match backend
+    const formData = new FormData();
+    formData.append('image', file);
+
+    // Send to server endpoint that handles Cloudinary upload
+    fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Handle successful upload
+        imageUrlInput.value = data.imageUrl || data.secure_url;
+        
+        // Store the public_id for potential deletion
+        if (data.public_id) {
+          imageUrlInput.dataset.publicId = data.public_id;
+        }
+
+        // Show success message
+        uploadSuccess.style.display = 'block';
+        setTimeout(() => {
+          // Hide upload container, show preview container
+          uploadContainer.style.display = 'none';
+          previewContainer.style.display = 'flex';
+          // Reset progress bar and messages
+          progressBar.style.width = '0%';
+          uploadSuccess.style.display = 'none';
+        }, 1000);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showError('Failed to upload image. Please try again.');
+        resetImageUpload();
+      });
+  }
+
+  function deleteFromCloudinary(publicId) {
+    if (!publicId) return;
+    
+    fetch(`/api/upload/${publicId}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Image deleted from Cloudinary:', data);
+      })
+      .catch(error => {
+        console.error('Error deleting image:', error);
+      });
+  }
+
+  function showError(message) {
+    uploadError.textContent = message;
+    uploadError.style.display = 'block';
+    setTimeout(() => {
+      uploadError.style.display = 'none';
+    }, 3000);
+  }
+
+  // For simulating upload progress for visual feedback
+  function simulateProgress() {
+    let width = 0;
+    const interval = setInterval(() => {
+      if (width >= 100) {
+        clearInterval(interval);
+      } else {
+        width += 5;
+        progressBar.style.width = width + '%';
+      }
+    }, 100);
+  }
+});
   </script>
 
 

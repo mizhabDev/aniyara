@@ -64,46 +64,10 @@ app.use("/", userRoutes);
 const adminRoutes=require("./routes/adminRoutes");
 app.use("/admin",adminRoutes);
 
-// Cloudinary Routes
+// Cloudinary Routes - used to handle based image routes 
 const uploadRoutes = require("./routes/uploadRoutes")
 app.use("/api",uploadRoutes);
 
-
-// API endpoint for file uploads
-
-const { upload, cloudinary }=require('./config/cloudinary')
-
-app.post('/api/upload', upload.single('file'), async (req, res) => {
-  try {
-
-    // Upload file to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'product_images', // Optional: store images in a specific folder
-      transformation: [
-        { width: 800, crop: 'limit' } // Optional: resize images
-      ]
-    });
-    
-    // Delete the file from local storage
-    fs.unlinkSync(req.file.path);
-
-      // Log successful upload
-    console.log('Cloudinary upload successful:', result.secure_url);
-    
-    // Return Cloudinary URL to client
-    res.json({
-      success: true,
-      secure_url: result.secure_url,
-      public_id: result.public_id
-    });
-  } catch (err) {
-    console.error('Error uploading to Cloudinary:', err);
-    res.status(500).json({
-      success: false,
-      message: 'Error uploading image'
-    });
-  }
-});
 
 
 
