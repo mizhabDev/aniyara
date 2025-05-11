@@ -166,18 +166,6 @@ const loadPnfPage = (req, res) => {
     }   
 }
 
-const loadLoginPage = async (req, res) => {
-    try {
-        return res.render('user/login', {
-            errorMessage: req.flash('error_msg'),
-            successMessage: req.flash('success_msg')
-        });
-    } catch (error) {
-        console.error('Error loading login page:', error);
-        res.status(500).send('Internal Server Error');
-    }
-}
-
 
 const loadWishlistPage = (req, res) =>{
     try {
@@ -200,36 +188,126 @@ const loadUserPage = (req, res) => {
 
 // sign up page
 
+// const login = async (req, res) => {
+//     try {
+//         const { email, password } = req.body;
+
+//         if (!email || !password) {
+//             req.flash('error_msg', 'All fields are required');
+//             return res.redirect('/login');
+//         }
+
+//         const user = await User.findOne({ email });
+//         if (!user) {
+//             req.flash('error_msg', 'Invalid email or password');
+//             return res.redirect('/login');
+//         }
+
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if (!isMatch) {
+//             req.flash('error_msg', 'Invalid email or password');
+//             return res.redirect('/login');
+//         }
+
+//         req.session.user = user;
+//         req.session.userLoggedIn = true;
+//         req.flash('success_msg', 'Welcome back! You have successfully logged in.');
+//         return res.redirect('/');
+
+//     } catch (error) {
+//         console.error('Login error:', error);
+//         req.flash('error_msg', 'An error occurred while logging in');
+//         return res.redirect('/login');
+//     }
+// };
+
+// const signup = async (req, res) => {
+//     try {
+//         const { name, email, password, confirmPassword } = req.body;
+
+//         if (!name || !email || !password || !confirmPassword) {
+//             req.flash('error_msg', 'All fields are required');
+//             return res.redirect('/login');
+//         }
+
+//         if (password !== confirmPassword) {
+//             req.flash('error_msg', 'Passwords do not match');
+//             return res.redirect('/login');
+//         }
+
+//         const existingUser = await User.findOne({ email });
+//         if (existingUser) {
+//             req.flash('error_msg', 'Email is already registered');
+//             return res.redirect('/login');
+//         }
+
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         const user = new User({
+//             name,
+//             email,
+//             password: hashedPassword
+//         });
+
+//         await user.save();
+//         req.session.user = user;
+//         req.session.userLoggedIn = true;
+//         req.flash('success_msg', 'Account created successfully! Welcome to Aniyara.');
+//         return res.redirect('/');
+
+//     } catch (error) {
+//         console.error('Signup error:', error);
+//         req.flash('error_msg', 'An error occurred while creating your account');
+//         return res.redirect('/login');
+//     }
+// };
+
+
+// const loadLoginPage = async (req, res) => {
+//     try {
+
+//         res.render('user/login');
+//     } catch (error) {
+//         console.error('Error loading login page:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// };
+const loadLoginPage = async (req, res) => {
+    try {
+        res.render('user/login');
+    } catch (error) {
+        console.error('Error loading login page:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            req.flash('error_msg', 'All fields are required');
+            req.flash('error', 'All fields are required');
             return res.redirect('/login');
         }
 
         const user = await User.findOne({ email });
         if (!user) {
-            req.flash('error_msg', 'Invalid email or password');
+            req.flash('error', 'Invalid email or password');
             return res.redirect('/login');
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            req.flash('error_msg', 'Invalid email or password');
+            req.flash('error', 'Invalid email or password');
             return res.redirect('/login');
         }
 
         req.session.user = user;
         req.session.userLoggedIn = true;
-        req.flash('success_msg', 'Welcome back! You have successfully logged in.');
-        return res.redirect('/');
-
+        req.flash('success', 'Welcome back!');
+        res.redirect('/');
     } catch (error) {
         console.error('Login error:', error);
-        req.flash('error_msg', 'An error occurred while logging in');
-        return res.redirect('/login');
+        req.flash('error', 'An error occurred during login');
+        res.redirect('/login');
     }
 };
 
@@ -237,19 +315,19 @@ const signup = async (req, res) => {
     try {
         const { name, email, password, confirmPassword } = req.body;
 
-        if (!name || !email || !password || !confirmPassword) {
-            req.flash('error_msg', 'All fields are required');
+        if (password >= 6) {
+            req.flash('error', 'Atlest 6 charater should be there');
             return res.redirect('/login');
         }
 
         if (password !== confirmPassword) {
-            req.flash('error_msg', 'Passwords do not match');
+            req.flash('error', 'Passwords do not match');
             return res.redirect('/login');
         }
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            req.flash('error_msg', 'Email is already registered');
+            req.flash('error', 'Email already registered');
             return res.redirect('/login');
         }
 
@@ -263,15 +341,15 @@ const signup = async (req, res) => {
         await user.save();
         req.session.user = user;
         req.session.userLoggedIn = true;
-        req.flash('success_msg', 'Account created successfully! Welcome to Aniyara.');
-        return res.redirect('/');
-
+        req.flash('success', 'Account created successfully!');
+        res.redirect('/');
     } catch (error) {
         console.error('Signup error:', error);
-        req.flash('error_msg', 'An error occurred while creating your account');
-        return res.redirect('/login');
+        req.flash('error', 'An error occurred during signup');
+        res.redirect('/login');
     }
 };
+
 
 // Exporting the functions to be used in routes
 

@@ -112,6 +112,8 @@
   </div>
 
   <!-- Add New Product Modal - Hidden by default -->
+
+  <!--   
   <div class="modal-overlay" id="productModal">
     <div class="modal">
       <div class="modal-header">
@@ -183,7 +185,104 @@
       </div>
     </div>
   </div>
+ -->
 
+  <!-- Add New Product Modal - Enhanced with Cloudinary Upload -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Product</h2>
+        <button class="close-button" id="closeModalBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="add-product-form">
+          <div class="form-group">
+            <label for="product-name">Product Name</label>
+            <input type="text" id="product-name" class="form-control" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-price">Price ($)</label>
+              <input type="number" id="product-price" class="form-control" step="0.01" min="0" required>
+            </div>
+            <div class="form-group">
+              <label for="product-stock">Stock Quantity</label>
+              <input type="number" id="product-stock" class="form-control" min="0" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="product-category">Category</label>
+            <select id="product-category" class="form-control" required>
+              <option value="">Select a category</option>
+              <option value="electronics">Electronics</option>
+              <option value="furniture">Furniture</option>
+              <option value="audio">Audio</option>
+              <option value="camera">Camera</option>
+              <option value="wearables">Wearables</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="product-description">Description</label>
+            <textarea id="product-description" class="form-control"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Product Image</label>
+            <input type="file" id="product-image" accept="image/*" style="display:none;">
+            <div class="image-upload" id="upload-container">
+              <div class="upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                  stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <p class="upload-text">Drag and drop an image here, or click to browse</p>
+              <div class="upload-progress">
+                <div class="progress-bar"></div>
+              </div>
+              <p class="upload-error">Error uploading image. Please try again.</p>
+              <p class="upload-success">Image uploaded successfully!</p>
+            </div>
+            <!-- Image preview area -->
+            <div class="image-preview-container" id="preview-container">
+              <img src="" alt="Product preview" class="image-preview" id="image-preview">
+              <div class="preview-details">
+                <span id="image-name">filename.jpg</span>
+                <button type="button" class="remove-image" id="remove-image">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"></path>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                  Remove
+                </button>
+              </div>
+            </div>
+            <!-- Hidden input to store Cloudinary URL -->
+            <input type="hidden" id="product-image-url" name="productImageUrl">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancelModalBtn">Cancel</button>
+        <button class="btn btn-primary" type="submit" form="add-product-form" id="submit-product">
+          Add Product
+        </button>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -268,6 +367,164 @@
       </div>
     </div>
   </div>
+
+
+
+  <script>
+
+    let uploadedImageInfo = null; // Will store publicId and url after upload
+
+    // Client-side JavaScript for handling file uploads to Cloudinary
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // DOM elements
+      const uploadContainer = document.getElementById('upload-container');
+      const previewContainer = document.getElementById('preview-container');
+      const imagePreview = document.getElementById('image-preview');
+      const imageName = document.getElementById('image-name');
+      const removeImage = document.getElementById('remove-image');
+      const fileInput = document.getElementById('product-image');
+      const imageUrlInput = document.getElementById('product-image-url');
+      const progressBar = document.querySelector('.progress-bar');
+      const uploadError = document.querySelector('.upload-error');
+      const uploadSuccess = document.querySelector('.upload-success');
+
+      // Show upload container initially, hide preview
+      previewContainer.style.display = 'none';
+      uploadError.style.display = 'none';
+      uploadSuccess.style.display = 'none';
+
+      // Handle click on upload container
+      uploadContainer.addEventListener('click', function () {
+        fileInput.click();
+      });
+
+      // Handle drag and drop events
+      uploadContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        uploadContainer.classList.add('dragover');
+      });
+
+      uploadContainer.addEventListener('dragleave', function () {
+        uploadContainer.classList.remove('dragover');
+      });
+
+      uploadContainer.addEventListener('drop', function (e) {
+        e.preventDefault();
+        uploadContainer.classList.remove('dragover');
+
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          handleFileSelect(e.dataTransfer.files[0]);
+        }
+      });
+
+      // Handle file selection
+      fileInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+          handleFileSelect(this.files[0]);
+        }
+      });
+
+      // Handle remove image button
+      removeImage.addEventListener('click', function () {
+        fileInput.value = '';
+        imageUrlInput.value = '';
+        previewContainer.style.display = 'none';
+        uploadContainer.style.display = 'block';
+      });
+
+      // Handle file selection and upload to Cloudinary
+      function handleFileSelect(file) {
+        // Display file name
+        imageName.textContent = file.name;
+
+        // Validate file type
+        if (!file.type.match('image.*')) {
+          showError('Please select an image file');
+          return;
+        }
+
+        // Create preview
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // Show upload progress
+        uploadContainer.querySelector('.upload-icon').style.display = 'none';
+        uploadContainer.querySelector('.upload-text').style.display = 'none';
+        uploadContainer.querySelector('.upload-progress').style.display = 'block';
+
+        // Upload to Cloudinary
+        uploadToCloudinary(file);
+      }
+
+      function uploadToCloudinary(file) {
+        // Create form data
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // Send to server endpoint that handles Cloudinary upload
+        fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Handle successful upload
+            imageUrlInput.value = data.secure_url;
+
+            // Show success message
+            uploadSuccess.style.display = 'block';
+            setTimeout(() => {
+              // Hide upload container, show preview container
+              uploadContainer.style.display = 'none';
+              previewContainer.style.display = 'flex';
+              // Reset progress bar and messages
+              progressBar.style.width = '0%';
+              uploadSuccess.style.display = 'none';
+              uploadContainer.querySelector('.upload-icon').style.display = 'block';
+              uploadContainer.querySelector('.upload-text').style.display = 'block';
+              uploadContainer.querySelector('.upload-progress').style.display = 'none';
+            }, 1000);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            showError('Failed to upload image. Please try again.');
+          });
+      }
+
+      function showError(message) {
+        uploadError.textContent = message;
+        uploadError.style.display = 'block';
+        setTimeout(() => {
+          uploadError.style.display = 'none';
+        }, 3000);
+      }
+
+      // For simulating upload progress (remove in production)
+      function simulateProgress() {
+        let width = 0;
+        const interval = setInterval(() => {
+          if (width >= 100) {
+            clearInterval(interval);
+          } else {
+            width += 5;
+            progressBar.style.width = width + '%';
+          }
+        }, 100);
+      }
+    });
+
+  </script>
+
 
 
 

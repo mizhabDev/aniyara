@@ -430,3 +430,218 @@
   color: #00ccff !important;
   /* Light Blue */
 }
+
+
+
+/* some of them are not important or duplicated find them */
+
+
+.modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background-color: white;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .btn-outline {
+      background-color: white;
+      border: 1px solid #d1d5db;
+      color: #4b5563;
+    }
+
+    .btn-outline:hover {
+      background-color: #f9fafb;
+    }
+
+    .btn-primary {
+      background-color: #3b82f6;
+      border: 1px solid #3b82f6;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+
+    /* Enhanced image upload styling */
+    .image-upload {
+      border: 2px dashed #d1d5db;
+      border-radius: 6px;
+      padding: 30px;
+      text-align: center;
+      background-color: #f9fafb;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .image-upload:hover {
+      border-color: #93c5fd;
+      background-color: #f0f9ff;
+    }
+
+    .upload-icon {
+      margin-bottom: 10px;
+    }
+
+    .upload-text {
+      margin: 0;
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    /* New styles for image preview */
+    .image-preview-container {
+      margin-top: 15px;
+      display: none;
+    }
+
+    .image-preview {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .preview-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .remove-image {
+      color: #ef4444;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      padding: 0;
+    }
+
+    .upload-progress {
+      width: 100%;
+      height: 6px;
+      background-color: #e5e7eb;
+      border-radius: 3px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: #3b82f6;
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    /* Error and success messages */
+    .upload-error {
+      margin-top: 10px;
+      color: #dc2626;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .upload-success {
+      margin-top: 10px;
+      color: #10b981;
+      font-size: 0.85rem;
+      display: none;
+    }

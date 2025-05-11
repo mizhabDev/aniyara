@@ -337,7 +337,8 @@
     }
        else {
         // Show error message
-        showToast('error', 'Failed to add customer - ' + result.message);
+        showToast('error', 'Failed to add customer - ' + (result.error || result.message || 'Unknown error'));
+
         console.error('Failed to add customer');
 
       }

@@ -21,7 +21,7 @@ const getOrderPage = (req, res) => {
 }
 
 const getProductPage = (req, res) => {
-    res.render('admin/products',{currentPage:2,totalPages:10    });
+    res.render('admin/products', { currentPage: 2, totalPages: 10 });
 }
 
 const getSettingsPage = (req, res) => {
@@ -34,39 +34,39 @@ const getTransactionPage = (req, res) => {
 
 
 const getCustomersPage = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = 1;
-  const sortOption = req.query.sort || 'name';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 1;
+    const sortOption = req.query.sort || 'name';
 
-  let sortBy;
+    let sortBy;
 
-  if (sortOption === 'date') {
-    sortBy = { createdAt: -1 }; // latest joined first
-  } else if (sortOption === 'count') {
-    sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
-  } else {
-    sortBy = { name: 1 }; // default to A-Z
-  }
+    if (sortOption === 'date') {
+        sortBy = { createdAt: -1 }; // latest joined first
+    } else if (sortOption === 'count') {
+        sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
+    } else {
+        sortBy = { name: 1 }; // default to A-Z
+    }
 
-  try {
-    const totalUsers = await User.countDocuments();
-    const totalPages = Math.ceil(totalUsers / limit);
+    try {
+        const totalUsers = await User.countDocuments();
+        const totalPages = Math.ceil(totalUsers / limit);
 
-    const users = await User.find({})
-      .sort(sortBy)
-      .skip((page - 1) * limit)
-      .limit(limit);
+        const users = await User.find({})
+            .sort(sortBy)
+            .skip((page - 1) * limit)
+            .limit(limit);
 
-    res.render('admin/customers', {
-      users,
-      currentPage: page,
-      totalPages,
-      sort: sortOption
-    });
-  } catch (error) {
-    console.error("Error fetching customers:", error);
-    res.status(500).send("Internal Server Error");
-  }
+        res.render('admin/customers', {
+            users,
+            currentPage: page,
+            totalPages,
+            sort: sortOption
+        });
+    } catch (error) {
+        console.error("Error fetching customers:", error);
+        res.status(500).send("Internal Server Error");
+    }
 };
 
 
@@ -126,6 +126,25 @@ const updateBlockStatus = async (req, res) => {
 const addCustomer = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body;
+        // Name validation
+        if (!name || name.length < 3) {
+            return res.status(400).json({ error: 'Name must be at least 3 characters long' });
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Invalid email address' });
+        }
+
+        // Password validation
+        if (!password || password.length < 6) {
+            return res.status(400).json({ error: 'Password must be at least 6 characters long' });
+        }
+        if (phone && !/^\d{10}$/.test(phone)) {
+            return res.status(400).json({ error: 'Phone must be a 10-digit number if provided' });
+        }
+
 
         const hashedPassword = await bcrypt.hash(password, 10); // 
 
@@ -180,7 +199,7 @@ module.exports = {
     getDiscountPage,
     getStaffPage,
     getCustomerDetailsModal,
-    searchUsers,  
+    searchUsers,
 
     // put methods
     updateBlockStatus,

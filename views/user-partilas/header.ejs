@@ -486,6 +486,17 @@
     </div>
   </div>
 
+  <div class="flash-messages">
+                        <% if (message) { %>
+                            <div class="alert alert-error">
+                                <span class="alert-message">
+                                    <%= message%>
+                                </span>
+                            </div>
+                            <% } %>
+
+                    </div>
+
   <script>
     // Mobile menu functionality
     const hamburger = document.getElementById('hamburger');
@@ -498,6 +509,31 @@
 
     closeMenu.addEventListener('click', () => {
       mobileMenu.classList.remove('active');
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      // FLASH MESSAGE 
+            const flashMessages = document.querySelectorAll('.alert');
+            if (flashMessages.length > 0) {
+                flashMessages.forEach(message => {
+                    // Animate in
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-10px)';
+
+                    requestAnimationFrame(() => {
+                        message.style.opacity = '1';
+                        message.style.transform = 'translateY(0)';
+                    });
+
+                    // Fade out after 5 seconds
+                    setTimeout(() => {
+                        message.classList.add('fade-out');
+                        setTimeout(() => {
+                            message.remove();
+                        }, 300);
+                    }, 3000);
+                });
+            }
+
     });
   </script>
 </body>

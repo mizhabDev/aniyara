@@ -9,15 +9,20 @@
 
 </head>
 <style>
-    
-    
+
+
 </style>
 
 <body>
 
+
+
+
     <div class="container" id="container">
         <div class="form-container signup-container">
             <form class="form" action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
+
+
 
                 <div class="logo">ANIYARA</div>
                 <h1>Create Account</h1>
@@ -25,24 +30,27 @@
 
                 <div class="form-group">
                     <span class="input-icon">👤</span>
-                    <input type="text" id="signup-name" name="name" placeholder="Full Name" required />
+                    <input type="text" id="signup-name" name="name" placeholder="Full Name" minlength="2"
+                        pattern="[A-Za-z ]+" title="Letters and spaces only" required />
                 </div>
 
                 <div class="form-group">
                     <span class="input-icon">📧</span>
-                    <input type="email" id="signup-email" name="email" placeholder="Email Address" required />
+                    <input type="email" id="signup-email" name="email" placeholder="Email Address"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email" required />
                 </div>
 
                 <div class="form-group">
                     <span class="input-icon">🔒</span>
-                    <input type="password" id="signup-password" name="password" placeholder="Password" required />
+                    <input type="password" id="signup-password" name="password" placeholder="Password" minlength="6"
+                        required />
                     <span class="password-toggle">👁️</span>
                 </div>
 
                 <div class="form-group">
                     <span class="input-icon">🔒</span>
                     <input type="password" id="signup-confirm-password" name="confirmPassword"
-                        placeholder="Confirm Password" required />
+                        placeholder="Confirm Password" minlength="6" required />
                     <span class="password-toggle">👁️</span>
                 </div>
 
@@ -65,6 +73,8 @@
         <div class="form-container login-container">
 
             <form class="form" action="/login" method="POST">
+
+
 
                 <div class="logo">ANIYARA</div>
                 <h1>Sign In</h1>
@@ -107,42 +117,52 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
 
-                    <% if (message && message.length> 0) { %>
-                        <div class="alert flash-message" style="color: red; margin-bottom: 10px;">
-                            <%= message %>
-                        </div>
+                    <div class="flash-messages">
+                        <% if (message) { %>
+                            <div class="alert alert-error">
+                                <span class="alert-icon">⚠️</span>
+                                <span class="alert-message">
+                                    <%= message %>
+                                </span>
+                            </div>
+                            <% } %>
 
-                        <% } %>
+                    </div>
 
 
+                    <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
+                    <h1>Already a Member?</h1>
+                    <p class="form-subtitle">Sign in to access your account and continue
+                        shopping your favorite
+                        products!</p>
 
-
-                            <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
-                            <h1>Already a Member?</h1>
-                            <p class="form-subtitle">Sign in to access your account and continue shopping your favorite
-                                products!</p>
-
-                            <button class="ghost" id="signIn">SIGN IN</button>
+                    <button class="ghost" id="signIn">SIGN IN</button>
                 </div>
 
 
                 <div class="overlay-panel overlay-right">
 
-                    <% if (message && message.length> 0) { %>
-                        <div class="alert flash-message" style="color: red; margin-bottom: 10px;">
-                            <%= message %>
-                        </div>
 
-                        <% } %>
+                    <div class="flash-messages">
+                        <% if (message) { %>
+                            <div class="alert alert-error">
+                                <span class="alert-message">
+                                    <%= message%>
+                                </span>
+                            </div>
+                            <% } %>
+
+                    </div>
 
 
-                            <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
-                            <h1>New to Aniyara?</h1>
-                            <p class="form-subtitle">Sign up now and discover our amazing collection of jewelry,
-                                cosmetics,
-                                gifts and more!</p>
+                    <img src="/images/homeImage/logo.png" alt="Welcome Illustration" class="welcome-image" />
+                    <h1>New to Aniyara?</h1>
+                    <p class="form-subtitle">Sign up now and discover our amazing collection of
+                        jewelry,
+                        cosmetics,
+                        gifts and more!</p>
 
-                            <button class="ghost" id="signUp">SIGN UP</button>
+                    <button class="ghost" id="signUp">SIGN UP</button>
                 </div>
             </div>
         </div>
@@ -224,13 +244,30 @@
                 });
             }
 
-            const flashMessages = document.querySelectorAll('.flash-message');
-            flashMessages.forEach(msg => {
-                setTimeout(() => {
-                    msg.style.opacity = '0';
-                    setTimeout(() => msg.style.display = 'none', 300); // wait for fade
-                }, 5000);
-            });
+
+
+            // FLASH MESSAGE 
+            const flashMessages = document.querySelectorAll('.alert');
+            if (flashMessages.length > 0) {
+                flashMessages.forEach(message => {
+                    // Animate in
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-10px)';
+
+                    requestAnimationFrame(() => {
+                        message.style.opacity = '1';
+                        message.style.transform = 'translateY(0)';
+                    });
+
+                    // Fade out after 5 seconds
+                    setTimeout(() => {
+                        message.classList.add('fade-out');
+                        setTimeout(() => {
+                            message.remove();
+                        }, 300);
+                    }, 5000);
+                });
+            }
 
 
 
@@ -239,6 +276,29 @@
 
             // Update on window resize
             window.addEventListener('resize', updateVisibility);
+
+
+            signupForm.addEventListener('submit', function (e) {
+                const password = document.getElementById('signup-password');
+                const confirmPassword = document.getElementById('signup-confirm-password');
+
+                if (password.value !== confirmPassword.value) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                    confirmPassword.focus();
+                }
+            });
+
+
+
+            document.querySelectorAll('.password-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function () {
+                    const input = this.previousElementSibling;
+                    const type = input.type === 'password' ? 'text' : 'password';
+                    input.type = type;
+                    this.textContent = type === 'password' ? '👁️' : '👁️🗨️';
+                });
+            });
         });
     </script>
 </body>
