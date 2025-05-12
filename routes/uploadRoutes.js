@@ -1,57 +1,9 @@
-// //image upload routers
-
-// const express = require('express');
-// const router = express.Router();
-// const multer = require('multer');
-// const { storage } = require('../config/cloudinary');
-// const cloudinary = require('../utils/cloudinaryUtils.js')
-
-// const upload = multer({ storage });
-
-
-
-// // Upload single image
-// router.post('/upload', upload.single('image'), async (req, res) => {
-//     try {
-//         if (!req.file) {
-//             return res.status(400).json({ error: 'No file uploaded' });
-//         }
-
-//         const result = await uploadToCloudinary(req.file);
-//         res.json({
-//             success: true,
-//             imageUrl: result.url,
-//             public_id: result.public_id
-//         });
-//     } catch (error) {
-//         console.error('Upload error:', error);
-//         res.status(500).json({ error: 'Failed to upload image' });
-//     }
-// });
-
-// // Delete image
-// // In your Express backend
-// router.delete('/api/upload/:publicId',cloudinary.deleteFromCloudinary);
-
-// // Fetch image details
-// router.get('/image/:public_id', async (req, res) => {
-//     try {
-//         const result = await fetchFromCloudinary(req.params.public_id);
-//         res.json(result);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to fetch image details' });
-//     }
-// });
-
-// module.exports = router;
-
-
 // routes/uploadRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const { upload, cloudinary } = require('../config/cloudinary');
-const cloudinaryUtils = require('../utils/cloudinaryUtils');
 
 // Upload single image
 router.post('/upload', upload.single('image'), async (req, res) => {
@@ -70,6 +22,8 @@ router.post('/upload', upload.single('image'), async (req, res) => {
         
         // Delete the file from local storage
         fs.unlinkSync(req.file.path);
+        
+        console.log('Upload successful:', result);
 
         res.json({
             success: true,
@@ -78,36 +32,77 @@ router.post('/upload', upload.single('image'), async (req, res) => {
         });
     } catch (error) {
         console.error('Upload error:', error);
+        
+        // Try to delete the local file if it exists
+        if (req.file && req.file.path) {
+            try {
+                fs.unlinkSync(req.file.path);
+            } catch (e) {
+                console.error('Error deleting local file:', e);
+            }
+        }
+        
         res.status(500).json({ success: false, message: 'Failed to upload image' });
     }
 });
 
-// Delete image from Cloudinary
-router.delete('/upload/:publicId', async (req, res) => {
+// Delete image from Cloudinary - FIXED ROUTE PATH TO MATCH CLIENT
+router.delete('/upload/delete/:publicId', async (req, res) => {
     try {
         const { publicId } = req.params;
+        console.log('Delete request received for:', publicId);
         
-        // Delete image from Cloudinary
-        const result = await cloudinary.uploader.destroy(publicId);
+        // Try to delete with the exact publicId provided first
+        let result = await cloudinary.uploader.destroy(publicId);
+        
+        // If that fails, try with product_images/ prefix
+        if (result.result !== 'ok' && !publicId.includes('product_images/')) {
+            const fullPublicId = `product_images/${publicId}`;
+            console.log('First attempt failed, trying with prefix:', fullPublicId);
+            result = await cloudinary.uploader.destroy(fullPublicId);
+        }
+        
+        // If that fails too, try removing the prefix if it exists
+        if (result.result !== 'ok' && publicId.includes('product_images/')) {
+            const basePublicId = publicId.replace('product_images/', '');
+            console.log('Second attempt failed, trying without prefix:', basePublicId);
+            result = await cloudinary.uploader.destroy(basePublicId);
+        }
+        
+        console.log('Final delete result:', result);
         
         if (result.result === 'ok') {
             res.json({ success: true, message: 'Image deleted successfully' });
         } else {
-            res.status(400).json({ success: false, message: 'Failed to delete image' });
+            res.status(400).json({ 
+                success: false, 
+                message: 'Failed to delete image',
+                details: result 
+            });
         }
     } catch (err) {
         console.error('Error deleting from Cloudinary:', err);
-        res.status(500).json({ success: false, message: 'Error deleting image' });
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error deleting image',
+            error: err.message 
+        });
     }
 });
 
-// Fetch image details
-router.get('/image/:public_id', async (req, res) => {
+// Fetch image details (optional)
+router.get('/image/:publicId', async (req, res) => {
     try {
-        const result = await cloudinaryUtils.fetchFromCloudinary(req.params.public_id);
+        const { publicId } = req.params;
+        const result = await cloudinary.api.resource(publicId);
         res.json(result);
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to fetch image details' });
+        console.error('Error fetching image details:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to fetch image details',
+            error: error.message 
+        });
     }
 });
 
