@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const { upload, cloudinary } = require('../config/cloudinary');
+const Product = require('../models/productSchema')
 
 // Upload single image
 router.post('/upload', upload.single('image'), async (req, res) => {
@@ -45,6 +46,51 @@ router.post('/upload', upload.single('image'), async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to upload image' });
     }
 });
+
+// Add this to your product routes
+router.post('/products', async (req, res) => {
+  try {
+    const { 
+      name, 
+      price, 
+      stock, 
+      category, 
+      description,
+      imageUrl,
+      imagePublicId
+    } = req.body;
+
+    const productData = {
+      name,
+      price: Number(price),
+      stock: Number(stock),
+      category,
+      description,
+      image: {
+        url: imageUrl,
+        public_id: imagePublicId,
+        alt: `Image of ${name}` // Generate alt text automatically
+      }
+    };
+
+    const product = new Product(productData);
+    await product.save();
+
+    res.status(201).json({
+      success: true,
+      product
+    });
+  } catch (error) {
+    console.error('Error creating product:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating product',
+      error: error.message
+    });
+  }
+});
+
+
 
 // Delete image from Cloudinary - FIXED ROUTE PATH TO MATCH CLIENT
 router.delete('/upload/delete/:publicId', async (req, res) => {

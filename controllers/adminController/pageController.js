@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../models/userModel');
-const { name } = require('ejs');
+const Product = require('../../models/productSchema')
+
 
 
 // controllers/adminController.js
@@ -20,8 +21,40 @@ const getOrderPage = (req, res) => {
     res.render('admin/orders');
 }
 
-const getProductPage = (req, res) => {
-    res.render('admin/products', { currentPage: 2, totalPages: 10 });
+const getProductPage = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 16;
+    const sortOption = req.query.sort || 'name';
+
+    let sortBy;
+
+    if (sortOption === 'date') {
+        sortBy = { createdAt: -1 }; // latest joined first
+    } else if (sortOption === 'count') {
+        sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
+    } else {
+        sortBy = { name: 1 }; // default to A-Z
+    }
+
+    try {
+        const totalUsers = await Product.countDocuments();
+        const totalPages = Math.ceil(totalUsers / limit);
+
+        const products = await Product.find({})
+            .sort(sortBy)
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        res.render('admin/products', {
+            products,
+            currentPage: page,
+            totalPages,
+            sort: sortOption
+        });
+    } catch (error) {
+        console.error("Error fetching customers:", error);
+        res.status(500).send("Internal Server Error");
+    }
 }
 
 const getSettingsPage = (req, res) => {
@@ -35,7 +68,7 @@ const getTransactionPage = (req, res) => {
 
 const getCustomersPage = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = 1;
+    const limit = 6;
     const sortOption = req.query.sort || 'name';
 
     let sortBy;
@@ -182,6 +215,7 @@ const searchUsers = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
 
 
 module.exports = {
