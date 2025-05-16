@@ -3,7 +3,8 @@ const router = express.Router();
 const pageController = require('../controllers/userController/pageController');
 
 // user controlletr for rendering pages
-router.get('/', pageController.getHomePage);
+router.get('/',pageController.loading)
+router.get('/home', pageController.getHomePage);
 router.get('/login', pageController.loadLoginPage);
 router.get('/toys', pageController.loadToysPage);
 router.get('/gifts', pageController.loadGiftsPage);

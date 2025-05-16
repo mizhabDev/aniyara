@@ -1,0 +1,86 @@
+<style>
+    /* Preloader overlay that covers the entire page */
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); /* for Safari */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+        transition: opacity 0.5s ease-out;
+        overflow: hidden;
+
+    }
+
+    .inLoader {
+        width: 650px;
+        height: 550px;
+        color: black;
+        overflow: hidden;
+        position: relative;
+        /* background-color: rgb(81, 0, 255); */
+
+
+    }
+
+    .loader-gif {
+        top: 60px;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        clip-path: inset(30px 30px 30px 30px); /* top, right, bottom, left */
+
+    }
+
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0.5;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.5;
+        }
+    }
+</style>
+
+
+
+
+<!-- Preloader that shows the GIF -->
+
+
+<div class="preloader" id="preloader">
+    <div class="inLoader">
+        <div class="loader-container">
+            <img src="/loadingGif/enhanced_center_pause_aniyara-gimp.gif" alt="Loading..." class="loader-gif">
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    // Simulate loading time and then hide preloader
+    window.addEventListener('load', function () {
+        // You can adjust the timeout to match your needs
+        // or replace with actual loading logic
+        setTimeout(function () {
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(function () {
+                document.getElementById('preloader').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            }, 500);
+        }, 5000); // Show loading for 2 seconds
+    });
+</script>

@@ -60,10 +60,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 // Add this before your routes
-app.use((req, res, next) => {
-  console.log(`Incoming ${req.method} request to ${req.originalUrl}`);
-  next();
-});
+
 
 // User Routes
 const userRoutes = require("./routes/userRoutes");
@@ -78,7 +75,7 @@ const uploadRoutes = require("./routes/uploadRoutes")
 app.use("/api",uploadRoutes);
 
 
-
+ 
 
 
 const PORT = process.env.API_PORT || 4000;

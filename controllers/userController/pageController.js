@@ -3,7 +3,9 @@ const User = require('../../models/userModel');
 const bcrypt = require('bcryptjs');
 
 
-
+const loading = (req,res)=>{
+    res.render('loading')
+}
 
 const getHomePage = (req, res) => {
     const productSections = {
@@ -279,6 +281,7 @@ const loadLoginPage = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -371,6 +374,7 @@ module.exports = {
     loadLoginPage,
     loadWishlistPage,
     loadUserPage,
+    loading,
 
     // post pages
     signup,
