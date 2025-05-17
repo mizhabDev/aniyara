@@ -65,20 +65,40 @@ const getTransactionPage = (req, res) => {
     res.render('admin/transaction');
 }
 
+const loadCustomerPage = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const sort = req.query.sort || 'name';
+
+        // This renders the EJS template instead of returning JSON data
+        res.render('admin/customers', {
+            currentPage: page,
+            totalPages: 4, // This will be replaced by client-side pagination
+            sort: sort
+        });
+    } catch (error) {
+        console.error('Error rendering customers page:', error);
+        res.status(500).send('Server error');
+    }
+};
+
 
 const getCustomersPage = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 6;
     const sortOption = req.query.sort || 'name';
 
-    let sortBy;
 
-    if (sortOption === 'date') {
-        sortBy = { createdAt: -1 }; // latest joined first
-    } else if (sortOption === 'count') {
-        sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
-    } else {
-        sortBy = { name: 1 }; // default to A-Z
+    let sortBy = {};
+    switch (sortOption) {
+        case 'date':
+            sortBy = { createdAt: -1 };
+            break;
+        case 'count':
+            sortBy = { totalOrders: -1 };
+            break;
+        default:
+            sortBy = { name: 1 };
     }
 
     try {
@@ -88,9 +108,10 @@ const getCustomersPage = async (req, res) => {
         const users = await User.find({})
             .sort(sortBy)
             .skip((page - 1) * limit)
-            .limit(limit);
+            .limit(limit).lean();
 
-        res.render('admin/customers', {
+        return res.json({
+            success: true,
             users,
             currentPage: page,
             totalPages,
@@ -174,9 +195,15 @@ const addCustomer = async (req, res) => {
         if (!password || password.length < 6) {
             return res.status(400).json({ error: 'Password must be at least 6 characters long' });
         }
+
+        const oldPhone = await User.find({ phone: phone })
         if (phone && !/^\d{10}$/.test(phone)) {
             return res.status(400).json({ error: 'Phone must be a 10-digit number if provided' });
+
+        } else if (phone != oldPhone) {
+            return res.status(400).json({ error: 'Phone number alredy exit' });
         }
+
 
 
         const hashedPassword = await bcrypt.hash(password, 10); // 
@@ -197,25 +224,107 @@ const addCustomer = async (req, res) => {
     }
 }
 
+// const searchUsers = async (req, res) => {
+//     const query = req.query.query || '';
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 6;
+//     const sortOption = req.query.sort || 'name';
+
+
+//     try {
+
+//         let sortBy = {};
+//         switch (sortOption) {
+//             case 'date': sortBy = { createdAt: -1 }; break;
+//             case 'count': sortBy = { totalOrders: -1 }; break;
+//             default: sortBy = { name: 1 };
+//         }
+
+
+//         const count = await User.countDocuments({
+//             $or: [
+//                 { name: { $regex: query, $options: 'i' } },
+//                 { email: { $regex: query, $options: 'i' } },
+//                 { phone: { $regex: query, $options: 'i' } }
+//             ]
+//         });
+//         const totalPages = Math.ceil(count / limit);
+
+//         const users = await User.find({
+//             $or: [
+//                 { name: { $regex: query, $options: 'i' } }, 
+//                 { email: { $regex: query, $options: 'i' } },
+//                 { phone: { $regex: query, $options: 'i' } }
+//             ]
+//         })  .sort(sortBy)
+//             .skip((page - 1) * limit)
+
+
+
+//         setTimeout(() => {
+//             res.json({
+//                 success: true,
+//                 users,
+//                 currentPage: page,
+//                 totalPages,
+//                 sort: sortOption
+//             });
+//         }, 5000);
+
+//     } catch (err) {
+//         console.error('Search error:', err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// }
+
+
 const searchUsers = async (req, res) => {
     const query = req.query.query || '';
+    const page = parseInt(req.query.page) || 1;
+    const limit = 6;
+    const sortOption = req.query.sort || 'name';
 
     try {
-        const users = await User.find({
+        let sortBy = {};
+        switch (sortOption) {
+            case 'date': sortBy = { createdAt: -1 }; break;
+            case 'count': sortBy = { totalOrders: -1 }; break;
+            default: sortBy = { name: 1 };
+        }
+
+        const searchQuery = {
             $or: [
-                { name: { $regex: query, $options: 'i' } }, // case-insensitive match
-                { email: { $regex: query, $options: 'i' } }, // case-insensitive match
-                { phone: { $regex: query, $options: 'i' } } // case-insensitive match
+                { name: { $regex: query, $options: 'i' } },
+                { email: { $regex: query, $options: 'i' } },
+                { phone: { $regex: query, $options: 'i' } }
             ]
+        };
+
+        const count = await User.countDocuments(searchQuery);
+        const totalPages = Math.ceil(count / limit);
+
+        const users = await User.find(searchQuery)
+            .sort(sortBy)
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        // Remove the setTimeout - it's causing unnecessary delay
+        res.json({
+            success: true,
+            users,
+            currentPage: page,
+            totalPages,
+            sort: sortOption
         });
 
-        res.json(users);
     } catch (err) {
         console.error('Search error:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({
+            success: false,
+            error: 'Internal Server Error'
+        });
     }
 }
-
 
 
 module.exports = {
@@ -234,6 +343,7 @@ module.exports = {
     getStaffPage,
     getCustomerDetailsModal,
     searchUsers,
+    loadCustomerPage,
 
     // put methods
     updateBlockStatus,

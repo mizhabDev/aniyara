@@ -7,6 +7,49 @@
   <title>Customers - Aniyara</title>
   <!-- Customers Page -->
 
+  <style>
+    /* Skeleton loader animation */
+    .skeleton {
+      background: linear-gradient(90deg, #e0e0e0 25%, #f4f4f4 50%, #e0e0e0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    /* Placeholder styles */
+    .skeleton-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      margin: 8px 0;
+      width: 80%;
+    }
+
+    .skeleton-line.short {
+      width: 40%;
+    }
+
+    .skeleton-card {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+  </style>
 
 
 
@@ -54,39 +97,13 @@
     </div>
 
     <div class="customers-content" id="user-list">
-      <% users.forEach(user=> { %>
+
+      <div id="userListContainer"> 
         <div class="customer-card">
-          <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
-          <div class="customer-info">
-            <h3 class="customer-name">
-              <%= user.name %>
-            </h3>
-            <div class="customer-email">
-              <%= user.email %>
-            </div>
-            <div class="customer-stats">
-              <div>Total Orders: <%= user.totalOrders || 0 %>
-              </div>
-              <div>Total Spent: $<%= (user.totalSpent || 0).toFixed(2) %>
-              </div>
-              <div>Member Since: <%= user.createdAt.toDateString() %>
-              </div>
-            </div>
-          </div>
-          <div class="customer-actions">
-
-            <!-- view button -->
-            <button type="button" class="btn btn-sm view-btn" data-id="<%= user._id %>">
-              View
-            </button>
-
-            <!-- edit button -->
-            <button class="btn btn-sm btn-secondary edit-btn" data-id="<%= user._id %>">
-              Edit
-            </button>
-          </div>
+          
         </div>
-        <% }) %>
+      </div>
+
 
     </div>
 
@@ -142,7 +159,7 @@
 
   <!-- Include modal -->
 
-  <%- include('../admin/customer-modal',{ users:users }) %>
+  <%- include('../admin/customer-modal') %>
 
 
     <script src="/js/admin_js/customer.js"></script>

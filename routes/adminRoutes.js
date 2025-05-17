@@ -8,7 +8,7 @@ const adminController = require('../controllers/adminController/pageController')
 
 router.get('/', adminController.getloginPage);
 router.get('/dashboard', adminController.getAdminPage);
-router.get('/customers', adminController.getCustomersPage);
+router.get('/customers', adminController.loadCustomerPage);
 router.get('/message', adminController.getMessagePage);
 router.get('/orders', adminController.getOrderPage);
 router.get('/products', adminController.getProductPage);
@@ -18,6 +18,7 @@ router.get('/discount', adminController.getDiscountPage);
 router.get('/staff', adminController.getStaffPage);
 router.get('/customers/:id', adminController.getCustomerDetailsModal);
 router.get('/search-users', adminController.searchUsers);
+router.get('/customersFetch',adminController.getCustomersPage)
   
 
 
