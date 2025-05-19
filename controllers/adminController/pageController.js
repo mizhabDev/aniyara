@@ -196,13 +196,25 @@ const addCustomer = async (req, res) => {
             return res.status(400).json({ error: 'Password must be at least 6 characters long' });
         }
 
-        const oldPhone = await User.find({ phone: phone })
+
         if (phone && !/^\d{10}$/.test(phone)) {
             return res.status(400).json({ error: 'Phone must be a 10-digit number if provided' });
-
-        } else if (phone != oldPhone) {
-            return res.status(400).json({ error: 'Phone number alredy exit' });
         }
+
+        const emailExists = await User.findOne({ email });
+        console.log(emailExists);
+        
+        if (emailExists) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        const phoneExists = await User.findOne({ phone });
+        console.log(phoneExists);
+        
+        if (phoneExists) {
+            return res.status(400).json({ error: 'Phone number already exists' });
+        }
+
 
 
 
