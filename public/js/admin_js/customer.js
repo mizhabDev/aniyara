@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Main function to fetch customers
 async function fetchCustomers(page = 1, sort = 'name') {
-  
+
 
   try {
     const response = await fetch(`/admin/customersFetch?page=${page}&sort=${sort}`);
@@ -96,7 +96,7 @@ function renderCustomers(users) {
   users.forEach(user => {
     const card = document.createElement('div');
     card.classList.add('customer-card');
-    card.innerHTML =  `
+    card.innerHTML = `
           <img src="/api/placeholder/60/60" alt="Customer" class="customer-avatar">
           <div class="customer-info">
             <h3 class="customer-name">${user.name}</h3>
@@ -116,7 +116,7 @@ function renderCustomers(users) {
     userListContainer.appendChild(card);
   });
 
-  
+
 }
 
 
@@ -129,7 +129,7 @@ const handleSearch = async (page = 1) => {
   if (query) {
     // Update current page
     currentPage = page;
-    
+
     // Show loading skeletons
     userListContainer.innerHTML = '';
     for (let i = 0; i < 4; i++) {
@@ -156,13 +156,13 @@ const handleSearch = async (page = 1) => {
 
       const data = await res.json();
       console.log("Search response:", data);
-      
+
       if (!data.success) {
         throw new Error('API returned unsuccessful response');
       }
 
       const users = data.users || [];
-      
+
       // Clear skeletons
       userListContainer.innerHTML = users.length ? '' : '<div class="no-results">No users found</div>';
 
@@ -188,14 +188,14 @@ const handleSearch = async (page = 1) => {
         `;
         userListContainer.appendChild(card);
       });
-      
+
       // Render pagination
       renderPagination(data.currentPage, data.totalPages, query);
 
     } catch (err) {
       console.error('Error fetching users:', err);
       userListContainer.innerHTML = '<p>Error loading users. Please try again.</p>';
-      
+
       // Hide pagination on error
       if (pagination) {
         pagination.style.display = 'none';
@@ -212,7 +212,7 @@ const handleSearch = async (page = 1) => {
 // Function to handle pagination clicks for search results
 function handlePageChange(page, query) {
   currentPage = page;
-  
+
   // If there's an active search, use the search function
   if (query && query.trim() !== '') {
     handleSearch(page);
@@ -238,12 +238,12 @@ clearBtn.addEventListener('click', () => {
 // edit & view button configaration
 document.getElementById('userListContainer').addEventListener('click', async (event) => {
   const target = event.target;
-  
+
   if (target.classList.contains('view-btn')) {
     const userId = target.dataset.id;
     handleViewCustomer(userId);
   }
-  
+
   if (target.classList.contains('edit-btn')) {
     const userId = target.dataset.id;
     handleEditCustomer(userId);
@@ -255,18 +255,18 @@ document.getElementById('userListContainer').addEventListener('click', async (ev
 function renderPagination(currentPage, totalPages, query) {
   // If pagination element doesn't exist, don't try to render
   if (!pagination) return;
-  
+
   // Clear existing pagination
   pagination.innerHTML = '';
-  
+
   // Don't render pagination if there's only one page
   if (totalPages <= 1) {
     pagination.style.display = 'none';
     return;
   }
-  
+
   pagination.style.display = '';
-  
+
   // Previous page button
   if (currentPage > 1) {
     const prevBtn = document.createElement('a');
@@ -276,7 +276,7 @@ function renderPagination(currentPage, totalPages, query) {
     prevBtn.addEventListener('click', () => handlePageChange(currentPage - 1, query));
     pagination.appendChild(prevBtn);
   }
-  
+
   // First page
   if (currentPage > 2) {
     const firstPage = document.createElement('a');
@@ -285,7 +285,7 @@ function renderPagination(currentPage, totalPages, query) {
     firstPage.textContent = '1';
     firstPage.addEventListener('click', () => handlePageChange(1, query));
     pagination.appendChild(firstPage);
-    
+
     // Add ellipsis if needed
     if (currentPage > 3) {
       const ellipsis = document.createElement('span');
@@ -294,7 +294,7 @@ function renderPagination(currentPage, totalPages, query) {
       pagination.appendChild(ellipsis);
     }
   }
-  
+
   // Page before current (if it exists)
   if (currentPage > 1) {
     const prevPage = document.createElement('a');
@@ -304,13 +304,13 @@ function renderPagination(currentPage, totalPages, query) {
     prevPage.addEventListener('click', () => handlePageChange(currentPage - 1, query));
     pagination.appendChild(prevPage);
   }
-  
+
   // Current page
   const currentPageEl = document.createElement('span');
   currentPageEl.classList.add('pagination-item', 'active');
   currentPageEl.textContent = currentPage;
   pagination.appendChild(currentPageEl);
-  
+
   // Page after current (if it exists)
   if (currentPage < totalPages) {
     const nextPage = document.createElement('a');
@@ -320,7 +320,7 @@ function renderPagination(currentPage, totalPages, query) {
     nextPage.addEventListener('click', () => handlePageChange(currentPage + 1, query));
     pagination.appendChild(nextPage);
   }
-  
+
   // Add ellipsis if needed
   if (currentPage < totalPages - 2) {
     const ellipsis = document.createElement('span');
@@ -328,7 +328,7 @@ function renderPagination(currentPage, totalPages, query) {
     ellipsis.textContent = '...';
     pagination.appendChild(ellipsis);
   }
-  
+
   // Last page (if not current or next page)
   if (currentPage < totalPages - 1) {
     const lastPage = document.createElement('a');
@@ -338,7 +338,7 @@ function renderPagination(currentPage, totalPages, query) {
     lastPage.addEventListener('click', () => handlePageChange(totalPages, query));
     pagination.appendChild(lastPage);
   }
-  
+
   // Next page button
   if (currentPage < totalPages) {
     const nextBtn = document.createElement('a');

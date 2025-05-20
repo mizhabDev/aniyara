@@ -21,7 +21,15 @@ const getOrderPage = (req, res) => {
     res.render('admin/orders');
 }
 
+
 const getProductPage = async (req, res) => {
+
+    res.render('admin/products', { currentPage: 1,totalPages: 4});
+};
+
+
+
+const loadProductPage = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 16;
     const sortOption = req.query.sort || 'name';
@@ -45,7 +53,8 @@ const getProductPage = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(limit);
 
-        res.render('admin/products', {
+        res.json({
+            success:true,
             products,
             currentPage: page,
             totalPages,
@@ -65,7 +74,7 @@ const getTransactionPage = (req, res) => {
     res.render('admin/transaction');
 }
 
-const loadCustomerPage = async (req, res) => {
+const getCustomersPage = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const sort = req.query.sort || 'name';
@@ -83,7 +92,7 @@ const loadCustomerPage = async (req, res) => {
 };
 
 
-const getCustomersPage = async (req, res) => {
+const loadCustomerPage = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 6;
     const sortOption = req.query.sort || 'name';
@@ -203,14 +212,14 @@ const addCustomer = async (req, res) => {
 
         const emailExists = await User.findOne({ email });
         console.log(emailExists);
-        
+
         if (emailExists) {
             return res.status(400).json({ error: 'Email already exists' });
         }
 
         const phoneExists = await User.findOne({ phone });
         console.log(phoneExists);
-        
+
         if (phoneExists) {
             return res.status(400).json({ error: 'Phone number already exists' });
         }
@@ -235,59 +244,6 @@ const addCustomer = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
-
-// const searchUsers = async (req, res) => {
-//     const query = req.query.query || '';
-//     const page = parseInt(req.query.page) || 1;
-//     const limit = 6;
-//     const sortOption = req.query.sort || 'name';
-
-
-//     try {
-
-//         let sortBy = {};
-//         switch (sortOption) {
-//             case 'date': sortBy = { createdAt: -1 }; break;
-//             case 'count': sortBy = { totalOrders: -1 }; break;
-//             default: sortBy = { name: 1 };
-//         }
-
-
-//         const count = await User.countDocuments({
-//             $or: [
-//                 { name: { $regex: query, $options: 'i' } },
-//                 { email: { $regex: query, $options: 'i' } },
-//                 { phone: { $regex: query, $options: 'i' } }
-//             ]
-//         });
-//         const totalPages = Math.ceil(count / limit);
-
-//         const users = await User.find({
-//             $or: [
-//                 { name: { $regex: query, $options: 'i' } }, 
-//                 { email: { $regex: query, $options: 'i' } },
-//                 { phone: { $regex: query, $options: 'i' } }
-//             ]
-//         })  .sort(sortBy)
-//             .skip((page - 1) * limit)
-
-
-
-//         setTimeout(() => {
-//             res.json({
-//                 success: true,
-//                 users,
-//                 currentPage: page,
-//                 totalPages,
-//                 sort: sortOption
-//             });
-//         }, 5000);
-
-//     } catch (err) {
-//         console.error('Search error:', err);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// }
 
 
 const searchUsers = async (req, res) => {
@@ -344,24 +300,44 @@ module.exports = {
     // getpages
 
     getAdminPage,
+
+    // massage Page
     getMessagePage,
+
+
+    // order page
     getOrderPage,
+
+    // product page 
     getProductPage,
+loadProductPage,
+
+    // setting Page 
     getSettingsPage,
+
+    // transaction page
     getTransactionPage,
+
+
+    // customers page
     getCustomersPage,
-    getloginPage,
-    getDiscountPage,
-    getStaffPage,
-    getCustomerDetailsModal,
-    searchUsers,
     loadCustomerPage,
+    getCustomerDetailsModal,
+    updateBlockStatus,// put methods
+    addCustomer,// post methods
+    searchUsers,
 
-    // put methods
-    updateBlockStatus,
 
-    // post methods
-    addCustomer
+    // login page
+    getloginPage,
+
+
+    // Discound page
+    getDiscountPage,
+
+
+    // staff page
+    getStaffPage,
 
 
 }

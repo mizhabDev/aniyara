@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             } catch (error) {
 
-                console.log('cannot add new product',error);
-                showToast('error','Cannot add a new product')
+                console.log('cannot add new product', error);
+                showToast('error', 'Cannot add a new product')
 
 
             }
@@ -342,12 +342,269 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function showToast(type, message) {
     Swal.fire({
-      toast: true,
-      position: 'top-end',
-      icon: type, // 'success', 'error', 'warning'
-      title: message,
-      showConfirmButton: false,
-      timer: 5000,
-      timerProgressBar: true,
+        toast: true,
+        position: 'top-end',
+        icon: type, // 'success', 'error', 'warning'
+        title: message,
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
     });
-  }
+}
+
+
+
+// cloudinary handling 
+
+document.addEventListener('DOMContentLoaded', function () {
+    // DOM elements
+    const uploadContainer = document.getElementById('upload-container');
+    const previewContainer = document.getElementById('preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const imageName = document.getElementById('image-name');
+    const removeImage = document.getElementById('remove-image');
+    const fileInput = document.getElementById('product-image');
+    const imageUrlInput = document.getElementById('product-image-url');
+    const progressBar = document.querySelector('.progress-bar');
+    const uploadError = document.querySelector('.upload-error');
+    const uploadSuccess = document.querySelector('.upload-success');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const addProductForm = document.getElementById('add-product-form');
+
+    // Track uploaded image info
+    let uploadedImageInfo = null;
+
+    // Show upload container initially, hide preview
+    previewContainer.style.display = 'none';
+    uploadError.style.display = 'none';
+    uploadSuccess.style.display = 'none';
+
+
+    // Handle click on upload container
+    uploadContainer.addEventListener('click', function () {
+        fileInput.click();
+    });
+
+    // Handle drag and drop events
+    uploadContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        uploadContainer.classList.add('dragover');
+    });
+
+    uploadContainer.addEventListener('dragleave', function () {
+        uploadContainer.classList.remove('dragover');
+    });
+
+    uploadContainer.addEventListener('drop', function (e) {
+        e.preventDefault();
+        uploadContainer.classList.remove('dragover');
+
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            handleFileSelect(e.dataTransfer.files[0]);
+        }
+    });
+
+    // Handle file selection
+    fileInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            handleFileSelect(this.files[0]);
+        }
+    });
+
+    // Handle remove image button
+    removeImage.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Delete from Cloudinary if public_id is available
+        if (uploadedImageInfo && uploadedImageInfo.public_id) {
+            deleteFromCloudinary(uploadedImageInfo.public_id);
+        }
+
+        // Reset the upload interface
+        resetImageUpload();
+    });
+
+    // Handle cancel modal button
+    cancelModalBtn.addEventListener('click', function () {
+        // Delete from Cloudinary if we've uploaded something
+        if (uploadedImageInfo && uploadedImageInfo.public_id) {
+            deleteFromCloudinary(uploadedImageInfo.public_id);
+        }
+
+        resetImageUpload();
+        closeModal();
+    });
+
+    // Handle close modal button
+    closeModalBtn.addEventListener('click', function () {
+        // Same as cancel - delete and close
+        if (uploadedImageInfo && uploadedImageInfo.public_id) {
+            deleteFromCloudinary(uploadedImageInfo.public_id);
+        }
+
+        resetImageUpload();
+        closeModal();
+    });
+
+    // Reset form when modal is closed or canceled
+    function resetImageUpload() {
+        fileInput.value = '';
+        imageUrlInput.value = '';
+        uploadedImageInfo = null;
+        previewContainer.style.display = 'none';
+        uploadContainer.style.display = 'block';
+        uploadContainer.querySelector('.upload-icon').style.display = 'block';
+        uploadContainer.querySelector('.upload-text').style.display = 'block';
+        uploadContainer.querySelector('.upload-progress').style.display = 'none';
+        progressBar.style.width = '0%';
+
+        // Log reset
+        console.log('Image upload reset');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('productModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // Handle file selection and upload to Cloudinary
+    function handleFileSelect(file) {
+        // Display file name
+        imageName.textContent = file.name;
+
+        // Validate file type
+        if (!file.type.match('image.*')) {
+            showError('Please select an image file');
+            return;
+        }
+
+        // Create preview
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // Show upload progress
+        uploadContainer.querySelector('.upload-icon').style.display = 'none';
+        uploadContainer.querySelector('.upload-text').style.display = 'none';
+        uploadContainer.querySelector('.upload-progress').style.display = 'block';
+        simulateProgress(); // For visual feedback during upload
+
+        // Upload to Cloudinary
+        uploadToCloudinary(file);
+    }
+
+    function uploadToCloudinary(file) {
+        // Create form data - using 'image' field name to match backend
+        const formData = new FormData();
+        formData.append('image', file);
+
+        // Send to server endpoint that handles Cloudinary upload
+        fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Upload response this :', data);
+
+                // Store upload info for potential deletion
+                uploadedImageInfo = {
+                    url: data.imageUrl || data.secure_url,
+                    public_id: data.public_id
+                };
+
+                document.querySelector('#image-url').value = data.imageUrl;
+                document.querySelector('#image-public-id').value = data.public_id;
+
+
+                // Show success message
+                uploadSuccess.style.display = 'block';
+                setTimeout(() => {
+                    // Hide upload container, show preview container
+                    uploadContainer.style.display = 'none';
+                    previewContainer.style.display = 'flex';
+                    // Reset progress bar and messages
+                    progressBar.style.width = '0%';
+                    uploadSuccess.style.display = 'none';
+                }, 1000);
+
+                // After successful image upload
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Failed to upload image. Please try again.');
+                resetImageUpload();
+            });
+    }
+
+
+
+    function deleteFromCloudinary(publicId) {
+        console.log('Deleting from Cloudinary, public_id:', publicId);
+
+        if (!publicId) {
+            console.warn('No public_id provided for deletion');
+            return;
+        }
+
+        // Send the public_id as is - let the server handle the format
+        fetch(`/api/upload/delete/${encodeURIComponent(publicId)}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Image deleted from Cloudinary:', data);
+            })
+            .catch(error => {
+                console.error('Error deleting image:', error);
+            });
+    }
+
+
+    function showError(message) {
+        uploadError.textContent = message;
+        uploadError.style.display = 'block';
+        setTimeout(() => {
+            uploadError.style.display = 'none';
+        }, 3000);
+    }
+
+    // For simulating upload progress for visual feedback
+    function simulateProgress() {
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+            } else {
+                width += 5;
+                progressBar.style.width = width + '%';
+            }
+        }, 100);
+    }
+
+    // Handle form submission
+    if (addProductForm) {
+        addProductForm.addEventListener('submit', function (e) {
+            // Don't prevent default as we want the form to submit normally
+            // Just reset uploadedImageInfo once the form is submitted
+            uploadedImageInfo = null;
+        });
+    }
+});
