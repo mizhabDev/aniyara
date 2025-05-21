@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Main function to fetch customers
 async function fetchCustomers(page = 1, sort = 'name') {
 
+  //show the preloader when starting to fetch
+  document.getElementById('preloader').style.display = 'flex';
+  
 
   try {
     const response = await fetch(`/admin/customersFetch?page=${page}&sort=${sort}`);
@@ -80,7 +83,12 @@ async function fetchCustomers(page = 1, sort = 'name') {
             </div>
         `;
   } finally {
+    // Hide the preloder
+    setTimeout(() => {
+      document.getElementById('preloader').style.display = 'none';
 
+    }, 500);
+    
   }
 }
 

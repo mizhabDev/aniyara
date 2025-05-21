@@ -50,12 +50,12 @@
       </button>
     </div>
 
-    <div class="products-grid" id="productListContainer" >
+    <div class="products-grid" id="productListContainer">
       <p>empty</p>
 
-      
 
-       
+
+
     </div>
 
 
@@ -293,12 +293,12 @@
 
   <script>
     let currenSort = 'name';
-    let currentPage =1;
+    let currentPage = 1;
 
     const productListContainer = document.getElementById('productListContainer');
 
 
-    
+
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -308,29 +308,29 @@
       const page = urlParams.get('page') || 1;
 
 
-      fetchProducts(page, currenSort,()=>{
+      fetchProducts(page, currenSort, () => {
         console.log("fetching...");
-        
+
       })
 
     });
 
-    async function fetchProducts(page,sort) {
+    async function fetchProducts(page, sort) {
       try {
         const response = await axios.get('/admin/productFetch')
-        const data= response.data;
+        const data = response.data;
 
-        if (data.success){
+        if (data.success) {
           renderProducts(data.products);
-        }else{
-          console.log('error fetching products fron fetch Products function',data);
+        } else {
+          console.log('error fetching products fron fetch Products function', data);
         }
 
 
 
 
       } catch (error) {
-        console.log('error fetching products form fetch products function',error);
+        console.log('error fetching products form fetch products function', error);
         productListContainer.innerHTML = `
             <div class="error-message">
                 Failed to load products. Please try again.
@@ -338,15 +338,21 @@
             </div>
         `;
       }
+      finally {
+        setTimeout(() => {
+          document.getElementById('preloader').style.display = 'none';
+
+        }, 500);
+      }
     }
 
 
     // render products card 
 
-    function renderProducts(products){
+    function renderProducts(products) {
       productListContainer.innerHTML = '';
 
-      if (products.length === 0){
+      if (products.length === 0) {
         productListContainer.innerHTML = '<div class= "no-results"> No products found </div>  ';
         return;
       }
@@ -354,7 +360,7 @@
       products.forEach(product => {
         const card = document.createElement('div');
         card.classList.add('customer-card');
-        card.innerHTML=`
+        card.innerHTML = `
         <div class="product-card">
           <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
           <div class="product-card-body">
@@ -365,8 +371,8 @@
             <div class="product-card-stock"> In Stock: ${product.stock}
             </div>
             <div class="product-card-actions">
-              <button class="btn btn-sm edit-product-btn" data-id=" ${product._id } ">Edit</button>
-              <button class="btn btn-sm btn-danger delete-product-btn" data-id=" ${product._id }">Delete</button>
+              <button class="btn btn-sm edit-product-btn" data-id=" ${product._id} ">Edit</button>
+              <button class="btn btn-sm btn-danger delete-product-btn" data-id=" ${product._id}">Delete</button>
             </div>
           </div>
         </div>
@@ -381,7 +387,7 @@
 
 
 
-    
+
   </script>
 
 

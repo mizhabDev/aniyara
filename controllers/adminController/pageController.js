@@ -24,7 +24,7 @@ const getOrderPage = (req, res) => {
 
 const getProductPage = async (req, res) => {
 
-    res.render('admin/products', { currentPage: 1,totalPages: 4});
+    res.render('admin/products', { currentPage: 1, totalPages: 4 });
 };
 
 
@@ -53,13 +53,18 @@ const loadProductPage = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(limit);
 
-        res.json({
-            success:true,
-            products,
-            currentPage: page,
-            totalPages,
-            sort: sortOption
-        });
+        setTimeout(() => {
+            res.json({
+                success: true,
+                products,
+                currentPage: page,
+                totalPages,
+                sort: sortOption
+            });
+        }, 5000);
+
+
+
     } catch (error) {
         console.error("Error fetching customers:", error);
         res.status(500).send("Internal Server Error");
@@ -75,6 +80,7 @@ const getTransactionPage = (req, res) => {
 }
 
 const getCustomersPage = async (req, res) => {
+
     try {
         const page = parseInt(req.query.page) || 1;
         const sort = req.query.sort || 'name';
@@ -110,6 +116,7 @@ const loadCustomerPage = async (req, res) => {
             sortBy = { name: 1 };
     }
 
+
     try {
         const totalUsers = await User.countDocuments();
         const totalPages = Math.ceil(totalUsers / limit);
@@ -119,13 +126,17 @@ const loadCustomerPage = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(limit).lean();
 
-        return res.json({
-            success: true,
-            users,
-            currentPage: page,
-            totalPages,
-            sort: sortOption
-        });
+        setTimeout(() => {
+
+            return res.json({
+                success: true,
+                users,
+                currentPage: page,
+                totalPages,
+                sort: sortOption
+            });
+        }, 1000);
+
     } catch (error) {
         console.error("Error fetching customers:", error);
         res.status(500).send("Internal Server Error");
@@ -268,6 +279,8 @@ const searchUsers = async (req, res) => {
             ]
         };
 
+
+
         const count = await User.countDocuments(searchQuery);
         const totalPages = Math.ceil(count / limit);
 
@@ -276,14 +289,17 @@ const searchUsers = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(limit);
 
-        // Remove the setTimeout - it's causing unnecessary delay
-        res.json({
-            success: true,
-            users,
-            currentPage: page,
-            totalPages,
-            sort: sortOption
-        });
+
+        setTimeout(() => {
+            // Remove the setTimeout - it's causing unnecessary delay
+            res.json({
+                success: true,
+                users,
+                currentPage: page,
+                totalPages,
+                sort: sortOption
+            });
+        }, 500);
 
     } catch (err) {
         console.error('Search error:', err);
@@ -310,7 +326,7 @@ module.exports = {
 
     // product page 
     getProductPage,
-loadProductPage,
+    loadProductPage,
 
     // setting Page 
     getSettingsPage,
