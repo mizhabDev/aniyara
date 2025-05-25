@@ -70,6 +70,10 @@ app.use("/", userRoutes);
 const adminRoutes=require("./routes/adminRoutes");
 app.use("/admin",adminRoutes);
 
+
+
+
+
 // Cloudinary Routes - used to handle based image routes 
 const uploadRoutes = require("./routes/uploadRoutes")
 app.use("/api",uploadRoutes);

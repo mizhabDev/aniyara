@@ -296,3 +296,13 @@ body {
     background: var(--white);
     transition: all 0.2s ease;
 }
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+}

@@ -112,42 +112,8 @@
 
 
     <div class="pagination">
-      <% if (currentPage> 1) { %>
-        <a href="?page=<%= currentPage - 1 %>" class="pagination-item">&lt;</a>
-        <% } %>
-
-          <% if (currentPage> 2) { %>
-            <span class="pagination-item">...</span>
-            <% } %>
-
-              <% if (currentPage> 1) { %>
-                <a href="?page=<%= currentPage - 1 %>" class="pagination-item">
-                  <%= currentPage - 1 %>
-                </a>
-                <% } %>
-
-                  <span class="pagination-item active">
-                    <%= currentPage %>
-                  </span>
-
-                  <% if (currentPage < totalPages) { %>
-                    <a href="?page=<%= parseInt(currentPage) + 1 %>" class="pagination-item">
-                      <%= parseInt(currentPage) + 1 %>
-                    </a>
-                    <% } %>
-
-                      <% if (currentPage < totalPages - 1) { %>
-                        <span class="pagination-item">...</span>
-                        <% } %>
-
-                          <% if (currentPage < totalPages) { %>
-                            <a href="?page=<%= parseInt(currentPage) + 1 %>" class="pagination-item">&gt;</a>
-                            <% } %>
+      
     </div>
-
-
-
-
 
 
 
@@ -163,6 +129,7 @@
 
 
     <script src="/js/admin_js/customer.js"></script>
+   
 
 
     <!-- Include Footer -->

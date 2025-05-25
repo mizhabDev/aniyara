@@ -38,6 +38,7 @@ router.get('/orders', adminController.getOrderPage);
 router.get('/products', adminController.getProductPage);
 router.get('/productFetch',adminController.loadProductPage)
 
+
 // settings page  -----------------------------
 router.get('/settings', adminController.getSettingsPage);
 

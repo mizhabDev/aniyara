@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results Pagination Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            padding: 8px;
+            width: 70%;
+            font-size: 16px;
+        }
+        
+        .search-button {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .results-container {
+            margin-bottom: 20px;
+        }
+        
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .pagination-item {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        .pagination-item.active {
+            background-color: #4285f4;
+            color: white;
+            border-color: #4285f4;
+            cursor: default;
+        }
+        
+        .pagination-item:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+        <button id="searchButton" class="search-button">Search</button>
+    </div>
+    
+    <div id="resultsContainer" class="results-container"></div>
+    
+    <div id="pagination" class="pagination"></div>
+    
+    <script>
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const pagination = document.getElementById('pagination');
+        
+        // Sample data - replace with your actual data or API call
+        const mockData = [];
+        for (let i = 1; i <= 100; i++) {
+            mockData.push({
+                id: i,
+                title: `Result Item ${i}`,
+                description: `This is a description for result item ${i}. It contains some sample text.`
+            });
+        }
+        
+        // Configuration
+        const ITEMS_PER_PAGE = 10;
+        let currentPage = 1;
+        let currentQuery = '';
+        
+        // Event listeners
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                currentQuery = query;
+                currentPage = 1;
+                performSearch(query, currentPage);
+            }
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+        
+        // Initialize with empty search
+        performSearch('', 1);
+        
+        // Function to handle page changes
+        function handlePageChange(page, query) {
+            currentPage = page;
+            performSearch(query, page);
+            // Scroll to top of results
+            window.scrollTo(0, resultsContainer.offsetTop);
+        }
+        
+        // Function to perform search
+        function performSearch(query, page) {
+            // In a real application, this would be an API call
+            // For this example, we'll filter the mock data
+            let filteredResults = mockData;
+            
+            if (query) {
+                const lowerQuery = query.toLowerCase();
+                filteredResults = mockData.filter(item => 
+                    item.title.toLowerCase().includes(lowerQuery) || 
+                    item.description.toLowerCase().includes(lowerQuery)
+                );
+            }
+            
+            const totalResults = filteredResults.length;
+            const totalPages = Math.ceil(totalResults / ITEMS_PER_PAGE);
+            
+            // Paginate results
+            const startIndex = (page - 1) * ITEMS_PER_PAGE;
+            const paginatedResults = filteredResults.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+            
+            // Render results
+            renderResults(paginatedResults, totalResults);
+            
+            // Render pagination
+            renderPagination(page, totalPages, query);
+        }
+        
+        // Function to render results
+        function renderResults(results, totalCount) {
+            resultsContainer.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p>No results found.</p>';
+                return;
+            }
+            
+            const resultCountElement = document.createElement('p');
+            resultCountElement.textContent = `Showing ${results.length} of ${totalCount} results`;
+            resultsContainer.appendChild(resultCountElement);
+            
+            results.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                
+                const title = document.createElement('h3');
+                title.textContent = result.title;
+                
+                const description = document.createElement('p');
+                description.textContent = result.description;
+                
+                resultItem.appendChild(title);
+                resultItem.appendChild(description);
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+        
+        // Function to render pagination
+        function renderPagination(currentPage, totalPages, query) {
+            // If pagination element doesn't exist, don't try to render
+            if (!pagination) return;
+          
+            // Clear existing pagination
+            pagination.innerHTML = '';
+          
+            // Don't render pagination if there's only one page
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+          
+            pagination.style.display = '';
+          
+            // Previous page button
+            if (currentPage > 1) {
+                const prevBtn = document.createElement('a');
+                prevBtn.href = "javascript:void(0)";
+                prevBtn.classList.add('pagination-item');
+                prevBtn.innerHTML = '&lt;';
+                prevBtn.addEventListener('click', () => handlePageChange(currentPage - 1, query));
+                pagination.appendChild(prevBtn);
+            }
+          
+            // First page
+            if (currentPage > 2) {
+                const firstPage = document.createElement('a');
+                firstPage.href = "javascript:void(0)";
+                firstPage.classList.add('pagination-item');
+                firstPage.textContent = '1';
+                firstPage.addEventListener('click', () => handlePageChange(1, query));
+                pagination.appendChild(firstPage);
+            
+                // Add ellipsis if needed
+                if (currentPage > 3) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.classList.add('pagination-item');
+                    ellipsis.textContent = '...';
+                    pagination.appendChild(ellipsis);
+                }
+            }
+          
+            // Page before current (if it exists)
+            if (currentPage > 1) {
+                const prevPage = document.createElement('a');
+                prevPage.href = "javascript:void(0)";
+                prevPage.classList.add('pagination-item');
+                prevPage.textContent = currentPage - 1;
+                prevPage.addEventListener('click', () => handlePageChange(currentPage - 1, query));
+                pagination.appendChild(prevPage);
+            }
+          
+            // Current page
+            const currentPageEl = document.createElement('span');
+            currentPageEl.classList.add('pagination-item', 'active');
+            currentPageEl.textContent = currentPage;
+            pagination.appendChild(currentPageEl);
+          
+            // Page after current (if it exists)
+            if (currentPage < totalPages) {
+                const nextPage = document.createElement('a');
+                nextPage.href = "javascript:void(0)";
+                nextPage.classList.add('pagination-item');
+                nextPage.textContent = currentPage + 1;
+                nextPage.addEventListener('click', () => handlePageChange(currentPage + 1, query));
+                pagination.appendChild(nextPage);
+            }
+          
+            // Add ellipsis if needed
+            if (currentPage < totalPages - 2) {
+                const ellipsis = document.createElement('span');
+                ellipsis.classList.add('pagination-item');
+                ellipsis.textContent = '...';
+                pagination.appendChild(ellipsis);
+            }
+          
+            // Last page (if not current or next page)
+            if (currentPage < totalPages - 1) {
+                const lastPage = document.createElement('a');
+                lastPage.href = "javascript:void(0)";
+                lastPage.classList.add('pagination-item');
+                lastPage.textContent = totalPages;
+                lastPage.addEventListener('click', () => handlePageChange(totalPages, query));
+                pagination.appendChild(lastPage);
+            }
+          
+            // Next page button
+            if (currentPage < totalPages) {
+                const nextBtn = document.createElement('a');
+                nextBtn.href = "javascript:void(0)";
+                nextBtn.classList.add('pagination-item');
+                nextBtn.innerHTML = '&gt;';
+                nextBtn.addEventListener('click', () => handlePageChange(currentPage + 1, query));
+                pagination.appendChild(nextBtn);
+            }
+        }
+    </script>
+</body>
+</html>

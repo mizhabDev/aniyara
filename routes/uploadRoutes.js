@@ -17,13 +17,20 @@ router.post('/upload', upload.single('image'), async (req, res) => {
         const result = await cloudinary.uploader.upload(req.file.path, {
             folder: 'product_images',
             transformation: [
-                { width: 800, crop: 'limit' }
+                {
+                    width: 300,
+                    height: 300,
+                    crop: "fill",        // Ensures image fills the dimensions
+                    gravity: "auto",     // AI-based object detection for focus
+                    quality: "auto:best",// High-quality compression
+                    fetch_format: "auto" // Automatically chooses best format (like WebP)
+                }
             ]
         });
-        
+
         // Delete the file from local storage
         fs.unlinkSync(req.file.path);
-        
+
         console.log('Upload successful:', result);
 
         res.json({
@@ -33,7 +40,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
         });
     } catch (error) {
         console.error('Upload error:', error);
-        
+
         // Try to delete the local file if it exists
         if (req.file && req.file.path) {
             try {
@@ -42,53 +49,64 @@ router.post('/upload', upload.single('image'), async (req, res) => {
                 console.error('Error deleting local file:', e);
             }
         }
-        
+
         res.status(500).json({ success: false, message: 'Failed to upload image' });
     }
 });
 
 // Add this to your product routes
 router.post('/products', async (req, res) => {
-  try {
-    const { 
-      name, 
-      price, 
-      stock, 
-      category, 
-      description,
-      imageUrl,
-      imagePublicId
-    } = req.body;
+    try {
+        const {
+            name,
+            price,
+            stock,
+            category,
+            description,
+            imageUrl,
+            imagePublicId
+        } = req.body;
 
-    const productData = {
-      name,
-      price: Number(price),
-      stock: Number(stock),
-      category,
-      description,
-      image: {
-        url: imageUrl,
-        public_id: imagePublicId,
-        alt: `Image of ${name}` // Generate alt text automatically
-      }
-    };
+        const productData = {
+            name,
+            price: Number(price),
+            stock: Number(stock),
+            category,
+            description,
+            image: {
+                url: imageUrl,
+                public_id: imagePublicId,
+                alt: `Image of ${name}` // Generate alt text automatically
+            }
+        };
 
-    const product = new Product(productData);
-    await product.save();
+        const product = new Product(productData);
+        await product.save();
 
-    res.status(201).json({
-      success: true,
-      product
-    });
-  } catch (error) {
-    console.error('Error creating product:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error creating product',
-      error: error.message
-    });
-  }
+        res.status(201).json({
+            success: true,
+            product
+        });
+    } catch (error) {
+        console.error('Error creating product:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error creating product',
+            error: error.message
+        });
+    }
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -97,44 +115,67 @@ router.delete('/upload/delete/:publicId', async (req, res) => {
     try {
         const { publicId } = req.params;
         console.log('Delete request received for:', publicId);
-        
+
+        const deleteId = await Product.findOne({ _id: publicId });
+        console.log("consoling deleting id details", deleteId.image.public_id, "------------------");
+
         // Try to delete with the exact publicId provided first
-        let result = await cloudinary.uploader.destroy(publicId);
-        
+        let result = await cloudinary.uploader.destroy(deleteId.image.public_id);
+        console.log('First delete attempt result:', result);
+
         // If that fails, try with product_images/ prefix
         if (result.result !== 'ok' && !publicId.includes('product_images/')) {
-            const fullPublicId = `product_images/${publicId}`;
+            const fullPublicId = `product_images/${deleteId.image.public_id}`;
             console.log('First attempt failed, trying with prefix:', fullPublicId);
             result = await cloudinary.uploader.destroy(fullPublicId);
+
         }
-        
-        // If that fails too, try removing the prefix if it exists
-        if (result.result !== 'ok' && publicId.includes('product_images/')) {
-            const basePublicId = publicId.replace('product_images/', '');
-            console.log('Second attempt failed, trying without prefix:', basePublicId);
-            result = await cloudinary.uploader.destroy(basePublicId);
-        }
-        
+
+
         console.log('Final delete result:', result);
-        
+
         if (result.result === 'ok') {
             res.json({ success: true, message: 'Image deleted successfully' });
+
+
+            // delete form Product.db
+            const dlt = await Product.findByIdAndDelete(publicId)
+            console.log("consoling deleting id details", dlt, "------------------");
+            if (dlt) {
+                console.log("Product deleted successfully");
+            } else {
+                console.log("Product not found");
+            }
         } else {
-            res.status(400).json({ 
-                success: false, 
+            res.status(400).json({
+                success: false,
                 message: 'Failed to delete image',
-                details: result 
+                details: result
             });
         }
     } catch (err) {
         console.error('Error deleting from Cloudinary:', err);
-        res.status(500).json({ 
-            success: false, 
+        res.status(500).json({
+            success: false,
             message: 'Error deleting image',
-            error: err.message 
+            error: err.message
         });
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Fetch image details (optional)
 router.get('/image/:publicId', async (req, res) => {
@@ -144,10 +185,10 @@ router.get('/image/:publicId', async (req, res) => {
         res.json(result);
     } catch (error) {
         console.error('Error fetching image details:', error);
-        res.status(500).json({ 
-            success: false, 
+        res.status(500).json({
+            success: false,
             message: 'Failed to fetch image details',
-            error: error.message 
+            error: error.message
         });
     }
 });

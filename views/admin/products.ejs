@@ -4,6 +4,8 @@
 
   <title>Products - Aniyara</title>
 
+
+
   <!-- Products Page -->
   <div id="products-page" class="main-content page hidden-pages">
     <div class="header">
@@ -22,10 +24,17 @@
       <div class="filter-group">
         <select class="filter-select">
           <option>All Categories</option>
-          <option>Electronics</option>
-          <option>Clothing</option>
-          <option>Home & Kitchen</option>
-          <option>Beauty & Personal Care</option>
+          <option>Chain</option>
+          <option>Bracelate</option>
+          <option>Earings</option>
+          <option>consmetis</option>
+          <option>Watches</option>
+          <option>Necklace</option>
+          <option>Rings</option>
+          <option>Gents Items</option>
+          <option>Toys</option>
+          <option>Perfumes</option>
+          <option>Decorations</option>
         </select>
         <select class="filter-select">
           <option>All Stock Status</option>
@@ -59,42 +68,11 @@
     </div>
 
 
-
     <!-- pagination -->
 
 
-    <div class="pagination">
-      <% if (currentPage> 1) { %>
-        <a href="?page=<%= currentPage - 1 %>" class="pagination-item">&lt;</a>
-        <% } %>
-
-          <% if (currentPage> 2) { %>
-            <span class="pagination-item">...</span>
-            <% } %>
-
-              <% if (currentPage> 1) { %>
-                <a href="?page=<%= currentPage - 1 %>" class="pagination-item">
-                  <%= currentPage - 1 %>
-                </a>
-                <% } %>
-
-                  <span class="pagination-item active">
-                    <%= currentPage %>
-                  </span>
-
-                  <% if (currentPage < totalPages) { %>
-                    <a href="?page=<%= parseInt(currentPage) + 1 %>" class="pagination-item">
-                      <%= parseInt(currentPage) + 1 %>
-                    </a>
-                    <% } %>
-
-                      <% if (currentPage < totalPages - 1) { %>
-                        <span class="pagination-item">...</span>
-                        <% } %>
-
-                          <% if (currentPage < totalPages) { %>
-                            <a href="?page=<%= parseInt(currentPage) + 1 %>" class="pagination-item">&gt;</a>
-                            <% } %>
+    <div class="pagination" id="pagination">
+      current page appears here
     </div>
 
 
@@ -102,6 +80,9 @@
 
 
   </div>
+
+
+
 
   <!-- Add New Product Modal - Hidden by default -->
 
@@ -139,11 +120,17 @@
             <label for="product-category">Category</label>
             <select id="product-category" class="form-control" required>
               <option value="">Select a category</option>
-              <option value="electronics">Electronics</option>
-              <option value="furniture">Furniture</option>
-              <option value="audio">Audio</option>
-              <option value="camera">Camera</option>
-              <option value="wearables">Wearables</option>
+              <option value="Chain">Chain</option>
+              <option value="Bracelate">Bracelate</option>
+              <option value="Earings">Earings</option>
+              <option value="consmetis">consmetis</option>
+              <option value="Watches">Watches</option>
+              <option value="Necklace">Necklace</option>
+              <option value="Rings">Rings</option>
+              <option value="Gents_items">Gents Items</option>
+              <option value="Toys">Toys</option>
+              <option value="Perfumes">Perfumes</option>
+              <option value="Decorations">Decorations</option>
             </select>
           </div>
 
@@ -292,10 +279,14 @@
 
 
   <script>
-    let currenSort = 'name';
+    let currentSort = 'latest';
     let currentPage = 1;
+    let currentCategory = '';
+    let currentStockStatus = '';
+    let currentSearchTerm = '';
 
     const productListContainer = document.getElementById('productListContainer');
+
 
 
 
@@ -304,24 +295,35 @@
     document.addEventListener('DOMContentLoaded', () => {
       // fetching data
       const urlParams = new URLSearchParams(window.location.search);
-      currenSort = urlParams.get('sort') || 'name';
-      const page = urlParams.get('page') || 1;
+      currentSort = urlParams.get('sort') || 'latest';
+      currentPage = urlParams.get('page') || 1;
+      console.log('current sort:', currentSort);
+      console.log('current page:', currentPage);
 
 
-      fetchProducts(page, currenSort, () => {
-        console.log("fetching...");
-
-      })
+      fetchProducts(currentPage, currentSort)
 
     });
 
+    document.querySelectorAll('.pagination-button').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        console.log('Pagination clicked:', e.target.dataset.page);
+      });
+    });
+
+
     async function fetchProducts(page, sort) {
       try {
-        const response = await axios.get('/admin/productFetch')
+        document.getElementById('preloader').style.display = 'flex';
+        console.log('fetching products');
+        const response = await axios.get(`/admin/productFetch?page=${page}&sort=${sort}`);
+        console.log('response:', response);
         const data = response.data;
 
         if (data.success) {
           renderProducts(data.products);
+          currentPage = data.currentPage;
+          renderPagination(data.currentPage, data.totalPages);
         } else {
           console.log('error fetching products fron fetch Products function', data);
         }
@@ -347,22 +349,24 @@
     }
 
 
+
+
     // render products card 
 
     function renderProducts(products) {
-      productListContainer.innerHTML = '';
+
 
       if (products.length === 0) {
-        productListContainer.innerHTML = '<div class= "no-results"> No products found </div>  ';
+
         return;
       }
-
+      productListContainer.innerHTML = '';
       products.forEach(product => {
         const card = document.createElement('div');
         card.classList.add('customer-card');
         card.innerHTML = `
         <div class="product-card">
-          <img src="/api/placeholder/300/200" alt="Product" class="product-card-img">
+           <img src="${product.image.url || '/api/placeholder/300/200'}" alt="Product" class="product-card-img">
           <div class="product-card-body">
             <h3 class="product-card-title">${product.name}
             </h3>
@@ -371,13 +375,15 @@
             <div class="product-card-stock"> In Stock: ${product.stock}
             </div>
             <div class="product-card-actions">
-              <button class="btn btn-sm edit-product-btn" data-id=" ${product._id} ">Edit</button>
-              <button class="btn btn-sm btn-danger delete-product-btn" data-id=" ${product._id}">Delete</button>
+              <button class="btn btn-sm edit-product-btn" data-id="${product._id}">Edit</button>
+              <button class="btn btn-sm btn-danger delete-product-btn" data-id="${product._id}">Delete</button>
             </div>
           </div>
         </div>
         `;
         productListContainer.appendChild(card);
+
+
       });
 
 
@@ -385,8 +391,18 @@
     }
 
 
+    // Function to handle pagination clicks for search results
+    function handlePageChange(page, query) {
+      currentPage = page;
 
-
+      // If there's an active search, use the search function
+      if (query && query.trim() !== '') {
+        handleSearch(page);
+      } else {
+        // Otherwise fall back to regular customer list
+        fetchProducts(page, currentSort);
+      }
+    }
 
   </script>
 

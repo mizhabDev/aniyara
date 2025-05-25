@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../models/userModel');
-const Product = require('../../models/productSchema')
+const Product = require('../../models/productSchema');
+
 
 
 
@@ -29,25 +30,95 @@ const getProductPage = async (req, res) => {
 
 
 
+// const loadProductPage = async (req, res) => {
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 1;
+//     const sortOption = req.query.sort || 'latest';
+//     console.log("this is from product page on loadProductPge function", sortOption);
+//     console.log("this is from product page on loadProductPge function", page);
+
+
+
+
+//     let sortBy;
+
+//     if (sortOption === 'latest') {
+//         sortBy = { createdAt: -1 }; // latest joined first
+//     } else if (sortOption === 'count') {
+//         sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
+//     } else {
+//         sortBy = { name: 1 }; // default to A-Z
+//     }
+
+//     try {
+//         const totalUsers = await Product.countDocuments();
+//         const totalPages = Math.ceil(totalUsers / limit);
+
+//         const products = await Product.find({})
+//             .sort(sortBy)
+//             .skip((page - 1) * limit)
+//             .limit(limit);
+
+//         setTimeout(() => {
+//             res.json({
+//                 success: true,
+//                 products,
+//                 currentPage: page,
+//                 totalPages,
+//                 sort: sortOption
+//             });
+//         }, 5000);
+
+
+
+//     } catch (error) {
+//         console.error("Error fetching customers:", error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// }
+
 const loadProductPage = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = 16;
-    const sortOption = req.query.sort || 'name';
+    const limit = 1; // Changed from 1 to 10 for better UX
+    const sortOption = req.query.sort || 'latest';
+    console.log("loadProuductPage function Sort option:", sortOption);
+    console.log("loadProuductPage function Page:", page);
 
     let sortBy;
 
-    if (sortOption === 'date') {
-        sortBy = { createdAt: -1 }; // latest joined first
-    } else if (sortOption === 'count') {
-        sortBy = { totalCount: -1 }; // assuming you have a field 'totalCount'
-    } else {
-        sortBy = { name: 1 }; // default to A-Z
+    switch (sortOption) {
+        case 'latest':
+            sortBy = { createdAt: -1 };
+            break;
+        case 'price_asc':
+            sortBy = { price: 1 };
+            break;
+        case 'price_desc':
+            sortBy = { price: -1 };
+            break;
+        case 'popular':
+            sortBy = { viewCount: -1 }; // Assuming you have a viewCount field
+            break;
+        case 'name_asc':
+            sortBy = { name: 1 };
+            break;
+        default:
+            sortBy = { createdAt: -1 };
     }
 
     try {
-        const totalUsers = await Product.countDocuments();
-        const totalPages = Math.ceil(totalUsers / limit);
+        const totalProducts = await Product.countDocuments();
+        const totalPages = Math.ceil(totalProducts / limit);
 
+        let adjustedPage = page;
+        if (totalPages > 0 && adjustedPage > totalPages) {
+            adjustedPage = totalPages;
+        } else if (totalPages === 0) {
+            adjustedPage = 1;
+        }
+
+
+        console.log("Adjusted Page:", adjustedPage);
         const products = await Product.find({})
             .sort(sortBy)
             .skip((page - 1) * limit)
@@ -57,19 +128,26 @@ const loadProductPage = async (req, res) => {
             res.json({
                 success: true,
                 products,
-                currentPage: page,
+                currentPage: adjustedPage,
                 totalPages,
+                totalProducts,
                 sort: sortOption
             });
-        }, 5000);
-
+        }, 1000);
 
 
     } catch (error) {
-        console.error("Error fetching customers:", error);
-        res.status(500).send("Internal Server Error");
+        console.error("Error fetching products:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: error.message
+        });
     }
 }
+
+
+
 
 const getSettingsPage = (req, res) => {
     res.render('admin/settings');
