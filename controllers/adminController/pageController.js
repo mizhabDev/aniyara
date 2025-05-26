@@ -79,7 +79,7 @@ const getProductPage = async (req, res) => {
 
 const loadProductPage = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = 1; // Changed from 1 to 10 for better UX
+    const limit = 3; // Changed from 1 to 10 for better UX
     const sortOption = req.query.sort || 'latest';
     console.log("loadProuductPage function Sort option:", sortOption);
     console.log("loadProuductPage function Page:", page);
