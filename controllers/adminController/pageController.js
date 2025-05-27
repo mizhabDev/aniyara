@@ -78,60 +78,101 @@ const getProductPage = async (req, res) => {
 // }
 
 const loadProductPage = async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 3; // Changed from 1 to 10 for better UX
-    const sortOption = req.query.sort || 'latest';
-    console.log("loadProuductPage function Sort option:", sortOption);
-    console.log("loadProuductPage function Page:", page);
-
-    let sortBy;
-
-    switch (sortOption) {
-        case 'latest':
-            sortBy = { createdAt: -1 };
-            break;
-        case 'price_asc':
-            sortBy = { price: 1 };
-            break;
-        case 'price_desc':
-            sortBy = { price: -1 };
-            break;
-        case 'popular':
-            sortBy = { viewCount: -1 }; // Assuming you have a viewCount field
-            break;
-        case 'name_asc':
-            sortBy = { name: 1 };
-            break;
-        default:
-            sortBy = { createdAt: -1 };
-    }
 
     try {
-        const totalProducts = await Product.countDocuments();
-        const totalPages = Math.ceil(totalProducts / limit);
+        const page = parseInt(req.query.page) || 1;
+        const limit = 3;
+        const skip = (page - 1) * limit;
 
-        let adjustedPage = page;
-        if (totalPages > 0 && adjustedPage > totalPages) {
-            adjustedPage = totalPages;
-        } else if (totalPages === 0) {
-            adjustedPage = 1;
+        // get filtter parameter
+        const sort = req.query.sort || 'latest';
+        const category = req.query.category || '';
+        const stockStatus = req.query.stockStatus || '';
+        const searchTerm = req.query.search || '';
+
+        console.log("---------------------loadProuductPage function Sort option:", sort, category, stockStatus, searchTerm, '----------------------');
+
+        let query = {}
+
+        if (category && category !== 'All Categories') {
+            query.category = category;
+
+        }
+
+        // stock status filtter
+
+        if (stockStatus && stockStatus !== 'All Stock Status') {
+            switch (stockStatus) {
+                case 'In Stock':
+                    query.stock = { $gt: 10 };
+                    break;
+                case 'Low Stock':
+                    query.stock = { $gte: 1, $lte: 10 };
+                    break;
+                case 'Out of Stock':
+                    query.stock = { $eq: 0 };
+                    break;
+            }
+        }
+
+        if (searchTerm) {
+            query.$or = [
+                { name: { $regex: searchTerm, $options: 'i' } },
+                { description: { $regex: searchTerm, $options: 'i' } },
+                { category: { $regex: searchTerm, $options: 'i' } }
+            ];
         }
 
 
-        console.log("Adjusted Page:", adjustedPage);
-        const products = await Product.find({})
-            .sort(sortBy)
-            .skip((page - 1) * limit)
-            .limit(limit);
+        let sortBy = {};
+
+        switch (sort) {
+            case 'latest':
+                sortBy = { createdAt: -1 };
+                break;
+            case 'price_asc':
+                sortBy = { price: 1 };
+                break;
+            case 'price_desc':
+                sortBy = { price: -1 };
+                break;
+            case 'popular':
+                sortBy = { viewCount: -1 }; // Assuming you have a viewCount field
+                break;
+            case 'name_asc':
+                sortBy = { name: 1 };
+                break;
+            default:
+                sortBy = { createdAt: -1 };
+        }
+
+        console.log('Query:', query);
+        console.log('Sort:', sortBy);
+
+        
+
+
+        const [products, totalProducts] = await Promise.all([
+            Product.find(query)
+                .sort(sortBy)
+                .skip(skip)
+                .limit(limit)
+                .populate('category'),
+            Product.countDocuments(query)
+        ]);
+
+        const totalPages = Math.ceil(totalProducts / limit)
+
+
 
         setTimeout(() => {
             res.json({
                 success: true,
                 products,
-                currentPage: adjustedPage,
+                currentPage: page,
                 totalPages,
                 totalProducts,
-                sort: sortOption
+                hasnextpage: page < totalPages, hasPrevPage: page > 1, filters: { category, stockStatus, searchTerm, sort }
             });
         }, 1000);
 

@@ -22,7 +22,7 @@
 
     <div class="filters">
       <div class="filter-group">
-        <select class="filter-select">
+        <select class="filter-select" id="category-filter">
           <option>All Categories</option>
           <option>Chain</option>
           <option>Bracelate</option>
@@ -36,19 +36,25 @@
           <option>Perfumes</option>
           <option>Decorations</option>
         </select>
-        <select class="filter-select">
+
+        <!-- Added id="stock-filter" -->
+        <select class="filter-select" id="stock-filter">
           <option>All Stock Status</option>
           <option>In Stock</option>
           <option>Low Stock</option>
           <option>Out of Stock</option>
         </select>
-        <select class="filter-select">
+
+        <!-- Added id="sort-filter" -->
+        <select class="filter-select" id="sort-filter">
           <option>Sort By: Latest</option>
           <option>Sort By: Price (Low to High)</option>
           <option>Sort By: Price (High to Low)</option>
           <option>Sort By: Most Popular</option>
         </select>
       </div>
+      
+
       <button class="btn" id="openModalBtn">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -58,6 +64,8 @@
         Add New Product
       </button>
     </div>
+
+
 
     <div class="products-grid" id="productListContainer">
       <p>empty</p>
@@ -300,7 +308,8 @@
       console.log('current sort:', currentSort);
       console.log('current page:', currentPage);
 
-
+      initializeFromURL();
+      initializeFilters();
       fetchProducts(currentPage, currentSort)
 
     });
@@ -312,11 +321,100 @@
     });
 
 
-    async function fetchProducts(page, sort) {
+
+    function initializeFilters() {
+      const categoryFilter = document.getElementById('category-filter');
+      const stockFilter = document.getElementById('stock-filter');
+      const sortFilter = document.getElementById('sort-filter');
+      const searchInput = document.querySelector('.search-bar input');
+
+      if (!categoryFilter || !stockFilter || !sortFilter || !searchInput) {
+        console.error('Filter elements not found! Check your IDs.');
+        return;
+      }
+
+
+      // Category filter change event
+      categoryFilter.addEventListener('change', (e) => {
+        currentCategory = e.target.value === 'All Categories' ? '' : e.target.value;
+        currentPage = 1; // Reset to first page
+        applyFilters();
+      });
+
+      // stock status
+      stockFilter.addEventListener('change', (e) => {
+        currentStockStatus = e.target.value === 'All Stock Status' ? '' : e.target.value;
+        currentPage = 1; // Reset to first page
+        applyFilters();
+      });
+
+      // Sort filter change event
+      sortFilter.addEventListener('change', (e) => {
+        const sortValue = e.target.value;
+        switch (sortValue) {
+          case 'Sort By: Latest':
+            currentSort = 'latest';
+            break;
+          case 'sort By: Price (Low to High)':
+            currentSort = 'price_asc';
+            break;
+          case 'Sort By: Price (High to Low)':
+            currentSort = 'price_desc';
+            break;
+          case 'sort By: Most Popular':
+            currentSort = 'Popular';
+            break;
+          default:
+            currentSort = 'latest';
+        }
+        currentPage = 1; // Reset to first page
+        applyFilters();
+      });
+
+
+
+      // search input debounce 
+
+      let searchTimeout;
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentSearchTerm = e.target.value.trim();
+          currentPage = 1
+          applyFilters();
+        }, 300);
+      });
+      console.log('Filters initialized successfully!');
+    }
+
+
+    // Apply all current filters
+
+    function applyFilters() {
+      fetchProducts(currentPage, currentSort, currentCategory, currentStockStatus, currentSearchTerm);
+      updateURL();
+      
+    }
+
+
+
+    async function fetchProducts(page = 1, sort = 'latest', category = '', stockStatus = '', searchTerm = '') {
       try {
         document.getElementById('preloader').style.display = 'flex';
-        console.log('fetching products');
-        const response = await axios.get(`/admin/productFetch?page=${page}&sort=${sort}`);
+        console.log('Fetching products with filters:', { page, sort, category, stockStatus, searchTerm });
+
+        const params = new URLSearchParams({
+          page: page,
+          sort: sort
+        });
+
+        if (category) params.append('category', category);
+        if (stockStatus) params.append('stockStatus', stockStatus);
+        if (searchTerm) params.append('search', searchTerm);
+
+
+
+        const response = await axios.get(`/admin/productFetch?${params.toString()}`);
         console.log('response:', response);
         const data = response.data;
 
@@ -324,21 +422,16 @@
           renderProducts(data.products);
           currentPage = data.currentPage;
           renderPagination(data.currentPage, data.totalPages);
+
+          updateResultsCount(data.products.length, data.totalProducts)
         } else {
           console.log('error fetching products fron fetch Products function', data);
+          showError('Failed to fetch products')
         }
-
-
-
 
       } catch (error) {
         console.log('error fetching products form fetch products function', error);
-        productListContainer.innerHTML = `
-            <div class="error-message">
-                Failed to load products. Please try again.
-           <button onclick="fetchProducts(${page}, '${sort}')">Retry</button>
-            </div>
-        `;
+        showError('Failed to load products. Please try again.')
       }
       finally {
         setTimeout(() => {
@@ -348,11 +441,47 @@
       }
     }
 
+    function updateURL() {
+      const params = new URLSearchParams();
 
+      if (currentPage > 1) params.set('page', currentPage);
+      if (currentSort !== 'latest') params.set('sort', currentSort);
+      if (currentCategory) params.set('category', currentCategory);
+      if (currentStockStatus) params.set('stockStatus', currentStockStatus);
+      if (currentSearchTerm) params.set('search', currentSearchTerm);
+
+      const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+      window.history.replaceState({}, '', newURL);
+
+    }
+
+    function showError(message) {
+      productListContainer.innerHTML = `
+
+
+        <div class="error-message" style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+          <p>${message}</p>
+         <button onclick="applyFilters()" class="btn">Retry</button>
+        </div>
+      `;
+    }
+
+
+    function updateResultsCount(currentCount, totalCount) {
+      const header = document.querySelector('.header h1');
+      const countText = totalCount > 0 ?
+        `Products Management (${currentCount} of ${totalCount})` :
+        'Products Management (No results)';
+      header.textContent = countText;
+    }
+
+
+
+    
+    
 
 
     // render products card 
-
     function renderProducts(products) {
 
 
@@ -392,19 +521,54 @@
 
 
     // Function to handle pagination clicks for search results
-    function handlePageChange(page, query) {
+    function handlePageChange(page) {
       currentPage = page;
-
-      // If there's an active search, use the search function
-      if (query && query.trim() !== '') {
-        handleSearch(page);
-      } else {
-        // Otherwise fall back to regular customer list
-        fetchProducts(page, currentSort);
-      }
+      applyFilters();
     }
 
-   
+    function initializeFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      currentSort = 'latest';
+      currentPage = parseInt(urlParams.get('page')) || 1;
+      currentCategory = '';
+      currentStockStatus = '';
+      currentSearchTerm = '';
+
+      // Update UI elements to match URL parameters
+      const categoryFilter = document.getElementById('category-filter');
+      const stockFilter = document.getElementById('stock-filter');
+      const sortFilter = document.getElementById('sort-filter');
+      const searchInput = document.querySelector('.search-bar input');
+
+      if (currentCategory) {
+        categoryFilter.value = currentCategory;
+      }
+
+      if (currentStockStatus) {
+        stockFilter.value = currentStockStatus;
+      }
+
+      // Set sort filter based on currentSort value
+      switch (currentSort) {
+        case 'latest':
+          sortFilter.value = 'Sort By: Latest';
+          break;
+        case 'price_asc':
+          sortFilter.value = 'Sort By: Price (Low to High)';
+          break;
+        case 'price_desc':
+          sortFilter.value = 'Sort By: Price (High to Low)';
+          break;
+        case 'popular':
+          sortFilter.value = 'Sort By: Most Popular';
+          break;
+      }
+
+      if (currentSearchTerm) {
+        searchInput.value = currentSearchTerm;
+      }
+    }
 
 
   </script>
